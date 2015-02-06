@@ -1,0 +1,14 @@
+==> Downloading https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz
+Error: Failed to download resource "python"
+Download failed: https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz
+/Users/m3drano/Coding/dotfiles/os/Darwin/install.sh: line 8: pip: command not found
+Warning: emacs-24.4 already installed
+/usr/local/Cellar/emacs/24.4/homebrew.mxcl.emacs.plist: Operation already in progress
+Warning: tmux-1.9a already installed
+==> Downloading https://downloads.sf.net/project/machomebrew/Bottles/colordiff-1.0.13.yosemite.bottle.tar.gz
+Error: Failed to download resource "colordiff"
+Download failed: https://downloads.sf.net/project/machomebrew/Bottles/colordiff-1.0.13.yosemite.bottle.tar.gz
+Warning: Bottle installation failed: building from source.
+==> Downloading http://www.colordiff.org/colordiff-1.0.13.tar.gz
+Error: Failed to download resource "colordiff"
+Download failed: http://www.colordiff.org/colordiff-1.0.13.tar.gz

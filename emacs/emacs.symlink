@@ -1,0 +1,26 @@
+;; -*- mode: Emacs-Lisp -*-
+
+;; Set UTF-8 as default encoding.
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;; Recompile that that is needed.
+(byte-recompile-directory user-emacs-directory 0)
+
+;; Load path.
+(add-to-list 'load-path "~/.emacs.d/lisp")
+
+;; Load other configs.
+(load "~/.emacs.d/config/package-config")
+(load "~/.emacs.d/config/behaviour-config")
+(load "~/.emacs.d/config/ui-config")
+(load "~/.emacs.d/config/linum-config")
+(load "~/.emacs.d/config/flymake-config")
+(load "~/.emacs.d/config/python-config")
+
+;; And for Mac OS X.
+(if (string-equal system-type "darwin")
+    (load "~/.emacs.d/config/darwin-config"))

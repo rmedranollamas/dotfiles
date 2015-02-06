@@ -1,0 +1,45 @@
+#!/bin/bash
+# -*- mode: sh -*-
+
+# If not running interactively, don't do anything
+[[ -z "${PS1}" ]] && return
+
+# Place for all the config scripts for bash.
+BASHRCD="${HOME}/.bashrc.d"
+
+# Basic variables that are used everywhere.
+export EDITOR='emacsclient -a "" -nw'
+
+# Error and logging.
+err() {
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2
+}
+
+# Handy function that sources executable files in this folder.
+source_all() {
+  for i in $(LC_ALL='C' command ls "${1}") ; do
+    i="${1}/${i}"
+    [[ ( "${i}" =~ (.sh$|.bash$) && -x "${i}" ) || -h "${i}" ]] && . "${i}"
+  done
+  unset i
+}
+
+# Load the platform specific configs before the rest.
+source "${BASHRCD}/platform/`uname -s`.sh"
+
+# Load other configuration scripts if they exist.
+source_all "${BASHRCD}"
+
+# Clean up not needed stuff.
+unset BASHRCD
+unset err
+unset source_all
+
+# Add user bin to path.
+export PATH="${HOME}/.bin:${PATH}"
+
+# Make PATH unique in case there are duplicates.
+export PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
+
+# Set this one to avoid loading this multiple times.
+export BASHRC='done!'

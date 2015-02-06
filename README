@@ -1,0 +1,18 @@
+These are my configuration files.
+
+The configs are organized by themes, whether a theme is an application or some
+other area, like OS config. There are some important conventions:
+
+ 1. bootstrap.sh installs all the files into the local user home directory.
+    It runs on the plain /bin/sh provided by the system by default.
+ 2. Each <directory>/install.sh will be run once on bootstrap time.
+ 3. Each <directory>/<file>.symlink will be symlinked at $HOME with the name
+    .<file> (it can be a directory, such as emacs.d.symlink/)
+ 4. The platform files, in the form <directory>/<platform>/ (for example
+    <directory>/Darwin/) have the same structure as the mail level, but are only
+    considered on each platform.
+ 5. The directory bin/ will be added to the user PATH variable.
+
+The main choice of tools is the old die-hard tripet (screen, bash, emacs). There
+are many other supported, and configured to match as much as possible the config
+of the main tools.

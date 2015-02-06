@@ -1,0 +1,4 @@
+# -*- mode: sh -*-
+# Loaded of .bashrc
+
+. ~/.bashrc

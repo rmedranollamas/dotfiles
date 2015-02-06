@@ -1,0 +1,46 @@
+[user]
+	name = Ramón Medrano Llamas
+	email = m3drano@gmail.com
+[core]
+	editor = emacsclient -a "" -nw
+	whitespace = trailing-space,space-before-tab
+	excludesfile = ~/.gitignore_global
+	autocrlf = input
+	fileMode = false
+[color]
+	ui = auto
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[diff]
+	renames = copies
+	mnemonicprefix = true
+[push]
+	default = tracking
+[rerere]
+	enabled = true
+[merge]
+	stat = true
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+	lg = log --graph --decorate --oneline -100
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = !gitk
+	ls-ignored = ls-files --exclude-standard --ignored --others
+[credential]
+	helper = osxkeychain
+[advice]
+	statusHints = false
+[branch]
+	autosetupmerge = true
+[pull]
+	rebase = true
+[status]
+	submodulesummary = true
+[help]
+	autocorrect = 0

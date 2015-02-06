@@ -1,0 +1,9 @@
+# Show proper term variable.
+term screen-256color
+
+# Clean startup and detach.
+startup_message off
+autodetach on
+
+# Show me the caption bar.
+caption always "%{-b ..}%-w%{+b ..}[%n %t]%{-}%+w"
