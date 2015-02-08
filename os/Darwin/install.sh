@@ -3,14 +3,15 @@
 log="${DOTFILES_ROOT}/logs/os.install.log"
 touch "${log}"
 
-# Install Python with hombrew, to not mess with system paths.
-brew install python --without-gdbm --without-readline --without-sqlite > ${log} 2>&1
-PIP_REQUIRE_VIRTUALENV='' pip install --upgrade setuptools pip virtualenv ipython >> ${log} 2>&1
+# Install Python 3 with hombrew, to not mess with system paths.
+brew install python3 --without-gdbm --without-sqlite > ${log} 2>&1
+PIP_REQUIRE_VIRTUALENV='' pip3 install --upgrade setuptools pip virtualenv ipython >> ${log} 2>&1
 
 # Install a modern emacs.
-brew install emacs >> ${log} 2>&1
-ln -sf "$(brew --repository)/opt/emacs/.plist" ~/Library/LaunchAgents >> ${log} 2>&1
+brew install emacs --cocoa >> ${log} 2>&1
+ln -sf "$(brew --repository)/opt/emacs/.plist" ~/Library/LaunchAgents/ >> ${log} 2>&1
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.emacs.plist >> ${log} 2>&1
+brew linkapps emacs >> ${log} 2>&1
 
 # Other packages brew will install.
 brew install colordiff tmux >> ${log} 2>&1
