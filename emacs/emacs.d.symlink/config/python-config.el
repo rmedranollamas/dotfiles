@@ -10,7 +10,7 @@
 
 ;; Configure flymake for Python
 (defvar python-pylint nil "Path to epylint")
-(setq python-pylint "egpylint")
+(setq python-pylint "/usr/local/bin/epylint")
 (when (load "flymake" t)
   (defun flymake-pylint-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
