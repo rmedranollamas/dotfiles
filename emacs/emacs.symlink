@@ -14,7 +14,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;; Load other configs.
-(load "~/.emacs.d/config/package-config")
+(load "~/.emacs.d/config/0package-config")
 (load "~/.emacs.d/config/behaviour-config")
 (load "~/.emacs.d/config/ui-config")
 (load "~/.emacs.d/config/linum-config")
