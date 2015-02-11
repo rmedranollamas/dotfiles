@@ -3,8 +3,11 @@
 log="${DOTFILES_ROOT}/logs/os.install.log"
 touch "${log}"
 
+# We want a proper bash available.
+brew install bash > ${log} 2>&1
+
 # Install Python 3 with hombrew, to not mess with system paths.
-brew install python3 --without-gdbm --without-sqlite > ${log} 2>&1
+brew install python3 --without-gdbm --without-sqlite >> ${log} 2>&1
 PIP_REQUIRE_VIRTUALENV='' pip3 install --upgrade setuptools pip virtualenv ipython >> ${log} 2>&1
 
 # Install a modern emacs.
@@ -13,8 +16,11 @@ ln -sf "$(brew --repository)/opt/emacs/.plist" ~/Library/LaunchAgents/ >> ${log}
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.emacs.plist >> ${log} 2>&1
 brew linkapps emacs >> ${log} 2>&1
 
+# Install git from brew.
+brew install git --with-blk-sha1 >> ${log} 2>&1
+
 # Other packages brew will install.
-brew install colordiff tmux >> ${log} 2>&1
+brew install bash-completion colordiff tmux >> ${log} 2>&1
 
 unset log
 
