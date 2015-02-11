@@ -4,11 +4,14 @@
 # If not running interactively, don't do anything
 [[ -z "${PS1}" ]] && return
 
+# Load system bashrc.
+source '/etc/bashrc'
+
 # Place for all the config scripts for bash.
 BASHRCD="${HOME}/.bashrc.d"
 
 # Basic variables that are used everywhere.
-export EDITOR='emacsclient -a "" -nw'
+export EDITOR='emacsclient -nw'
 
 # Error and logging.
 err() {
@@ -19,7 +22,7 @@ err() {
 source_all() {
   for i in $(LC_ALL='C' command ls "${1}") ; do
     i="${1}/${i}"
-    [[ ( "${i}" =~ (.sh$|.bash$) && -x "${i}" ) || -h "${i}" ]] && . "${i}"
+    [[ ( "${i}" =~ (.sh$|.bash$) && -x "${i}" ) || -h "${i}" ]] && source "${i}"
   done
   unset i
 }
