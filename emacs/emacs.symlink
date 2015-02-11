@@ -20,6 +20,7 @@
 (load "~/.emacs.d/config/linum-config")
 (load "~/.emacs.d/config/flymake-config")
 (load "~/.emacs.d/config/python-config")
+(load "~/.emacs.d/config/latex-config")
 
 ;; And for Mac OS X.
 (if (string-equal system-type "darwin")

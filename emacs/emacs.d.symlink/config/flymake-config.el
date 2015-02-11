@@ -2,7 +2,6 @@
 
 ;; Enable Flymake by default.
 (require 'flymake)
-(flymake-mode 1)
 
 ;; Enable Flymake on every file load.
 (add-hook 'find-file-hook 'flymake-find-file-hook)
@@ -14,3 +13,5 @@
 (require 'auto-complete)
 (ac-config-default)
 (global-auto-complete-mode t)
+
+(flymake-mode t)
