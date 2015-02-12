@@ -16,6 +16,9 @@ ln -sf "$(brew --repository)/opt/emacs/.plist" ~/Library/LaunchAgents/ >> ${log}
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.emacs.plist >> ${log} 2>&1
 brew linkapps emacs >> ${log} 2>&1
 
+# Install aspell.
+brew install aspell --with-lang-es --with-lang-en >> ${log} 2>&1
+
 # Install git from brew.
 brew install git --with-blk-sha1 >> ${log} 2>&1
 
