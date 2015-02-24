@@ -1,6 +1,7 @@
 Host bitbucket.org
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/bitbucket
+     ControlPersist 60
 
 Host *
      ControlPath ~/.ssh/.%h.%p.%r
