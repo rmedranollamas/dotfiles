@@ -10,3 +10,8 @@ Host *
      Compression yes
      HashKnownHosts yes
      GSSAPITrustDns no
+     ForwardAgent yes
+     TCPKeepAlive no
+     ServerAliveInterval 30
+     ServerAliveCountMax 10
+     ForwardX11 yes
