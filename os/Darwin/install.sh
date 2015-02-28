@@ -3,8 +3,11 @@
 log="${DOTFILES_ROOT}/logs/os.install.log"
 touch "${log}"
 
+# Install the brew dupes.
+brew tap homebrew/dupes > ${log} 2>&1
+
 # We want a proper bash available.
-brew install bash > ${log} 2>&1
+brew install bash >> ${log} 2>&1
 
 # Install Python 3 with hombrew, to not mess with system paths.
 brew install python3 --without-gdbm --without-sqlite >> ${log} 2>&1
