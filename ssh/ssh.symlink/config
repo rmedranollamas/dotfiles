@@ -3,6 +3,10 @@ Host bitbucket.org
      IdentityFile ~/.ssh/bitbucket
      ControlPersist 60
 
+Host github.com
+     PreferredAuthentications publickey
+     IdentityFile ~/.ssh/github
+
 Host *
      ControlPath ~/.ssh/.%h.%p.%r
      ControlMaster auto
