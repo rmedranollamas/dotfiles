@@ -9,3 +9,7 @@ CDPATH=':~'
 if [[ -f "${HOME}/.bashrc_gcloud" ]] ; then
   source "${HOME}/.bashrc_gcloud"
 fi
+
+# Export the GPG_TTY variable.
+GPG_TTY="$(tty)"
+export GPG_TTY
