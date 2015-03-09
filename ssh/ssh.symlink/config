@@ -3,7 +3,7 @@ Host bitbucket.org
      IdentityFile ~/.ssh/bitbucket
      ControlPersist 60
 
-Host github.com
+Host github.com gist.github.com
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/github
 
