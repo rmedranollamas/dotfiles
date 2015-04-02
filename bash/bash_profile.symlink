@@ -1,4 +1,6 @@
 # -*- mode: sh -*-
-# Loaded of .bashrc
+# Load of .bashrc
 
-. ~/.bashrc
+if [[ -z "${BASHRC}" ]] ; then
+  source ~/.bashrc
+fi
