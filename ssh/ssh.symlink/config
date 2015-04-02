@@ -22,4 +22,3 @@ Host *
      TCPKeepAlive no
      ServerAliveInterval 30
      ServerAliveCountMax 10
-     ForwardX11 yes
