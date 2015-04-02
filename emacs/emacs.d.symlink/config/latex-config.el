@@ -25,3 +25,15 @@
 
 ;; Autocomplete with AuCTeX.
 (require 'auto-complete-auctex)
+
+;; Autocompletion of math symbols.
+(require 'ac-math)
+(add-to-list 'ac-modes 'latex-mode)
+(defun ac-latex-mode-setup ()
+  (setq ac-math-unicode-in-math-p t)
+  (setq ac-sources
+    (append
+      '(ac-source-math-unicode ac-source-math-latex ac-source-latex-commands)
+      ac-sources)))
+(add-hook 'TeX-mode-hook 'ac-latex-mode-setup)
+(ac-flyspell-workaround)
