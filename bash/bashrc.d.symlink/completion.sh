@@ -4,7 +4,7 @@
 
 # enable programmable completion features
 if [[ -f '/etc/bash_completion' ]] && ! shopt -oq posix; then
-    source '/etc/bash_completion'
+  source '/etc/bash_completion'
 fi
 
 # Go over all the possible completion scripts locally available.

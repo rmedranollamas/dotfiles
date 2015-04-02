@@ -42,7 +42,7 @@ unset source_all
 export PATH="${HOME}/.bin:${PATH}"
 
 # Make PATH unique in case there are duplicates.
-export PATH=$(echo "${PATH}" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
+export PATH="$(echo "${PATH}" | awk -v RS=':' -v ORS=':' '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')"
 
 # Set this one to avoid loading this multiple times.
 export BASHRC='done!'
