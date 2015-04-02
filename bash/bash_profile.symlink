@@ -1,6 +1,6 @@
 # -*- mode: sh -*-
 # Load of .bashrc
 
-if [[ -z "${BASHRC}" ]] ; then
+if [[ -z "${BASHRC}" || -n "${TMUX}" ]] ; then
   source ~/.bashrc
 fi
