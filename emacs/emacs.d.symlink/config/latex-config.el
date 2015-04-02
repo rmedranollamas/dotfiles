@@ -1,5 +1,11 @@
 ;; -*- mode: Emacs-Lisp -*-
 
+;; Set the path for TeXLive
+(setq exec-path (append exec-path '("/usr/texbin")))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
+(setq exec-path (append exec-path '("/usr/local/bin")))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+
 ;; Always use PDF mode.
 (setq TeX-PDF-mode t)
 
@@ -17,8 +23,5 @@
                                        "-draftmode"
                                        "-interaction=nonstopmode" file-name))))
 
-;; Set the path for TeXLive
-(setq exec-path (append exec-path '("/usr/texbin")))
-(setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
-(setq exec-path (append exec-path '("/usr/local/bin")))
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+;; Autocomplete with AuCTeX.
+(require 'auto-complete-auctex)
