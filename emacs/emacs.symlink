@@ -25,3 +25,5 @@
 ;; And for Mac OS X.
 (if (string-equal system-type "darwin")
     (load "~/.emacs.d/config/darwin-config"))
+
+(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
