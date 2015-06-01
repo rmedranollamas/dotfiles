@@ -29,4 +29,4 @@
 (require 'virtualenvwrapper)
 ; (venv-initialize-interactive-shells)
 ; (venv-initialize-eshell)
-(setq venv-location "~/Code/virtualenv")
+(setq venv-location "~/.virtualenvs")
