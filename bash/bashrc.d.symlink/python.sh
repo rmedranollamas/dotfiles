@@ -10,3 +10,9 @@ export PIP_DOWNLOAD_CACHE="${HOME}/.pip/cache"
 
 # Configuration for the Python interpreter.
 export PYTHONSTARTUP="${HOME}/.pythonrc"
+
+# virtualenvwrapper config.
+export WORKON_HOME="${HOME}/.virtualenvs"
+export PROJECT_HOME="${HOME}/Devel"
+export VIRTUALENVWRAPPER_SCRIPT='/usr/local/bin/virtualenvwrapper.sh'
+source '/usr/local/bin/virtualenvwrapper_lazy.sh'
