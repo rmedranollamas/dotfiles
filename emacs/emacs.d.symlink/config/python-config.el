@@ -24,3 +24,9 @@
 
 ;; Django modes.
 (add-to-list 'auto-mode-alist '("\\.djhtml$" . django-html-mode))
+
+;; Load the virtualenvs.
+(require 'virtualenvwrapper)
+; (venv-initialize-interactive-shells)
+; (venv-initialize-eshell)
+(setq venv-location "~/Code/virtualenv")

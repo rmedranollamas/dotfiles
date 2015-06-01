@@ -10,8 +10,8 @@ brew tap homebrew/dupes > ${log} 2>&1
 brew install bash >> ${log} 2>&1
 
 # Install Python 3 with hombrew, to not mess with system paths.
-brew install python3 --without-gdbm --without-sqlite >> ${log} 2>&1
-PIP_REQUIRE_VIRTUALENV='' pip3 install --upgrade setuptools pip virtualenv ipython >> ${log} 2>&1
+brew install python3 --framework --without-gdbm --without-sqlite --without-xz >> ${log} 2>&1
+PIP_REQUIRE_VIRTUALENV='' pip3 install --upgrade setuptools pip virtualenv ipython virtualenvwrapper >> ${log} 2>&1
 
 # Install a modern emacs.
 brew install emacs --cocoa >> ${log} 2>&1
