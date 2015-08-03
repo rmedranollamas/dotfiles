@@ -22,6 +22,7 @@
 [push]
 	default = tracking
 	signed = true
+	atomic = true
 [rerere]
 	enabled = true
 [merge]
