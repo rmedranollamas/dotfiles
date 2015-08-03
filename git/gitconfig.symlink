@@ -21,6 +21,7 @@
 	mnemonicprefix = true
 [push]
 	default = tracking
+	signed = true
 [rerere]
 	enabled = true
 [merge]
