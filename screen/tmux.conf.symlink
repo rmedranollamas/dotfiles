@@ -7,6 +7,9 @@ set -g status-utf8 on
 set -g default-terminal 'screen-256color'
 setw -g xterm-keys on
 
+# Do not launch a login shell.
+set -g default-command "${SHELL}"
+
 # We hate vi. Intensely.
 setw -g mode-keys emacs
 set -g status-keys emacs
