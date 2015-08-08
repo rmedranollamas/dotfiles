@@ -6,7 +6,11 @@
 export CLOUDSDK_PYTHON="$(which python)"
 
 # TODO(m3drano): Make this path dynamic.
-source "${HOME}/Code/google-cloud-sdk/path.bash.inc"
+if [[ -f "${HOME}/Code/google-cloud-sdk/path.bash.inc" ]] ; then
+  source "${HOME}/Code/google-cloud-sdk/path.bash.inc"
+fi
 
 # TODO(m3drano): Make this path dynamic.
-source "${HOME}/Code/google-cloud-sdk/completion.bash.inc"
+if [[ -f "${HOME}/Code/google-cloud-sdk/completion.bash.inc" ]] ; then
+  source "${HOME}/Code/google-cloud-sdk/completion.bash.inc"
+fi
