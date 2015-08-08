@@ -5,7 +5,13 @@
 [[ -z "${PS1}" ]] && return
 
 # Load system bashrc.
-source '/etc/bash.bashrc'
+if [[ -f '/etc/bash.bashrc' ]] ; then
+  source '/etc/bash.bashrc'
+fi
+
+if [[ -f '/etc/bashrc' ]] ; then
+  source '/etc/bashrc'
+fi
 
 # Place for all the config scripts for bash.
 BASHRCD="${HOME}/.bashrc.d"
