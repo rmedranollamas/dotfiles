@@ -9,7 +9,6 @@ Host *
      TCPKeepAlive no
      ServerAliveInterval 30
      ServerAliveCountMax 10
-#     PubkeyAuthentication no
      IdentitiesOnly yes
 
 Host bitbucket.org
