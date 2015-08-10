@@ -2,14 +2,16 @@
 # -*- mode: sh -*-
 
 # If not running interactively, don't do anything. Open tmux.
+TMUX_ARGS="-u -2 new-session -A -s $(hostname)"
 [[ -z "${PS1}" ]] && return
-[[ -z "$TMUX" ]] && exec tmux
+[[ -z "$TMUX" ]] && exec tmux ${TMUX_ARGS}
 
-# Load system bashrc.
+# Load system bashrc (Debian 8).
 if [[ -f '/etc/bash.bashrc' ]] ; then
   source '/etc/bash.bashrc'
 fi
 
+# Load system bashrc (OS X).
 if [[ -f '/etc/bashrc' ]] ; then
   source '/etc/bashrc'
 fi
