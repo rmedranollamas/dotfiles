@@ -19,10 +19,10 @@
  '(frame-background-mode (quote dark)))
 (add-hook 'after-make-frame-functions
           (lambda (frame)
-            (set-frame-parameter frame
-                                 'background-mode
-                                 'dark))
-            (enable-theme 'solarized))
+            (let ((mode (if (display-graphic-p frame) 'light 'dark)))
+              (set-frame-parameter frame 'background-mode mode)
+              (set-terminal-parameter frame 'background-mode mode))
+            (enable-theme 'solarized)))
 
 ;; Indentation.
 (setq c-basic-indent 2)
@@ -50,7 +50,7 @@
 ;; Others
 (setq initial-scratch-message "")
 (setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message "m3drano")
+(setq inhibit-startup-echo-area-message user-login-name)
 
 ;; Show warnings for long lines.
 (require 'whitespace)
