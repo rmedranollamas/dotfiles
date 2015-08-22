@@ -6,6 +6,8 @@
 (venv-initialize-interactive-shells)
 (setq venv-location "/Users/m3drano/.virtualenvs")
 
+(defvar python-pylint nil "Path to epylint")
+(setq python-pylint "~/.bin/epylint.sh")
 (when (load "flymake" t)
   (defun flymake-pylint-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -13,7 +15,7 @@
            (local-file (file-relative-name
                         temp-file
                         (file-name-directory buffer-file-name))))
-      (list (expand-file-name "/usr/local/bin/epylint" "") (list local-file))))
+      (list (expand-file-name python-pylint "") (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
 
