@@ -1,4 +1,6 @@
 #!/bin/bash
+# -*- mode: sh -*-
+# Specifics for bash completion in OS X.
 
 if [[ "$(uname -s)" == "Darwin" ]] ; then
   if [[ -x "$(which brew)" ]] ; then
