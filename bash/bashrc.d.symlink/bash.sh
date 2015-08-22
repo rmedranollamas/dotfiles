@@ -9,7 +9,7 @@ else
   export TERM='xterm-256color'
 fi
 
-# Stope using Ctrl for stopping.
+# Stop using Ctrl+S for stopping.
 stty stop ""
 
 # Check the window size after each command and, if necessary,
