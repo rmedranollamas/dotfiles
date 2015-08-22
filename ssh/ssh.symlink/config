@@ -19,7 +19,9 @@ Host bitbucket.org
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/bitbucket
      ControlPersist 60
+     ForwardX11 no
 
 Host git.code.sf.net
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/sourceforge
+     ForwardX11 no
