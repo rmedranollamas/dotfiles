@@ -61,6 +61,8 @@ bind e split-window -p 60 'emacsclient -a "" -nw'
 bind h split-window -h 'emacsclient -a "" -nw'
 
 # Let's set a title on the terminal.
-# enable wm window titles
 set -g set-titles on
 set -g set-titles-string '#W@#h'
+
+# Open IRC.
+bind i new-window irssi
