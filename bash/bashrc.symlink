@@ -2,9 +2,12 @@
 # -*- mode: sh -*-
 
 # If not running interactively, don't do anything. Open tmux.
-TMUX_ARGS="-u -2 new-session -A -s $(hostname -s)"
 [[ -z "${PS1}" ]] && return
-[[ -z "$TMUX" ]] && exec tmux ${TMUX_ARGS}
+
+# If there is tmux, use it.
+if [[ -x "$(which tmux)" ]] ; then
+  [[ -z "$TMUX" ]] && exec tmux -u -2 new-session -A -s "$(hostname -s)"
+fi
 
 # Load system bashrc (Debian 8).
 if [[ -f '/etc/bash.bashrc' ]] ; then
