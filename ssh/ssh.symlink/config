@@ -2,14 +2,18 @@ Host *
      ControlPath ~/.ssh/.%h.%p.%r
      ControlMaster auto
      ControlPersist 600
+     CheckHostIP yes
      Compression yes
      HashKnownHosts yes
      GSSAPITrustDns no
      ForwardAgent yes
+     ForwardX11 yes
      TCPKeepAlive no
      ServerAliveInterval 30
      ServerAliveCountMax 10
      IdentitiesOnly yes
+     GSSAPIAuthentication yes
+     GSSAPIKeyExchange yes
 
 Host bitbucket.org
      PreferredAuthentications publickey
