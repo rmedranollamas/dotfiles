@@ -14,14 +14,5 @@
 ;; Compile the packages now that we have load paths.
 (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
 
-;; Load other configs.
-(load "~/.emacs.d/config/behaviour-config")
-(load "~/.emacs.d/config/ui-config")
-(load "~/.emacs.d/config/linum-config")
-(load "~/.emacs.d/config/flymake-config")
-(load "~/.emacs.d/config/python-config")
-(load "~/.emacs.d/config/latex-config")
-
-;; And for Mac OS X.
-(if (string-equal system-type "darwin")
-    (load "~/.emacs.d/config/darwin-config"))
+;; Load all files on the load dir via load-dir.
+(require 'load-dir)
