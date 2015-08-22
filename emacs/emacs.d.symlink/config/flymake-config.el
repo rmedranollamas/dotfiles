@@ -9,6 +9,9 @@
 ;; Show details of errors on the minubuffer.
 (eval-after-load 'flymake '(require 'flymake-cursor))
 
+;; Show errors on the right fringe.
+(eval-after-load 'flymake '(require 'rfringe))
+
 ;; Also enable auto-complete.
 (require 'auto-complete)
 (ac-config-default)
