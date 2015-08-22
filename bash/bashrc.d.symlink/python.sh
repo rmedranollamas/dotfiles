@@ -9,9 +9,11 @@ export PIP_REQUIRE_VIRTUALENV='true'
 export PYTHONSTARTUP="${HOME}/.pythonrc"
 
 # virtualenvwrapper config.
-export WORKON_HOME="${HOME}/.virtualenvs"
-export PROJECT_HOME="${HOME}/Code"
-export VIRTUALENV_PYTHON="$(which python3)"
-export VIRTUALENVWRAPPER_PYTHON="${VIRTUALENV_PYTHON}"
-export VIRTUALENVWRAPPER_SCRIPT='/usr/local/bin/virtualenvwrapper.sh'
-source '/usr/local/bin/virtualenvwrapper_lazy.sh'
+if [[ -f '/usr/local/bin/virtualenvwrapper_lazy.sh' ]] ; then
+  export WORKON_HOME="${HOME}/.virtualenvs"
+  export PROJECT_HOME="${HOME}/Code"
+  export VIRTUALENV_PYTHON="$(which python3)"
+  export VIRTUALENVWRAPPER_PYTHON="${VIRTUALENV_PYTHON}"
+  export VIRTUALENVWRAPPER_SCRIPT='/usr/local/bin/virtualenvwrapper.sh'
+  source '/usr/local/bin/virtualenvwrapper_lazy.sh'
+fi
