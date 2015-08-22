@@ -10,5 +10,5 @@ shopt -s histappend
 # use a sane date format.
 HISTCONTROL='ignoreboth'
 HISTTIMEFORMAT='%d/%m/%Y %T - '
-HISTSIZE=1000
-HISTFILESIZE=20000
+HISTSIZE=64000
+HISTFILESIZE=64000
