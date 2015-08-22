@@ -4,6 +4,6 @@
 
 export CLICOLOR=yes
 
-if [[ -x `which dircolors` ]]; then
+if [[ -x "$(which dircolors)" ]]; then
   [[ -r "${HOME}/.dircolors" ]] && eval "$(dircolors -b ~/.dircolors)"
 fi
