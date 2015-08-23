@@ -13,13 +13,13 @@ alias ll='ls -lA '
 alias l='ls -log '
 alias df='df -hl '
 alias du='du -hcxs '
-alias e="${EDITOR} "
+alias e="TERM=xterm ${EDITOR} "
 alias se="sudo ${EDITOR} "
 alias g='git '
 alias py='python3 '
 alias sps='ps -ecmo state,pid,user,%cpu,%mem,command | less'
 alias grep='grep --color=auto '
-alias emacsserver='emacs --daemon'
-alias killemacs="emacsclient -e '(kill-emacs)'"
+alias emacsserver='TERM=xterm emacs --daemon'
+alias killemacs="TERM=xterm emacsclient -e '(kill-emacs)'"
 
 alias pip-update="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs pip3 install -U"
