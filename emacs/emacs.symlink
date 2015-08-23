@@ -16,3 +16,6 @@
 
 ;; Load all files on the load dir via load-dir.
 (require 'load-dir)
+(custom-set-variables
+ '(load-dirs t)
+ '(load-dir-recursive t))
