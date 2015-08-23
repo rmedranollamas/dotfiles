@@ -23,6 +23,9 @@
                                        "-draftmode"
                                        "-interaction=nonstopmode" file-name))))
 
+;; We need to load the auto-complete before.
+(require 'auto-complete)
+ 
 ;; Autocomplete with AuCTeX.
 (require 'auto-complete-auctex)
 
