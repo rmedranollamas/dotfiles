@@ -10,7 +10,7 @@
 (eval-after-load 'flymake '(require 'flymake-cursor))
 
 ;; Show errors on the right fringe.
-(eval-after-load 'flymake '(require 'rfringe))
+;(eval-after-load 'flymake '(require 'rfringe))
 
 ;; Also enable auto-complete.
 (require 'auto-complete)
