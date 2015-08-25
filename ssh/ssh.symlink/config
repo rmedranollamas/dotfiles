@@ -6,19 +6,27 @@ Host *
      Compression yes
      HashKnownHosts yes
      ForwardAgent yes
-     ForwardX11 yes
-     TCPKeepAlive no
-     ServerAliveInterval 30
-     ServerAliveCountMax 10
+     ForwardX11 no
+     ForwardX11Trusted no
+     TCPKeepAlive yes
+     ServerAliveInterval 15
+     ServerAliveCountMax 3
      IdentitiesOnly yes
+     StrictHostKeyChecking ask
+     PasswordAuthentication no
+     ChallengeResponseAuthentication no
+     PubkeyAuthentication yes
+     Ciphers aes256-ctr,aes128-ctr,aes256-cbc,aes128-cbc
+     KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+     HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-rsa-cert-v00@openssh.com,ssh-ed25519,ssh-rsa
+     Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+     MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
 
 Host bitbucket.org
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/bitbucket
      ControlPersist 60
-     ForwardX11 no
 
 Host git.code.sf.net
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/sourceforge
-     ForwardX11 no
