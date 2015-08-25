@@ -25,10 +25,10 @@
             (enable-theme 'solarized)))
 
 ;; Indentation.
-(setq tab-width 2)
-(setq indent-tabs-mode nil)
+(setq-default tab-width 2)
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'c-basic-indent 'tab-width)
+(setq-default indent-tabs-mode nil)
 
 ;; Use Wind Move.
 (global-set-key (kbd "C-x <up>") 'windmove-up)
@@ -55,8 +55,10 @@
 
 ;; Show warnings for long lines.
 (require 'whitespace)
+(global-whitespace-mode t)
 (setq whitespace-line-column 80
      whitespace-style '(face tabs trailing lines-tail))
+(setq whitespace-global-modes '(not go-mode))
 
 ;; Formats for the warnings.
 (set-face-attribute 'whitespace-line nil
