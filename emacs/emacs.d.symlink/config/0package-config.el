@@ -5,24 +5,28 @@
 
 ;; Packages to be installed.
 (setq package-list '(ac-math
-		     auctex
-		     auto-complete
-		     auto-complete-auctex
-		     color-theme-solarized
-		     flymake-cursor
-		     load-dir
-		     rfringe
-		     virtualenvwrapper))
+                     auctex
+                     auto-complete
+                     auto-complete-auctex
+                     color-theme-solarized
+                     flymake-cursor
+                     load-dir
+                     rfringe
+                     virtualenvwrapper))
 
 ;; On Emacs older than 24.x there is no default repository.
 (when (< emacs-major-version 24)
   (add-to-list 'package-archives
                '("gnu" .
-                 "http://elpa.gnu.org/packages/") t))
+                 "https://elpa.gnu.org/packages/") t))
+
+(add-to-list 'package-archives
+             '("marmalade" .
+               "https://marmalade-repo.org/packages/") t)
 
 (add-to-list 'package-archives
              '("melpa" .
-               "http://melpa.milkbox.net/packages/") t)
+               "https://melpa.org/packages/") t)
 
 (package-initialize)
 
