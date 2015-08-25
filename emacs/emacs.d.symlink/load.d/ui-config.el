@@ -25,9 +25,10 @@
             (enable-theme 'solarized)))
 
 ;; Indentation.
-(setq c-basic-indent 2)
-(setq tab-width 4)
+(setq tab-width 2)
 (setq indent-tabs-mode nil)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'c-basic-indent 'tab-width)
 
 ;; Use Wind Move.
 (global-set-key (kbd "C-x <up>") 'windmove-up)
