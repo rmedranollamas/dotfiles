@@ -24,6 +24,7 @@
 
 ;; Jedi for Python.
 (add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:setup-keys t)
 (setq jedi:complete-on-dot t)
 
 ;; Activate minor whitespace mode when in python mode.
