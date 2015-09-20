@@ -56,3 +56,6 @@ Icon
 *.swp
 *.lock
 profile
+
+# Bazel ignores.
+/bazel-*
