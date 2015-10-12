@@ -5,6 +5,11 @@ touch "${log}"
 
 unset log
 
+# OS X setup.
+
+# Font aliasing on Emacs.app.
+defaults write org.gnu.Emacs FontBackend ns
+
 # # ~/.osx — http://mths.be/osx
 
 # # Ask for the administrator password upfront
