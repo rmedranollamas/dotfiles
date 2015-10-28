@@ -2,7 +2,7 @@
 	name = Ramón Medrano Llamas
 	email = m3drano@gmail.com
 [core]
-	editor = emacsclient -nw
+	editor = /Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw
 	whitespace = trailing-space,space-before-tab
 	excludesfile = ~/.gitignore_global
 	autocrlf = input
