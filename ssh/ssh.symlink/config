@@ -29,3 +29,7 @@ Host bitbucket.org
 Host *.sf.net *.sourceforge.net
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/sourceforge
+
+Host *.m3drano.ch
+     PreferredAuthentications publickey
+     IdentityFile ~/.ssh/google_compute_engine
