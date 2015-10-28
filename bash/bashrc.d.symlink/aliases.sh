@@ -2,12 +2,12 @@
 # -*- mode: sh -*-
 # Command aliases useful in any environment.
 
-if [[ `ls --color &> /dev/null` ]] ; then
-  alias ls='ls --color -hBFG '
-else
-  alias ls='ls -hBFG '
+export LS_OPTIONS='-hBFG'
+if [[ ! `ls --color &> /dev/null` ]] ; then
+  export LS_OPTIONS="${LS_OPTIONS} --color=yes"
 fi
 
+alias ls="ls ${LS_OPTIONS}"
 alias cd..='cd ..'
 alias ll='ls -lA '
 alias l='ls -log '
