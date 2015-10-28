@@ -13,6 +13,8 @@
 
 ;; Load Solarized theme.
 (require 'cl-lib)
+(load-theme 'solarized t)
+(enable-theme 'solarized)
 (custom-set-variables
  '(solarized-termcolors 256)
  '(solarized-broken-srgb t)
@@ -22,8 +24,6 @@
             (set-frame-parameter frame 'background-mode 'dark)
             (set-terminal-parameter frame 'background-mode 'dark)
             (enable-theme 'solarized)))
-(load-theme 'solarized t)
-(enable-theme 'solarized)
 
 ;; Indentation.
 (setq-default tab-width 2)
