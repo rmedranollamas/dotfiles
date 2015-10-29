@@ -3,7 +3,7 @@
 # Command aliases useful in any environment.
 
 export LS_OPTIONS='-hBF'
-if [[ `ls --color &> /dev/null` ]] ; then
+if [[ "$(uname -s)" == "Linux" ]] ; then
   export LS_OPTIONS="${LS_OPTIONS} --color=yes"
 fi
 
