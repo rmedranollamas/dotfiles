@@ -12,6 +12,5 @@ source_all "${BASHRCD}/completion"
 
 # Some handy overrides.
 if [[ -n "$(type -t _git)" ]] ; then
-  complete -o bashdefault -o default -o nospace -F _git g 2>/dev/null \
-      || complete -o default -o nospace -F _git g
+  __git_complete g _git
 fi
