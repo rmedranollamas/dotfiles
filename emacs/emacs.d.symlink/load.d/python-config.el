@@ -19,9 +19,6 @@
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
 
-;; Django modes.
-(add-to-list 'auto-mode-alist '("\\.djhtml$" . django-html-mode))
-
 ;; Jedi for Python.
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:setup-keys t)

@@ -9,7 +9,6 @@
                      auto-complete
                      auto-complete-auctex
                      color-theme-solarized
-                     django-mode
                      flymake-cursor
                      flymake-go
                      go-mode
