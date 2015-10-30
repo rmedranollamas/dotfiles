@@ -1,9 +1,27 @@
+Host bitbucket.org
+     PreferredAuthentications publickey
+     IdentityFile ~/.ssh/bitbucket
+     ControlPersist 60
+     StrictHostKeyChecking no
+     UserKnownHostsFile /dev/null
+
+Host *.sf.net *.sourceforge.net
+     PreferredAuthentications publickey
+     IdentityFile ~/.ssh/sourceforge
+     StrictHostKeyChecking no
+     UserKnownHostsFile /dev/null
+
+Host *.m3drano.ch
+     PreferredAuthentications publickey
+     IdentityFile ~/.ssh/google_compute_engine
+
 Host *
      ControlPath ~/.ssh/.%h.%p.%r
      ControlMaster auto
      ControlPersist 600
      CheckHostIP yes
      Compression yes
+     CompressionLevel 9
      HashKnownHosts yes
      ForwardAgent no
      ForwardX11 no
@@ -16,20 +34,11 @@ Host *
      PasswordAuthentication no
      ChallengeResponseAuthentication no
      PubkeyAuthentication yes
+     GSSAPIAuthentication no
+     GSSAPIDelegateCredentials no
+     GSSAPIKeyExchange no
+     GSSAPITrustDns no
      KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp256,ecdh-sha2-nistp384,diffie-hellman-group-exchange-sha256
      HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,ssh-rsa,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256
      Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
      MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
-
-Host bitbucket.org
-     PreferredAuthentications publickey
-     IdentityFile ~/.ssh/bitbucket
-     ControlPersist 60
-
-Host *.sf.net *.sourceforge.net
-     PreferredAuthentications publickey
-     IdentityFile ~/.ssh/sourceforge
-
-Host *.m3drano.ch
-     PreferredAuthentications publickey
-     IdentityFile ~/.ssh/google_compute_engine
