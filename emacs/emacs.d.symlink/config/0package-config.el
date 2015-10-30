@@ -16,12 +16,6 @@
                      rfringe
                      virtualenvwrapper))
 
-;; On Emacs older than 24.x there is no default repository.
-(when (< emacs-major-version 24)
-  (add-to-list 'package-archives
-               '("gnu" .
-                 "https://elpa.gnu.org/packages/") t))
-
 (add-to-list 'package-archives
              '("marmalade" .
                "https://marmalade-repo.org/packages/") t)
