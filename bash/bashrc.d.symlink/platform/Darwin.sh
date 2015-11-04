@@ -22,6 +22,7 @@ if [[ "$(uname -s)" == "Darwin" ]] ; then
     export MANPATH="/opt/local/share/man:${MANPATH}"
   fi
 
-  alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
-  alias emacsclient='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
+  if [[ -d '/Applications/Emacs.app/Contents/MacOS/bin' ]] ; then
+    export PATH="/Applications/Emacs.app/Contents/MacOS/bin:${PATH}"
+  fi
 fi
