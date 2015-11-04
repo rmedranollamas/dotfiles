@@ -11,6 +11,9 @@ fi
 source_all "${BASHRCD}/completion"
 
 # Some handy overrides.
+if [[ -n "$(type -t _completion_loader)" ]] ; then
+  _completion_loader git
+fi
 if [[ -n "$(type -t _git)" ]] ; then
   __git_complete g _git
 fi
