@@ -3,5 +3,5 @@
 
 (if (string-equal system-type "darwin")
     ;; Use Spotlight for search.
-    (setq locate-command "mdfind")
+    (defvar locate-command "mdfind")
 )
