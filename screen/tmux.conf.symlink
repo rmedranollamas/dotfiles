@@ -3,6 +3,9 @@ set -g utf8
 setw -g utf8 on
 set -g status-utf8 on
 
+# Cleanup some env vars.
+set-option -g update-environment 'SSH_CLIENT SSH_CONNECTION'
+
 # Export the proper TERM and use xterm keys.
 set -g default-terminal 'screen-256color'
 setw -g xterm-keys on
