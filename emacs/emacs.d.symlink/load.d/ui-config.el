@@ -85,10 +85,4 @@
     (setq x-select-enable-clipboard t)
     (setq select-active-regions t)
     (global-set-key [mouse-2] 'mouse-yank-primary)
-    ; Allow fullscreen by using wmctrl on GNOME 3
-    (defun switch-full-screen ()
-      (interactive)
-      (shell-command "wmctrl -r :ACTIVE: -btoggle,fullscreen"))
-    ; And do it with F11
-    (global-set-key [f11] 'switch-full-screen)
 )))
