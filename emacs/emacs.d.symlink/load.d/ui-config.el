@@ -76,7 +76,7 @@
     (scroll-bar-mode 0)
     (tool-bar-mode 0)
     ; Font and. Use Inconsolata by default.
-    (set-face-font 'default "Inconsolata 12")
+    (set-face-font 'default "Inconsolata 14")
     ; Only in window system, set the frame size.
     (set-frame-size (selected-frame) 80 50)
     ; Improvements to X11 clipbard integration.
