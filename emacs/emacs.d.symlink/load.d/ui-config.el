@@ -14,16 +14,11 @@
 ;; Load Solarized theme.
 (require 'cl-lib)
 (load-theme 'solarized t)
-(enable-theme 'solarized)
 (custom-set-variables
  '(solarized-termcolors 256)
  '(solarized-broken-srgb t)
  '(frame-background-mode 'dark))
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (set-frame-parameter frame 'background-mode 'dark)
-            (set-terminal-parameter frame 'background-mode 'dark)
-            (enable-theme 'solarized)))
+(enable-theme 'solarized)
 
 ;; Indentation.
 (setq-default tab-width 2)
