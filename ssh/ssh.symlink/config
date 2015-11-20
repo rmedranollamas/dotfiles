@@ -3,13 +3,11 @@ Host bitbucket.org
      IdentityFile ~/.ssh/bitbucket
      ControlPersist 60
      StrictHostKeyChecking no
-     UserKnownHostsFile /dev/null
 
 Host *.sf.net *.sourceforge.net
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/sourceforge
      StrictHostKeyChecking no
-     UserKnownHostsFile /dev/null
 
 Host *.m3drano.ch
      PreferredAuthentications publickey
