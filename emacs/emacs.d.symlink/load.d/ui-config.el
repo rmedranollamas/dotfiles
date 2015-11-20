@@ -69,20 +69,16 @@
 (global-whitespace-mode 1)
 
 ;; Options when using the window manager.
-(cond (window-system (progn
-    (setq frame-title-format
+(setq frame-title-format
       '("Emacs - " (buffer-file-name "%f"
                                      (dired-directory dired-directory "%b"))))
-    (scroll-bar-mode 0)
-    (tool-bar-mode 0)
-    ; Font and. Use Inconsolata by default.
-    (set-face-font 'default "Inconsolata 14")
-    ; Only in window system, set the frame size.
-    (set-frame-size (selected-frame) 80 50)
-    ; Improvements to X11 clipbard integration.
-    (setq mouse-drag-copy-region nil)
-    (setq x-select-enable-primary nil)
-    (setq x-select-enable-clipboard t)
-    (setq select-active-regions t)
-    (global-set-key [mouse-2] 'mouse-yank-primary)
-)))
+(scroll-bar-mode 0)
+(tool-bar-mode 0)
+(add-to-list 'default-frame-alist '(width  . 90))
+(add-to-list 'default-frame-alist '(height . 60))
+(add-to-list 'default-frame-alist '(font . "Inconsolata 12"))
+;; Improvements to X11 clipbard integration.
+(setq mouse-drag-copy-region nil)
+(setq x-select-enable-primary nil)
+(setq x-select-enable-clipboard t)
+(setq select-active-regions t)
