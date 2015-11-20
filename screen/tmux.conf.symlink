@@ -17,6 +17,9 @@ set -g default-command "${SHELL}"
 setw -g mode-keys emacs
 set -g status-keys emacs
 
+# Send commands to the innermost tmux as default.
+bind-key b send-prefix
+
 # Disable mouse selection in copy mode.
 setw -g mode-mouse off
 
