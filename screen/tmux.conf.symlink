@@ -20,9 +20,6 @@ set -g status-keys emacs
 # Send commands to the innermost tmux as default.
 bind-key b send-prefix
 
-# Disable mouse selection in copy mode.
-setw -g mode-mouse off
-
 # C-b b will go the last active window.
 bind b last-window
 
