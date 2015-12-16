@@ -17,3 +17,6 @@ fi
 if [[ -n "$(type -t _git)" ]] ; then
   __git_complete g _git
 fi
+
+# Bazel for Linux.
+source '/usr/local/lib/bazel/bin/bazel-complete.bash'
