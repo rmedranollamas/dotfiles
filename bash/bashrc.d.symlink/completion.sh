@@ -18,5 +18,7 @@ if [[ -n "$(type -t _git)" ]] ; then
   __git_complete g _git
 fi
 
-# Bazel for Linux.
-source '/usr/local/lib/bazel/bin/bazel-complete.bash'
+# Bazel when not using .deb for install.
+if [[ -f '/usr/local/lib/bazel/bin/bazel-complete.bash' ]] ; then
+  source '/usr/local/lib/bazel/bin/bazel-complete.bash'
+fi
