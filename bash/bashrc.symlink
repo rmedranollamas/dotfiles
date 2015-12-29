@@ -4,10 +4,12 @@
 # If not running interactively, don't do anything. Open tmux.
 [[ -z "${PS1}" ]] && return
 
-# If there is tmux, use it.
-if [[ -x "$(which tmux)" ]] ; then
-  TERM='xterm-256color'
-  [[ -z "$TMUX" ]] && exec tmux -u -2 new-session -A -s "$(hostname -s)"
+# If there is tmux and we are in SSH, use it.
+if [[ -n "${SSH_CONNECTION}" ]] ; then
+  if [[ -x "$(which tmux)" ]] ; then
+    TERM='xterm-256color'
+    [[ -z "$TMUX" ]] && exec tmux -u -2 new-session -A -s "$(hostname -s)"
+  fi
 fi
 
 # Load system bashrc (Debian 8).

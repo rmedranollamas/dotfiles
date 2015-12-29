@@ -13,15 +13,20 @@ setw -g xterm-keys on
 # Do not launch a login shell.
 set -g default-command "${SHELL}"
 
+# Enable mouse mode.
+setw -g mode-mouse on
+
 # We hate vi. Intensely.
 setw -g mode-keys emacs
 set -g status-keys emacs
 
-# Send commands to the innermost tmux as default.
-bind-key b send-prefix
+# Binding with C-a and nested instances.
+unbind C-b
+set -g prefix C-a
+bind-key a send-prefix
 
-# C-b b will go the last active window.
-bind b last-window
+# C-a C-a will go the last active window.
+bind C-a last-window
 
 # I don't like to go the other side of the keyboard.
 set -g base-index 1
