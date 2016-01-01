@@ -4,7 +4,7 @@
 ;; Load the virtualenvs.
 (require 'virtualenvwrapper)
 (venv-initialize-interactive-shells)
-(setq venv-location "/Users/m3drano/.virtualenvs")
+(setq venv-location "~/.virtualenvs")
 
 (defvar python-pylint nil "Path to epylint")
 (setq python-pylint "~/.bin/epylint.sh")
