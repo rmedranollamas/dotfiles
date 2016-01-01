@@ -77,8 +77,10 @@
 (setq frame-title-format
       '("Emacs - " (buffer-file-name "%f"
                                      (dired-directory dired-directory "%b"))))
-(scroll-bar-mode 0)
-(tool-bar-mode 0)
+(when (functionp 'scroll-bar-mode)
+  (scroll-bar-mode 0))
+(when (functionp 'tool-bar-mode)
+  (tool-bar-mode 0))
 (add-to-list 'default-frame-alist '(width  . 90))
 (add-to-list 'default-frame-alist '(height . 60))
 (add-to-list 'default-frame-alist '(font . "Inconsolata 12"))
