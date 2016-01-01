@@ -71,7 +71,9 @@ symlink() {
 }
 
 bootstrap() {
-  sudo -v
+  if [[ sudo -v -n &> /dev/null ]] ; then
+    log_ok 'sudo credentials renewed'
+  fi
   system_setup
   echo ''
   link_file "${DOTFILES_ROOT}/bin" "${HOME}/.bin"
