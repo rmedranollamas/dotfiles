@@ -13,10 +13,6 @@ setw -g xterm-keys on
 # Do not launch a login shell.
 set -g default-command "${SHELL}"
 
-# Enable mouse mode.
-set -g mouse-utf8 on
-set -g mouse on
-
 # We hate vi. Intensely.
 setw -g mode-keys emacs
 set -g status-keys emacs
