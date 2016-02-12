@@ -1,3 +1,4 @@
+;;; behaviour-config.el --- Behavioural setup and configs.
 ;; -*- mode: Emacs-Lisp -*-
 
 ;; Nuke trailing whitespaces at save.

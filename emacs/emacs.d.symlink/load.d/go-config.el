@@ -1,5 +1,5 @@
-;; -*- mode: Lisp -*-
-;; python-mode config
+;;; go-config.el --- Configs for go-mode.
+;; -*- mode: Emacs-Lisp -*-
 
 (require 'go-mode-autoloads)
 
@@ -12,3 +12,6 @@
 
 ;; Do gofmt on save.
 (add-hook 'before-save-hook #'gofmt-before-save)
+
+;; Flymake-go.
+(eval-after-load "go-mode" '(require 'flymake-go))

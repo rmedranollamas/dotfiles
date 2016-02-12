@@ -1,3 +1,4 @@
+;;; latex-config.el --- Configs for AuCTeX.
 ;; -*- mode: Emacs-Lisp -*-
 
 ;; Set the path for TeXLive
@@ -7,6 +8,7 @@
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 
 ;; Always use PDF mode.
+(defvar TeX-PDF-mode nil "PDFmode for TeX")
 (setq TeX-PDF-mode t)
 
 ;; Use flymake with LaTeX.
@@ -14,6 +16,7 @@
 
 ;; Enable flyspell automatically when loading a TeX file.
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(defvar ispell-extra-args nil "extra args for ispell")
 (setq ispell-extra-args '("--sug-mode=fast"))
 
 ;; For LaTeX, let's use newer options.
@@ -25,7 +28,7 @@
 
 ;; We need to load the auto-complete before.
 (require 'auto-complete)
- 
+
 ;; Autocomplete with AuCTeX.
 (require 'auto-complete-auctex)
 

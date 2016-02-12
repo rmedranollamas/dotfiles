@@ -1,5 +1,5 @@
+;;; linum.el --- linum config.
 ;; -*- mode: Emacs-Lisp -*-
-;; linum config
 
 (require 'linum)
 

@@ -1,5 +1,5 @@
-;; -*- mode: Lisp -*-
-;; python-mode config
+;;; python-config.el --- python-mode config.
+;; -*- mode: Emacs-Lisp -*-
 
 ;; Load the virtualenvs.
 (require 'virtualenvwrapper)
@@ -21,7 +21,7 @@
 
 ;; Jedi for Python.
 (add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:setup-keys t)
+(defvar jedi:complete-on-dot nil "tell jedi to complete on dot")
 (setq jedi:complete-on-dot t)
 
 ;; Activate minor whitespace mode when in python mode.

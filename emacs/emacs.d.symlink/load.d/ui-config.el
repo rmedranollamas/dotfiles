@@ -1,5 +1,5 @@
-;; -*- mode: Lisp -*-
-;; General UI configurations.
+;;; ui-config.el --- General UI configurations.
+;; -*- mode: Emacs-Lisp -*-
 
 ;; Custom configurations for the interface.
 (blink-cursor-mode 0)
@@ -20,9 +20,8 @@
  '(frame-background-mode 'light))
 (add-hook 'after-make-frame-functions
           (lambda (frame)
-            (let ((mode (if (display-graphic-p frame) 'light 'light)))
-              (set-frame-parameter frame 'background-mode mode)
-              (set-terminal-parameter frame 'background-mode mode))
+            (set-frame-parameter frame 'background-mode 'light)
+            (set-terminal-parameter frame 'background-mode 'light)
             (enable-theme 'solarized)))
 
 ;; Indentation.
@@ -36,9 +35,6 @@
 (global-set-key (kbd "C-x <down>") 'windmove-down)
 (global-set-key (kbd "C-x <right>") 'windmove-right)
 (global-set-key (kbd "C-x <left>") 'windmove-left)
-
-;; Winner mode allow undo on window changes.
-(winner-mode 1)
 
 ;; A handy shortcut for increasing buffer size in split mode.
 (defun halve-other-window-height ()
@@ -70,8 +66,6 @@
                    :background "red1"
                    :foreground "yellow"
                    :weight 'bold)
-
-(global-whitespace-mode 1)
 
 ;; Options when using the window manager.
 (setq frame-title-format

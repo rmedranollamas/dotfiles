@@ -1,18 +1,18 @@
-;; -*- mode: Lisp -*-
-;; Marmelade and other repositories config.
+;;; 0package-config.el --- Marmelade and other repositories config.
+;; -*- mode: Emacs-Lisp -*-
 
 (require 'package)
 
 ;; Packages to be installed.
-(setq package-list '(ac-math
-                     auctex
+(setq package-list '(auctex
                      auto-complete
-                     auto-complete-auctex
                      color-theme-solarized
                      flymake-cursor
                      flymake-go
                      go-mode
+                     jedi
                      load-dir
+                     linum
                      rfringe
                      virtualenvwrapper))
 
