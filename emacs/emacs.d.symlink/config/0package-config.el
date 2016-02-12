@@ -4,8 +4,10 @@
 (require 'package)
 
 ;; Packages to be installed.
-(setq package-list '(auctex
+(setq package-list '(ac-math
+                     auctex
                      auto-complete
+                     auto-complete-auctex
                      color-theme-solarized
                      flymake-cursor
                      flymake-go
