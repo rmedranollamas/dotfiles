@@ -4,6 +4,10 @@ Host bitbucket.org
      ControlPersist 60
      StrictHostKeyChecking no
 
+Host github.com
+     PreferredAuthentications publickey
+     IdentityFile ~/.ssh/github
+
 Host *.sf.net *.sourceforge.net
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/sourceforge
