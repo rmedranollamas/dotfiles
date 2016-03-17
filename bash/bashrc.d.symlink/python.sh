@@ -8,6 +8,7 @@ export PYTHONSTARTUP="${HOME}/.pythonrc"
 # virtualenvwrapper and virtualenv.
 export VIRTUALENV_PYTHON="$(which python)"
 export VIRTUALENVWRAPPER_PYTHON="${VIRTUALENV_PYTHON}"
+export WORKON_HOME="${HOME}/Code/.virtualenvs"
 
 # virtualenvwrapper config for MacPorts.
 if [[ -f '/opt/local/bin/virtualenvwrapper_lazy.sh-3.4' ]] ; then
