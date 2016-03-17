@@ -18,7 +18,6 @@ if [[ -n "$(type -t _git)" ]] ; then
   __git_complete g _git
 fi
 
-# Bazel when not using .deb for install.
-if [[ -f '/usr/local/lib/bazel/bin/bazel-complete.bash' ]] ; then
-  source '/usr/local/lib/bazel/bin/bazel-complete.bash'
+if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+  source "$(brew --prefix)/etc/bash_completion"
 fi
