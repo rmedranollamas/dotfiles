@@ -18,6 +18,8 @@ if [[ -n "$(type -t _git)" ]] ; then
   __git_complete g _git
 fi
 
-if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
-  source "$(brew --prefix)/etc/bash_completion"
+if [[ -x "$(which brew)" ]] ; then
+  if [[ -f "$(brew --prefix)/etc/bash_completion" ]]; then
+    source "$(brew --prefix)/etc/bash_completion"
+  fi
 fi
