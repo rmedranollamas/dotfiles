@@ -1,8 +1,3 @@
-# Use always UTF-8.
-set -g utf8
-setw -g utf8 on
-set -g status-utf8 on
-
 # Cleanup some env vars.
 set-option -g update-environment 'SSH_CLIENT SSH_CONNECTION'
 
