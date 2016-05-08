@@ -7,12 +7,12 @@ export PYTHONSTARTUP="${HOME}/.pythonrc"
 
 # virtualenvwrapper and virtualenv.
 export PIP_REQUIRE_VIRTUALENV='true'
-export VIRTUALENV_PYTHON="/usr/local/bin/python3"
+export VIRTUALENV_PYTHON="$(which python3)"
 export VIRTUALENVWRAPPER_PYTHON="${VIRTUALENV_PYTHON}"
-export WORKON_HOME="${HOME}/Code/.virtualenvs"
+export WORKON_HOME="${HOME}/.virtualenvs"
 
 # virtualenvwrapper config for Homebrew.
-if [[ -f `which virtualenvwrapper_lazy.sh` ]] ; then
-  export VIRTUALENVWRAPPER_SCRIPT=`which virtualenvwrapper_lazy.sh`
-  source `which virtualenvwrapper_lazy.sh`
+if [[ -f "$(which virtualenvwrapper_lazy.sh)" ]] ; then
+  export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper_lazy.sh)"
+  source "$(which virtualenvwrapper_lazy.sh)"
 fi
