@@ -9,9 +9,4 @@ if [[ "$(uname -s)" == "Darwin" ]] ; then
     export ANDROID_HOME="${HOME}/Library/Android/sdk"
     export PATH="${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${PATH}"
   fi
-
-  if [[ -d '/Applications/Emacs.app/Contents/MacOS/bin' ]] ; then
-    export PATH="/Applications/Emacs.app/Contents/MacOS/bin:${PATH}"
-    export PATH="/Applications/Emacs.app/Contents/MacOS:${PATH}"
-  fi
 fi
