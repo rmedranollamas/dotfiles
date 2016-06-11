@@ -7,6 +7,11 @@
 (setq exec-path (append exec-path '("/usr/local/bin")))
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 
+;; Use latexmk.
+(require 'auctex-latexmk)
+(auctex-latexmk-setup)
+(setq auctex-latexmk-inherit-TeX-PDF-mode t)
+
 ;; Always use PDF mode.
 (defvar TeX-PDF-mode nil "PDFmode for TeX")
 (setq TeX-PDF-mode t)

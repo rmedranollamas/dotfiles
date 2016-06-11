@@ -6,6 +6,7 @@
 ;; Packages to be installed.
 (setq package-list '(ac-math
                      auctex
+                     auctex-latexmk
                      auto-complete
                      auto-complete-auctex
                      color-theme-solarized
