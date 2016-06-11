@@ -18,6 +18,7 @@
       (list (expand-file-name python-pylint "") (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
+(add-hook 'python-mode-hook 'flymake-mode)
 
 ;; Jedi for Python.
 (add-hook 'python-mode-hook 'jedi:setup)
