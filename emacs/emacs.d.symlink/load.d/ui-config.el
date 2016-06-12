@@ -3,6 +3,7 @@
 
 ;; Custom configurations for the interface.
 (blink-cursor-mode 0)
+(line-number-mode t)
 (column-number-mode t)
 (show-paren-mode 1)
 (menu-bar-mode 0)
@@ -10,6 +11,7 @@
 (cua-mode t)
 (defvar cua-auto-tabify-rectangles nil)
 (transient-mark-mode 1)
+(global-font-lock-mode 1)
 
 ;; Load Solarized theme.
 (require 'cl-lib)
