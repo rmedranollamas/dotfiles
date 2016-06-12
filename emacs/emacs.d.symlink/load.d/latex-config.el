@@ -2,10 +2,8 @@
 ;; -*- mode: Emacs-Lisp -*-
 
 ;; Set the path for TeXLive
-(setq exec-path (append exec-path '("/usr/texbin")))
-(setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
-(setq exec-path (append exec-path '("/usr/local/bin")))
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path '("/Library/TeX/texbin")))
+(setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin"))
 
 ;; Use latexmk.
 (require 'auctex-latexmk)
