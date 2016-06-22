@@ -1,0 +1,3 @@
+[submodule "emacs/emacs.d.symlink/lisp/emacs-flymake"]
+	path = emacs/emacs.d.symlink/lisp/emacs-flymake
+	url = https://github.com/illusori/emacs-flymake.git
