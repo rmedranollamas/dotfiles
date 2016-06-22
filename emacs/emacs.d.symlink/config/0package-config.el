@@ -10,6 +10,7 @@
                      auto-complete
                      auto-complete-auctex
                      color-theme-solarized
+                     diff-hl
                      flymake-go
                      go-mode
                      jedi
