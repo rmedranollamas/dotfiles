@@ -1,6 +1,8 @@
 ;;; python-config.el --- python-mode config.
 ;; -*- mode: Emacs-Lisp -*-
 
+(require 'flymake)
+
 ;; Load the virtualenvs.
 (require 'virtualenvwrapper)
 (venv-initialize-interactive-shells)
