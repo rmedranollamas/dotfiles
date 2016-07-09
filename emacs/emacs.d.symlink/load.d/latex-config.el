@@ -1,9 +1,27 @@
 ;;; latex-config.el --- Configs for AuCTeX.
 ;; -*- mode: Emacs-Lisp -*-
 
-;; Set the path for TeXLive
-(setq exec-path (append exec-path '("/Library/TeX/texbin")))
-(setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin"))
+;; Basics.
+(require 'tex)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+(require 'latex)
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+
+;; RefTeX.
+(require 'reftex)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
+
+;; SyncTeX.
+(setq TeX-source-correlate-method 'synctex)
+(add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+(custom-set-variables
+ '(TeX-source-correlate-method 'synctex)
+ '(TeX-source-correlate-mode t)
+ '(TeX-source-correlate-start-server t))
 
 ;; Use latexmk.
 (require 'auctex-latexmk)
