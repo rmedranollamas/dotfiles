@@ -11,6 +11,7 @@
                      auto-complete-auctex
                      color-theme-solarized
                      diff-hl
+                     exec-path-from-shell
                      flymake-go
                      go-mode
                      jedi

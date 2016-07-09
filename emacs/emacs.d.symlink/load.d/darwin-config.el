@@ -1,9 +1,9 @@
 ;;; darwin-config.el --- OS X config.
 ;; -*- mode: Emacs-Lisp -*-
 
-(if (string-equal system-type "darwin")
-    (setq exec-path (append exec-path '("/usr/local/bin")))
-    (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(if (eq system-type 'darwin)
+    (when (memq window-system '(mac ns))
+      (exec-path-from-shell-initialize))
     ;; Use Spotlight for search files.
     (defvar locate-command "mdfind")
 )
