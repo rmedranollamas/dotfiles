@@ -21,3 +21,7 @@
 (custom-set-variables
  '(load-dirs t)
  '(load-dir-recursive t))
+
+;; Server start.
+(setq server-use-tcp t)
+(server-start)
