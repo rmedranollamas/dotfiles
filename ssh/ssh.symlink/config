@@ -1,7 +1,7 @@
 Host bitbucket.org
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/bitbucket
-     ControlPersist 60
+     ControlMaster no
      StrictHostKeyChecking no
 
 Host github.com
