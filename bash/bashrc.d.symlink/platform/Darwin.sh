@@ -9,4 +9,8 @@ if [[ "$(uname -s)" == "Darwin" ]] ; then
     export ANDROID_HOME="${HOME}/Library/Android/sdk"
     export PATH="${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${PATH}"
   fi
+
+  if [[ -d "/usr/local/opt/go/libexec/bin" ]] ; then
+    export PATH="${PATH}:/usr/local/opt/go/libexec/bin"
+  fi
 fi
