@@ -4,6 +4,7 @@
 
 if [[ "$(uname -s)" == "Darwin" ]] ; then
   export DISPLAY=':0.0'
+  export HOMEBREW_NO_ANALYTICS=1
 
   if [[ -d "${HOME}/Library/Android/sdk" ]] ; then
     export ANDROID_HOME="${HOME}/Library/Android/sdk"
