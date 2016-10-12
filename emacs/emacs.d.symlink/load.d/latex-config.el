@@ -23,6 +23,11 @@
  '(TeX-source-correlate-mode t)
  '(TeX-source-correlate-start-server t))
 
+;; Skim.app
+(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
+(setq TeX-view-program-list
+      '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
+
 ;; Use latexmk.
 (require 'auctex-latexmk)
 (auctex-latexmk-setup)
