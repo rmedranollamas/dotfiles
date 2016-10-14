@@ -14,4 +14,10 @@ if [[ "$(uname -s)" == "Darwin" ]] ; then
   if [[ -d "/usr/local/opt/go/libexec/bin" ]] ; then
     export PATH="${PATH}:/usr/local/opt/go/libexec/bin"
   fi
+
+  if [[ -f "${HOME}/.gnupg/gpg-agent-info" ]]; then
+    source "${HOME}/.gnupg/gpg-agent-info"
+    export GPG_AGENT_INFO
+    export GPG_TTY="$(tty)"
+  fi
 fi
