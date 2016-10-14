@@ -18,7 +18,8 @@
                      load-dir
                      linum
                      rfringe
-                     virtualenvwrapper))
+                     virtualenvwrapper
+                     magit))
 
 (when (< emacs-major-version 24)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
