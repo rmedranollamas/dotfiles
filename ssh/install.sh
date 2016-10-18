@@ -7,7 +7,7 @@ sourceforge="${DOTFILES_ROOT}/ssh/ssh.symlink/sourceforge"
 gce="${DOTFILES_ROOT}/ssh/ssh.symlink/google_compute_engine"
 
 if [[ ! -f "${bitbucket}" ]] ; then
-  ssh-keygen -a 100 -o -b 4096 -t rsa -N '' -C 'm3drano@gmail.com' -f "${bitbucket}" > "${log}" 2>&1
+  ssh-keygen -a 100 -o -t ed25519 -N '' -C 'm3drano@gmail.com' -f "${bitbucket}" >> "${log}" 2>&1
   chmod 400 "${bitbucket}*"
 fi
 
