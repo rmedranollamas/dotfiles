@@ -12,7 +12,7 @@
                      color-theme-solarized
                      diff-hl
                      exec-path-from-shell
-                     flymake-go
+                     flycheck
                      go-mode
                      jedi
                      load-dir
