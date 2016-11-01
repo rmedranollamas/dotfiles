@@ -15,11 +15,11 @@
 
 ;; Load Solarized theme.
 (require 'cl-lib)
-(load-theme 'solarized t)
 (custom-set-variables
  '(solarized-termcolors 256)
  '(solarized-broken-srgb t)
  '(frame-background-mode 'light))
+(load-theme 'solarized t)
 (add-hook 'after-make-frame-functions
           (lambda (frame)
             (set-frame-parameter frame 'background-mode 'light)
