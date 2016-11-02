@@ -21,6 +21,7 @@ Host raspberrypi
      PreferredAuthentications publickey
 
 Host *
+     UseKeyChain no
      ControlPath ~/.ssh/.%h.%p.%r
      ControlMaster auto
      ControlPersist 600
