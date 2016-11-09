@@ -49,10 +49,10 @@ set -g status-left ''
 set -g status-right "#[fg=blue][#S] #[fg=green][#(date +'%H:%M')]"
 setw -g window-status-current-bg red
 
-# Show me activity in other windows.
-set -g bell-action any
+# Show me activity in other windows, but quietly.
+set -g bell-action none
 setw -g monitor-activity on
-set -g visual-activity on
+set -g visual-activity off
 
 # Get me an Emacs.
 bind e split-window -p 60 'emacsclient -a "" -nw'
