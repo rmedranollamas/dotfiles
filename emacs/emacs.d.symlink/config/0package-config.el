@@ -21,13 +21,14 @@
         diff-hl
         exec-path-from-shell
         flycheck
+        flycheck-pos-tip
         go-mode
         jedi
         load-dir
         linum
+        magit
         rfringe
-        virtualenvwrapper
-        magit))
+        virtualenvwrapper))
 
 (defun install-packages ()
   "Install all required packages."
