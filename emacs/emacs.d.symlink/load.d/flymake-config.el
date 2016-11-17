@@ -11,3 +11,6 @@
 (require 'auto-complete)
 (ac-config-default)
 (global-auto-complete-mode t)
+
+;; codesearch stuff.
+(require 'codesearch)
