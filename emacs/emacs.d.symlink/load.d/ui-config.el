@@ -79,6 +79,6 @@
 (add-to-list 'default-frame-alist '(font . "Inconsolata 14"))
 ;; Improvements to X11 clipbard integration.
 (setq mouse-drag-copy-region nil)
-(setq x-select-enable-primary nil)
-(setq x-select-enable-clipboard t)
+(setq select-enable-primary nil)
+(setq select-enable-clipboard t)
 (setq select-active-regions t)
