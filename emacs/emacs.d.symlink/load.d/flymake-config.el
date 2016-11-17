@@ -3,6 +3,9 @@
 
 ;; Flycheck config.
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(global-flycheck-mode t)
+(with-eval-after-load 'flycheck
+  (flycheck-pos-tip-mode))
 
 ;; Also enable auto-complete.
 (require 'auto-complete)
