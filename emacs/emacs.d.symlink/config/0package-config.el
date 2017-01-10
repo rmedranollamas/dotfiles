@@ -12,21 +12,18 @@
 
 ;; Packages to be installed.
 (setq package-selected-packages
-      '(ac-math
-        auctex
+      '(auctex
         auctex-latexmk
-        auto-complete
-        auto-complete-auctex
-	codesearch
+        codesearch
         color-theme-solarized
+        company
+        company-jedi
         diff-hl
         exec-path-from-shell
         flycheck
         flycheck-pos-tip
         go-mode
-        jedi
         load-dir
-        linum
         magit
         rfringe
         virtualenvwrapper))

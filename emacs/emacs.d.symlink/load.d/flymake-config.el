@@ -7,10 +7,12 @@
 (with-eval-after-load 'flycheck
   (flycheck-pos-tip-mode))
 
-;; Also enable auto-complete.
-(require 'auto-complete)
-(ac-config-default)
-(global-auto-complete-mode t)
 
 ;; codesearch stuff.
 (require 'codesearch)
+
+;; company-mode.
+(require 'company)
+(global-company-mode 1)
+(add-hook 'after-init-hook 'global-company-mode)
+(global-set-key (kbd "M-/") 'company-manual-begin)
