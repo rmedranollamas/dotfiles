@@ -16,3 +16,9 @@
 (global-company-mode 1)
 (add-hook 'after-init-hook 'global-company-mode)
 (global-set-key (kbd "M-/") 'company-manual-begin)
+
+;; YouCompleteMe configuration.
+(require 'ycmd)
+(add-hook 'after-init-hook 'global-ycmd-mode)
+(require 'company-ycmd)
+(company-ycmd-setup)

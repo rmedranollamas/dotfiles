@@ -18,6 +18,7 @@
         color-theme-solarized
         company
         company-jedi
+        company-ycmd
         diff-hl
         exec-path-from-shell
         flycheck
@@ -26,7 +27,8 @@
         load-dir
         magit
         rfringe
-        virtualenvwrapper))
+        virtualenvwrapper
+        ycmd))
 
 (defun install-packages ()
   "Install all required packages."
