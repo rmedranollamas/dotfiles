@@ -2,11 +2,9 @@
 ;; -*- mode: Emacs-Lisp -*-
 
 ;; Flycheck config.
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-flycheck-mode)
 (global-flycheck-mode t)
-(with-eval-after-load 'flycheck
-  (flycheck-pos-tip-mode))
-
+(with-eval-after-load 'flycheck (flycheck-pos-tip-mode))
 
 ;; codesearch stuff.
 (require 'codesearch)
