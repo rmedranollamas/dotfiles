@@ -17,6 +17,7 @@
         auctex-latexmk
         auto-complete
         auto-complete-auctex
+	codesearch
         color-theme-solarized
         diff-hl
         exec-path-from-shell
