@@ -76,7 +76,12 @@
   (tool-bar-mode 0))
 (add-to-list 'default-frame-alist '(width  . 90))
 (add-to-list 'default-frame-alist '(height . 60))
-(add-to-list 'default-frame-alist '(font . "Inconsolata 14"))
+(add-to-list 'default-frame-alist '(font . "Monoid Tight 11"))
+
+;; Ligatures.
+(mac-auto-operator-composition-mode)
+(global-prettify-symbols-mode +1)
+
 ;; Improvements to X11 clipbard integration.
 (setq mouse-drag-copy-region nil)
 (setq select-enable-primary nil)
