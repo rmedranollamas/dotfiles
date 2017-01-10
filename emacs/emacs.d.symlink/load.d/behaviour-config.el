@@ -4,6 +4,9 @@
 ;; Nuke trailing whitespaces at save.
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 
+;; Do not ask to follow a link to a version controlled file.
+(setq vc-follow-symlinks t)
+
 ;; Do not generate backup files.
 (setq make-backup-files nil)
 
