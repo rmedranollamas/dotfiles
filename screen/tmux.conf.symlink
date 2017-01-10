@@ -55,8 +55,8 @@ setw -g monitor-activity on
 set -g visual-activity off
 
 # Get me an Emacs.
-bind e split-window -p 60 'emacsclient -a "" -nw'
-bind h split-window -h 'emacsclient -a "" -nw'
+bind e split-window -p 60 'emacs -a "" -nw'
+bind h split-window -h 'emacs -a "" -nw'
 
 # Let's set a title on the terminal.
 set -g set-titles on
