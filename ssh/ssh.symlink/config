@@ -4,7 +4,7 @@ Host bitbucket.org
      ControlMaster no
      StrictHostKeyChecking no
 
-Host github.com
+Host github.com gist.github.com
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/github
 
