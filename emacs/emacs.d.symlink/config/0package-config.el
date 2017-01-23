@@ -23,6 +23,7 @@
         exec-path-from-shell
         flycheck
         flycheck-pos-tip
+        flycheck-ycmd
         go-mode
         load-dir
         magit
