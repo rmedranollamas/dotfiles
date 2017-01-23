@@ -20,9 +20,4 @@ if [[ "$(uname -s)" == "Darwin" ]] ; then
     export GPG_AGENT_INFO
     export GPG_TTY="$(tty)"
   fi
-
-  # iTerm 2 integration.
-  if [[ -e "${HOME}/.iterm2_shell_integration.bash" ]] ; then
-    source "${HOME}/.iterm2_shell_integration.bash"
-  fi
 fi
