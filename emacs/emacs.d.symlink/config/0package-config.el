@@ -22,13 +22,15 @@
         diff-hl
         exec-path-from-shell
         flycheck
+        flycheck-color-mode-line
         flycheck-pos-tip
         flycheck-ycmd
         go-mode
         load-dir
         magit
+        pyenv-mode
+        pyenv-mode-auto
         rfringe
-        virtualenvwrapper
         ycmd))
 
 (defun install-packages ()
