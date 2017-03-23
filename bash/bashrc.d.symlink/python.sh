@@ -5,13 +5,13 @@
 # Configuration for the Python interpreter.
 export PYTHONSTARTUP="${HOME}/.pythonrc"
 
+export PYENV_ROOT="${HOME}/.pyenv"
+export PATH="${PYENV_ROOT}/bin:${PATH}"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(pyenv virtualenvwrapper_lazy -)"
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV='true'
+
 # virtualenvwrapper and virtualenv.
 export PIP_REQUIRE_VIRTUALENV='true'
-export VIRTUALENV_PYTHON="$(which python3)"
-export WORKON_HOME="${HOME}/Code/.virtualenvs"
-
-# virtualenvwrapper config for Homebrew.
-if [[ -f "$(which virtualenvwrapper_lazy.sh)" ]] ; then
-  export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper_lazy.sh)"
-  source "$(which virtualenvwrapper_lazy.sh)"
-fi
+export WORKON_HOME="${HOME}/.pyenv/versions"

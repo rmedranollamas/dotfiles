@@ -1,10 +1,9 @@
 ;;; python-config.el --- python-mode config.
 ;; -*- mode: Emacs-Lisp -*-
 
-;; Load the virtualenvs.
-(require 'virtualenvwrapper)
-(venv-initialize-interactive-shells)
-(setq venv-location "~/Code/.virtualenvs")
+;; Enable pyenv.
+(pyenv-mode)
+(require 'pyenv-mode-auto)
 
 ;; Jedi for Python.
 (add-hook 'python-mode-hook 'jedi:setup)
