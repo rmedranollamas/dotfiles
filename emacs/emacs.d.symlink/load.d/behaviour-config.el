@@ -13,3 +13,8 @@
 ;; Do not ring bells.
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
+
+;; IDO.
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
