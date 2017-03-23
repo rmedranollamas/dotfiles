@@ -22,7 +22,6 @@
         diff-hl
         exec-path-from-shell
         flycheck
-        flycheck-color-mode-line
         flycheck-pos-tip
         flycheck-ycmd
         go-mode
