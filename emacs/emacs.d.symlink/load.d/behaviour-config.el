@@ -1,3 +1,4 @@
+
 ;;; behaviour-config.el --- Behavioural setup and configs.
 ;; -*- mode: Emacs-Lisp -*-
 
@@ -18,3 +19,7 @@
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode 1)
+
+;; Auto revert mode.
+(global-auto-revert-mode)
+(setq auto-revert-check-vc-info t)
