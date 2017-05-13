@@ -13,5 +13,4 @@ eval "$(pyenv virtualenvwrapper_lazy -)"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV='true'
 
 # virtualenvwrapper and virtualenv.
-export PIP_REQUIRE_VIRTUALENV='true'
 export WORKON_HOME="${HOME}/.pyenv/versions"
