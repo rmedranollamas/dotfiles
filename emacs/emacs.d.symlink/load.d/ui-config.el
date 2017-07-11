@@ -76,7 +76,7 @@
   (tool-bar-mode 0))
 (add-to-list 'default-frame-alist '(width  . 90))
 (add-to-list 'default-frame-alist '(height . 70))
-(add-to-list 'default-frame-alist '(font . "Monoid Tight 11"))
+(add-to-list 'default-frame-alist '(font . "Monoid Tight 12"))
 
 ;; Improvements to X11 clipbard integration.
 (setq mouse-drag-copy-region nil)
