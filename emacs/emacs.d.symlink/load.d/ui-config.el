@@ -50,11 +50,8 @@
 (setq inhibit-startup-echo-area-message user-login-name)
 
 ;; Show warnings for long lines.
-(require 'whitespace)
-(global-whitespace-mode t)
-(setq whitespace-line-column 80
-     whitespace-style '(face tabs trailing lines-tail))
-(setq whitespace-global-modes '(not go-mode))
+(require 'fill-column-indicator)
+(setq fill-column 80)
 
 ;; Formats for the warnings.
 (set-face-attribute 'whitespace-line nil

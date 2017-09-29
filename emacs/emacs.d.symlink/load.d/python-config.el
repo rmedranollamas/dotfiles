@@ -13,4 +13,4 @@
 (add-to-list 'company-backends 'company-jedi)
 
 ;; Activate minor whitespace mode when in python mode.
-(add-hook 'python-mode-hook 'whitespace-mode)
+(add-hook 'python-mode-hook #'fci-mode)
