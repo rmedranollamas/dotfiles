@@ -52,6 +52,7 @@
 ;; Show warnings for long lines.
 (require 'fill-column-indicator)
 (setq fill-column 80)
+(add-hook 'after-change-major-mode-hook 'fci-mode)
 
 ;; Formats for the warnings.
 (set-face-attribute 'whitespace-line nil

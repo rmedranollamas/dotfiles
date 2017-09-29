@@ -11,6 +11,3 @@
 (setq jedi:complete-on-dot t)
 (require 'company)
 (add-to-list 'company-backends 'company-jedi)
-
-;; Activate minor whitespace mode when in python mode.
-(add-hook 'python-mode-hook #'fci-mode)
