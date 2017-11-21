@@ -54,16 +54,6 @@
 (setq fill-column 80)
 (add-hook 'after-change-major-mode-hook 'fci-mode)
 
-;; Formats for the warnings.
-(set-face-attribute 'whitespace-line nil
-                   :background "red1"
-                   :foreground "yellow"
-                   :weight 'bold)
-(set-face-attribute 'whitespace-tab nil
-                   :background "red1"
-                   :foreground "yellow"
-                   :weight 'bold)
-
 ;; Options when using the window manager.
 (setq frame-title-format
       '("Emacs - " (buffer-file-name "%f"
