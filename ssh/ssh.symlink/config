@@ -15,7 +15,6 @@ Host *.sf.net *.sourceforge.net
 
 Host *.m3drano.ch
      PreferredAuthentications publickey
-     IdentityFile ~/.ssh/google_compute_engine
 
 Host *.local
      PreferredAuthentications publickey
