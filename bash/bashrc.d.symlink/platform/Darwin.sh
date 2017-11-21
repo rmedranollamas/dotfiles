@@ -3,12 +3,13 @@
 # Specifics for OS X.
 
 if [[ "$(uname -s)" == "Darwin" ]] ; then
+  export PATH="/usr/local/sbin:${PATH}"
   export DISPLAY=':0.0'
   export HOMEBREW_NO_ANALYTICS=1
 
   if [[ -d "${HOME}/Library/Android/sdk" ]] ; then
     export ANDROID_HOME="${HOME}/Library/Android/sdk"
-    export PATH="${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${PATH}"
+    export PATH="${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
   fi
 
   if [[ -d "/usr/local/opt/go/libexec/bin" ]] ; then
