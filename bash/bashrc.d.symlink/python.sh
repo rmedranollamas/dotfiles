@@ -2,15 +2,11 @@
 # -*- mode:sh -*-
 # Python REPL configuration.
 
-# Configuration for the Python interpreter.
 export PYTHONSTARTUP="${HOME}/.pythonrc"
-
 export PYENV_ROOT="${HOME}/.pyenv"
 export PATH="${PYENV_ROOT}/bin:${PATH}"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export WORKON_HOME="${HOME}/.pyenv/versions"
+
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-eval "$(pyenv virtualenvwrapper_lazy -)"
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV='true'
-
-# virtualenvwrapper and virtualenv.
-export WORKON_HOME="${HOME}/.pyenv/versions"
