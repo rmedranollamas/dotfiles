@@ -9,6 +9,7 @@ tramp
 .\#*
 .org-id-locations
 *_archive
+flycheck_*
 
 # Eclipse ignores
 *.pydevproject
