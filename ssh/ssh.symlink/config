@@ -1,15 +1,18 @@
 Host bitbucket.org
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/bitbucket
+     CheckHostIP no
+     ControlMaster no
 
 Host github.com gist.github.com
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/github
+     CheckHostIP no
 
 Host *.sf.net *.sourceforge.net
      PreferredAuthentications publickey
      IdentityFile ~/.ssh/sourceforge
-     StrictHostKeyChecking no
+     CheckHostIP no
 
 Host *.m3drano.ch
      PreferredAuthentications publickey
