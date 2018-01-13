@@ -2,7 +2,6 @@
 ;; -*- mode: Emacs-Lisp -*-
 
 ;; Enable pyenv.
-(pyenv-mode)
 (require 'pyenv-mode-auto)
 
 ;; Jedi for Python.
