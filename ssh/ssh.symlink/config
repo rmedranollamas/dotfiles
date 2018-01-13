@@ -20,6 +20,9 @@ Host *.m3drano.ch
 Host *.local
      PreferredAuthentications publickey
 
+Host *-gce.compute.m3drano.ch
+     IdentityFile ~/.ssh/gce
+
 Host *
      UseKeyChain no
      ControlPath ~/.ssh/.%h.%p.%r
