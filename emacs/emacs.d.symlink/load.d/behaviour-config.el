@@ -23,3 +23,6 @@
 ;; Auto revert mode.
 (global-auto-revert-mode)
 (setq auto-revert-check-vc-info t)
+
+;; Re-enable some functions.
+(put 'downcase-region 'disabled nil)
