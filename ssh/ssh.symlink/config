@@ -8,7 +8,7 @@ Host github.com gist.github.com
 Host *.sf.net *.sourceforge.net
      IdentityFile ~/.ssh/sourceforge
 
-Host *-gce.compute.m3drano.ch
+Host *.gce.compute.m3drano.ch *-gce.compute.m3drano.ch
      IdentityFile ~/.ssh/gce
 
 Host *
