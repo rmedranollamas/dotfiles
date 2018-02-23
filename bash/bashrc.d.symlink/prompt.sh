@@ -15,7 +15,7 @@ PS2='\[\e[0;31m\]>\[\e[0m\] '
 # Set the title to user@host.
 case "${TERM}" in
     xterm*|rxvt*|screen*)
-        PROMPT_COMMAND='history -a && echo -ne "\033]0;${USER}@${HOSTNAME}\007"' ;;
+        PROMPT_COMMAND='history -a ; history -c ; history -r ; echo -ne "\033]0;${USER}@${HOSTNAME}\007"' ;;
     *)
-        PROMPT_COMMAND='history -a' ;;
+        PROMPT_COMMAND='history -a ; history -c ; history -r' ;;
 esac
