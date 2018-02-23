@@ -8,8 +8,13 @@
 ;; Do not ask to follow a link to a version controlled file.
 (setq vc-follow-symlinks t)
 
-;; Do not generate backup files.
-(setq make-backup-files nil)
+;; Backups into a separate directory
+(add-to-list 'backup-directory-alist '("." . "~/.saves") :append)
+(customize-set-variable 'backup-by-copying t)
+(customize-set-variable 'delete-old-versions t)
+(customize-set-variable 'kept-new-versions 6)
+(customize-set-variable 'kept-old-versions 2)
+(customize-set-variable 'version-control t)
 
 ;; Do not ring bells.
 (setq visible-bell t)
