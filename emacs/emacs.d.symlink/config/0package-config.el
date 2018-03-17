@@ -30,7 +30,6 @@
         magit
         pyenv-mode
         pyenv-mode-auto
-        rfringe
         ycmd))
 
 (defun install-packages ()
