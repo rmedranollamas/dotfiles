@@ -1,15 +1,9 @@
 #!/bin/bash
 
 log="${DOTFILES_ROOT}/logs/ssh.install.log"
-bitbucket="${DOTFILES_ROOT}/ssh/ssh.symlink/bitbucket"
 gce="${DOTFILES_ROOT}/ssh/ssh.symlink/gce"
 github="${DOTFILES_ROOT}/ssh/ssh.symlink/github"
 sourceforge="${DOTFILES_ROOT}/ssh/ssh.symlink/sourceforge"
-
-if [[ ! -f "${bitbucket}" ]] ; then
-  ssh-keygen -a 100 -o -t ed25519 -N '' -C "m3drano@$(hostname -f)" -f "${bitbucket}" >> "${log}" 2>&1
-  chmod 400 "${bitbucket}*"
-fi
 
 if [[ ! -f "${gce}" ]] ; then
   ssh-keygen -a 100 -o -t ed25519 -N '' -C "m3drano@$(hostname -f)" -f "${gce}" >> "${log}" 2>&1
@@ -29,5 +23,4 @@ fi
 unset sourceforge
 unset github
 unset gce
-unset bitbucket
 unset log
