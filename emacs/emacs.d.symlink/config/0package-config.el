@@ -14,23 +14,13 @@
 (setq package-selected-packages
       '(auctex
         auctex-latexmk
-        codesearch
         color-theme-solarized
         company
         company-jedi
-        company-ycmd
-        diff-hl
         exec-path-from-shell
-        fill-column-indicator
         flycheck
         flycheck-pos-tip
-        flycheck-ycmd
-        go-mode
-        load-dir
-        magit
-        pyenv-mode
-        pyenv-mode-auto
-        ycmd))
+        load-dir))
 
 (defun install-packages ()
   "Install all required packages."

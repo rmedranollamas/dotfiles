@@ -19,6 +19,7 @@
 (require 'auctex-latexmk)
 (auctex-latexmk-setup)
 (setq auctex-latexmk-inherit-TeX-PDF-mode t)
+(setq TeX-command-default "LatexMk")
 
 ;; Always use PDF mode.
 (defvar TeX-PDF-mode nil "PDFmode for TeX")

@@ -1,8 +1,8 @@
 ;;; python-config.el --- python-mode config.
 ;; -*- mode: Emacs-Lisp -*-
 
-;; Enable pyenv.
-(require 'pyenv-mode-auto)
+;; Enable pipenv.
+(add-hook 'python-mode-hook #'pipenv-mode)
 
 ;; Jedi for Python.
 (add-hook 'python-mode-hook 'jedi:setup)
