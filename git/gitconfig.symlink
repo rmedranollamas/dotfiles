@@ -54,3 +54,5 @@
 	process = git-lfs filter-process
 [commit]
 	gpgsign = true
+[http]
+	cookiefile = /Users/m3drano/.gitcookies
