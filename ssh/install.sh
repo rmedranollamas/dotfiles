@@ -2,17 +2,11 @@
 
 log="${DOTFILES_ROOT}/logs/ssh.install.log"
 gce="${DOTFILES_ROOT}/ssh/ssh.symlink/gce"
-github="${DOTFILES_ROOT}/ssh/ssh.symlink/github"
 sourceforge="${DOTFILES_ROOT}/ssh/ssh.symlink/sourceforge"
 
 if [[ ! -f "${gce}" ]] ; then
   ssh-keygen -a 100 -o -t ed25519 -N '' -C "m3drano@$(hostname -f)" -f "${gce}" >> "${log}" 2>&1
   chmod 400 "${gce}*"
-fi
-
-if [[ ! -f "${github}" ]] ; then
-  ssh-keygen -a 100 -o -t ed25519 -N '' -C "m3drano@$(hostname -f)" -f "${github}" >> "${log}" 2>&1
-  chmod 400 "${github}*"
 fi
 
 if [[ ! -f "${sourceforge}" ]] ; then
@@ -21,6 +15,5 @@ if [[ ! -f "${sourceforge}" ]] ; then
 fi
 
 unset sourceforge
-unset github
 unset gce
 unset log
