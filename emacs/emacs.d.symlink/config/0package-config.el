@@ -18,6 +18,7 @@
         company
         company-jedi
         exec-path-from-shell
+        fill-column-indicator
         flycheck
         flycheck-pos-tip
         load-dir))
