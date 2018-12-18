@@ -13,7 +13,9 @@ Host *.m3drano.ch
      VerifyHostKeyDNS yes
 
 Host *.gce.compute.m3drano.ch *-gce.compute.m3drano.ch
-     IdentityFile ~/.ssh/gce
+     User m3drano_gmail_com
+     IdentityFile ~/.ssh/google_compute_engine
+     UserKnownHostsFile ~/.ssh/google_compute_known_hosts
 
 Host *
      UseKeyChain no
