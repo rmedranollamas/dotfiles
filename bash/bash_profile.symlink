@@ -1,6 +1,12 @@
 # -*- mode: sh -*-
-# Load of .bashrc
+# Bash config for login shells and then bashrc.
+
+if [[ -e "${HOME}/.profile" ]] ; then
+  source "${HOME}/.profile"
+fi
 
 if [[ -z "${BASHRC}" || -n "${TMUX}" ]] ; then
-  source ~/.bashrc
+  if [[ -e "${HOME}/.profile" ]] ; then
+    source "${HOME}/.bashrc"
+  fi
 fi
