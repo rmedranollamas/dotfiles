@@ -2,8 +2,9 @@
 ;; -*- mode: Emacs-Lisp -*-
 
 (if (eq system-type 'darwin)
-    (when (memq window-system '(mac ns))
-      (exec-path-from-shell-initialize))
-    ;; Use Spotlight for search files.
-    (defvar locate-command "mdfind")
+    (progn
+      (when (memq window-system '(mac ns x))
+        (exec-path-from-shell-initialize))
+      ;; Use Spotlight for search files.
+      (defvar locate-command "mdfind"))
 )
