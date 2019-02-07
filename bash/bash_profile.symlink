@@ -5,8 +5,6 @@ if [[ -e "${HOME}/.profile" ]] ; then
   source "${HOME}/.profile"
 fi
 
-if [[ -z "${BASHRC}" || -n "${TMUX}" ]] ; then
-  if [[ -e "${HOME}/.profile" ]] ; then
-    source "${HOME}/.bashrc"
-  fi
+if [[ -e "${HOME}/.bashrc" ]] ; then
+  source "${HOME}/.bashrc"
 fi
