@@ -20,8 +20,10 @@
         exec-path-from-shell
         fill-column-indicator
         flycheck
+        flycheck-color-mode-line
         flycheck-pos-tip
-        load-dir))
+        load-dir
+        pipenv))
 
 (defun install-packages ()
   "Install all required packages."

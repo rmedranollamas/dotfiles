@@ -2,13 +2,16 @@
 ;; -*- mode: Emacs-Lisp -*-
 
 ;; Flycheck config.
-(add-hook 'after-init-hook 'global-flycheck-mode)
+(require 'flycheck)
+(require 'flycheck-color-mode-line)
+(require 'flycheck-pos-tip)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-pos-tip-mode)
+  (add-hook 'flycheck-mode-hook #'flycheck-color-mode-line-mode))
 (global-flycheck-mode t)
-(with-eval-after-load 'flycheck (flycheck-pos-tip-mode))
-(setq flycheck-python-pylint-executable "python3")
 
 ;; company-mode.
 (require 'company)
 (global-company-mode 1)
-(add-hook 'after-init-hook 'global-company-mode)
-(global-set-key (kbd "M-/") 'company-manual-begin)
+(add-hook 'after-init-hook #'global-company-mode)

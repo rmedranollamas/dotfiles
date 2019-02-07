@@ -42,7 +42,7 @@
 (global-set-key (kbd "C-c v") 'halve-other-window-height)
 
 ;; Show color sequences as colors.
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
 
 ;; Others
 (setq initial-scratch-message "")

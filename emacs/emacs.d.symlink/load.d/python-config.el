@@ -2,11 +2,15 @@
 ;; -*- mode: Emacs-Lisp -*-
 
 ;; Enable pipenv.
+(require 'pipenv)
 (add-hook 'python-mode-hook #'pipenv-mode)
 
 ;; Jedi for Python.
-(add-hook 'python-mode-hook 'jedi:setup)
-(defvar jedi:complete-on-dot nil "tell jedi to complete on dot")
-(setq jedi:complete-on-dot t)
 (require 'company)
+(require 'company-jedi)
+(add-hook 'python-mode-hook #'jedi:setup)
+(setq jedi:environment-virtualenv
+      (append python-environment-virtualenv
+              '("--python" "python3")))
+(setq jedi:complete-on-dot t)
 (add-to-list 'company-backends 'company-jedi)

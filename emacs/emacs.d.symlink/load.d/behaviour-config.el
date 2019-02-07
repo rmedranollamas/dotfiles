@@ -1,9 +1,8 @@
-
 ;;; behaviour-config.el --- Behavioural setup and configs.
 ;; -*- mode: Emacs-Lisp -*-
 
 ;; Nuke trailing whitespaces at save.
-(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+(add-hook 'write-file-hooks #'delete-trailing-whitespace)
 
 ;; Do not ask to follow a link to a version controlled file.
 (setq vc-follow-symlinks t)
@@ -31,3 +30,5 @@
 
 ;; Re-enable some functions.
 (put 'downcase-region 'disabled nil)
+(global-eldoc-mode -1)
+(global-hl-line-mode 1)
