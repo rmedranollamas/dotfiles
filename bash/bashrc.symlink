@@ -59,5 +59,6 @@ export PATH="$(echo "${PATH}" | awk -v RS=':' -v ORS=':' '!a[$1]++{if (NR > 1) p
 
 # TODO(m3drano): For some reason, iTerm integration needs to be at the end. Fix.
 if [[ -e "${HOME}/.iterm2_shell_integration.bash" ]] ; then
+  shopt -u extdebug
   source "${HOME}/.iterm2_shell_integration.bash"
 fi
