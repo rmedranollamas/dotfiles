@@ -1,15 +1,13 @@
 # -*- mode: sh -*-
 # Interactive shell configuration.
 
-# If not running interactively, don't do anything. Open tmux.
+# If not running interactively, don't do anything.
 [[ -z "${PS1}" ]] && return
 
-# If there is tmux and we are in SSH, use it.
-if [[ -n "${SSH_CONNECTION}" ]] ; then
-  if [[ -x "$(which tmux)" ]] ; then
-    TERM='xterm-256color'
-    [[ -z "$TMUX" ]] && exec tmux -u -2 new-session -A -s "$(hostname -s)"
-  fi
+# If there is tmux, but not executing, and we are in SSH, then use it.
+if [[ -n "${SSH_CONNECTION}" && -x "$(which tmux)" && -z "${TMUX}" ]] ; then
+  TERM='xterm-256color'
+  exec tmux -u -2 new-session -A -s "$(hostname -s)"
 fi
 
 # Load system bashrc (Debian 8).
