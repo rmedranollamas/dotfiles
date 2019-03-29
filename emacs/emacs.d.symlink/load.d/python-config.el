@@ -2,8 +2,12 @@
 ;; -*- mode: Emacs-Lisp -*-
 
 ;; Enable pipenv.
-(require 'pipenv)
-(add-hook 'python-mode-hook #'pipenv-mode)
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended))
 
 ;; Jedi for Python.
 (require 'company)
