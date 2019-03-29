@@ -23,7 +23,9 @@
         flycheck-color-mode-line
         flycheck-pos-tip
         load-dir
-        pipenv))
+        pipenv
+        projectile
+        use-package))
 
 (defun install-packages ()
   "Install all required packages."

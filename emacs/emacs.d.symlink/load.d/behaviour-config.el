@@ -32,3 +32,6 @@
 (put 'downcase-region 'disabled nil)
 (global-eldoc-mode -1)
 (global-hl-line-mode 1)
+
+;; Enable projectile
+(projectile-mode +1)
