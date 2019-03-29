@@ -1,8 +1,14 @@
 #!/bin/bash
 
 log="${DOTFILES_ROOT}/logs/ssh.install.log"
+github="${DOTFILES_ROOT}/ssh/ssh.symlink/github"
 google_compute_engine="${DOTFILES_ROOT}/ssh/ssh.symlink/google_compute_engine"
 sourceforge="${DOTFILES_ROOT}/ssh/ssh.symlink/sourceforge"
+
+if [[ ! -f "${github}" ]] ; then
+  ssh-keygen -a 100 -o -t ed25519 -N '' -C "rmedranollamas@$(hostname -f)" -f "${github}" >> "${log}" 2>&1
+  chmod 400 "${github}*"
+fi
 
 if [[ ! -f "${google_compute_engine}" ]] ; then
   ssh-keygen -a 100 -o -t ed25519 -N '' -C "m3drano@$(hostname -f)" -f "${google_compute_engine}" >> "${log}" 2>&1
@@ -16,4 +22,5 @@ fi
 
 unset sourceforge
 unset google_compute_engine
+unset github
 unset log
