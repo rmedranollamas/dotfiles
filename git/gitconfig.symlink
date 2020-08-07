@@ -1,6 +1,6 @@
 [user]
 	name = Ramón Medrano Llamas
-	email = m3drano@gmail.com
+	email = ramon.medrano.llamas@icloud.com
 	signingkey = 6569E6E0
 [core]
 	editor = emacsclient -nw
