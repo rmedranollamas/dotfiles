@@ -9,6 +9,10 @@ if [[ "$(uname -s)" == "Darwin" ]] ; then
   export HOMEBREW_NO_AUTO_UPDATE=1
   export HOMEBREW_NO_EMOJI=1
 
+  if brew command command-not-found-init > /dev/null 2>&1; then
+    eval "$(brew command-not-found-init)"
+  fi
+
   if [[ -d "${HOME}/Library/Android/sdk" ]] ; then
     export ANDROID_HOME="${HOME}/Library/Android/sdk"
     export PATH="${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
