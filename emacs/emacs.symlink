@@ -1,7 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
 
-(package-initialize)
-
 ;; Set UTF-8 as default encoding.
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
