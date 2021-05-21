@@ -14,14 +14,8 @@
 (global-font-lock-mode 1)
 
 ;; Load Solarized theme.
-(require 'cl-lib)
-(custom-set-variables '(frame-background-mode 'light))
-(load-theme 'solarized t)
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (set-frame-parameter frame 'background-mode 'light)
-            (set-terminal-parameter frame 'background-mode 'light)
-            (enable-theme 'solarized)))
+(require 'solarized-theme)
+(load-theme 'solarized-light t)
 
 ;; Indentation.
 (setq-default tab-width 2)

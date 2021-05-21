@@ -4,7 +4,8 @@
 (require 'package)
 
 (when (< emacs-major-version 24)
-  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+  (add-to-list 'package-archives
+	       '("gnu" . "https://elpa.gnu.org/packages/") t))
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
@@ -14,7 +15,6 @@
 (setq package-selected-packages
       '(auctex
         auctex-latexmk
-        color-theme-solarized
         company
         company-jedi
         exec-path-from-shell
@@ -25,6 +25,7 @@
         load-dir
         pipenv
         projectile
+        solarized-theme
         use-package))
 
 (defun install-packages ()
