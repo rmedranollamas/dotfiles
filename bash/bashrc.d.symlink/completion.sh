@@ -18,6 +18,12 @@ if [[ -n "$(type -t _git)" ]] ; then
   __git_complete g _git
 fi
 
+if [[ -x "$(which kubectl)" ]] ; then
+  source <(kubectl completion bash)
+  alias k='kubectl'
+  complete -F __start_kubectl k
+fi
+
 if [[ -x "$(which brew)" ]] ; then
   if [[ -f "$(brew --prefix)/etc/bash_completion" ]]; then
     source "$(brew --prefix)/etc/bash_completion"
