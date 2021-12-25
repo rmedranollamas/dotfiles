@@ -17,6 +17,7 @@
 [diff]
 	renames = copies
 	mnemonicprefix = true
+  tool = opendiff
 [push]
 	default = tracking
 	signed = true
@@ -25,6 +26,7 @@
 	enabled = true
 [merge]
 	stat = true
+	tool = opendiff
 [alias]
 	st = status
 	ci = commit
@@ -58,3 +60,9 @@
 	helper = gcloud.sh
 [init]
 	defaultBranch = main
+[mergetool]
+  prompt = false
+	trustExitCode = true
+[difftool]
+  prompt = false
+	trustExitCode = true
