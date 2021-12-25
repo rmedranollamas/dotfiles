@@ -8,11 +8,7 @@ if [[ "$(uname -s)" == "Darwin" ]] ; then
   export HOMEBREW_NO_ANALYTICS=1
   export HOMEBREW_NO_AUTO_UPDATE=1
   export HOMEBREW_NO_EMOJI=1
-  export OPENBLAS="$(brew --prefix openblas)"
-
-  if brew command command-not-found-init > /dev/null 2>&1; then
-    eval "$(brew command-not-found-init)"
-  fi
+  export HOMEBREW_NO_INSTALL_CLEANUP=1
 
   if [[ -f "${HOME}/.gnupg/gpg-agent-info" ]]; then
     source "${HOME}/.gnupg/gpg-agent-info"
