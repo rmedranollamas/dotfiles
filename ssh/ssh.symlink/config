@@ -3,40 +3,40 @@ Host github.com gist.github.com
 
 Host *.sf.net *.sourceforge.net
      IdentityFile ~/.ssh/sourceforge
+     PubkeyAcceptedKeyTypes +ssh-rsa
+
+Host Computador.local
+     IdentityFile ~/.ssh/id_rsa
 
 Host *.m3drano.ch
-     StrictHostKeyChecking yes
+     StrictHostKeyChecking ask
      VerifyHostKeyDNS yes
 
 Host *.gce.compute.m3drano.ch *-gce.compute.m3drano.ch
-     User m3drano_gmail_com
      IdentityFile ~/.ssh/google_compute_engine
+     User m3drano_gmail_com
      UserKnownHostsFile ~/.ssh/google_compute_known_hosts
 
 Host *
-     UseKeyChain no
-     ControlPath ~/.ssh/.%h.%p.%r
-     ControlMaster auto
-     ControlPersist 600
+     ChallengeResponseAuthentication no
      CheckHostIP no
      Compression yes
-     HashKnownHosts yes
+     ControlMaster auto
+     ControlPath ~/.ssh/.%h.%p.%r
+     ControlPersist 600
      ForwardAgent no
      ForwardX11 no
      ForwardX11Trusted no
-     TCPKeepAlive yes
-     ServerAliveInterval 15
-     ServerAliveCountMax 3
-     IdentitiesOnly yes
-     StrictHostKeyChecking ask
-     PasswordAuthentication no
-     ChallengeResponseAuthentication no
-     PubkeyAuthentication yes
-     PreferredAuthentications publickey
      GSSAPIAuthentication no
      GSSAPIDelegateCredentials no
-     KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp256,ecdh-sha2-nistp384,diffie-hellman-group-exchange-sha256
-     HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,ssh-rsa,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256
-     Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
-     MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+     HashKnownHosts yes
+     IdentitiesOnly yes
+     PasswordAuthentication no
+     PreferredAuthentications publickey
+     PubkeyAuthentication yes
+     ServerAliveCountMax 3
+     ServerAliveInterval 15
+     StrictHostKeyChecking ask
+     TCPKeepAlive yes
+     UseKeyChain no
      VerifyHostKeyDNS ask
