@@ -21,5 +21,3 @@ alias sps='ps -ecmo state,pid,user,%cpu,%mem,command | less'
 alias grep='grep --color=auto '
 alias emacsserver='emacs --daemon'
 alias killemacs="emacsclient -e '(kill-emacs)'"
-
-alias pip-update="pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs pip install -U"
