@@ -4,5 +4,3 @@
 
 # Easier cd for the Home folders.
 CDPATH=':~'
-
-export GPG_TTY="$(tty)"
