@@ -12,6 +12,10 @@ if [[ "$(uname -s)" == "Darwin" ]] ; then
     export HOMEBREW_NO_AUTO_UPDATE=1
     export HOMEBREW_NO_EMOJI=1
     export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+    if [[ -r '/usr/local/etc/profile.d/bash_completion.sh' ]] ; then
+      source '/usr/local/etc/profile.d/bash_completion.sh'
+    fi
   fi
 
   if [[ -d "/Applications/Emacs.app/Contents/MacOS/bin" ]]; then
