@@ -17,6 +17,9 @@
 (require 'solarized-theme)
 (load-theme 'solarized-light t)
 
+;; Rainbow delimiters
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
 ;; Indentation.
 (setq-default tab-width 2)
 (defvaralias 'c-basic-offset 'tab-width)
