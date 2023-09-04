@@ -4,6 +4,9 @@
 
 export PYTHONSTARTUP="${HOME}/.pythonrc"
 
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+# Created by `pipx`
+export PATH="$PATH:/Users/ramon/.local/bin"
+
+if [[ $(type -P 'pipenv') ]]; then
+  eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
 fi
