@@ -17,7 +17,7 @@
 [diff]
 	renames = copies
 	mnemonicprefix = true
-  tool = opendiff
+	tool = opendiff
 [push]
 	default = tracking
 	signed = true
@@ -56,13 +56,11 @@
 	process = git-lfs filter-process
 [commit]
 	gpgsign = true
-[credential "https://source.developers.google.com"]
-	helper = gcloud.sh
 [init]
 	defaultBranch = main
 [mergetool]
-  prompt = false
+	prompt = false
 	trustExitCode = true
 [difftool]
-  prompt = false
+	prompt = false
 	trustExitCode = true
