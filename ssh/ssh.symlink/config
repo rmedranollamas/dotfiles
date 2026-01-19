@@ -33,7 +33,7 @@ Host *
      PreferredAuthentications publickey
      PubkeyAuthentication yes
      ServerAliveCountMax 3
-     ServerAliveInterval 15
+     ServerAliveInterval 25
      StrictHostKeyChecking ask
      TCPKeepAlive yes
      UseKeyChain no
