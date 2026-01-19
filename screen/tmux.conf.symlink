@@ -37,7 +37,6 @@ set -g display-time 5000
 
 # Some colors here and there.
 set-option -g pane-border-style fg=colour235
-set-option -g pane-active-border-style fg=magenta
 set-option -g pane-active-border-style fg=brightred
 set-option -g message-style bg=black,fg=brightred
 
