@@ -14,8 +14,8 @@
 (global-font-lock-mode 1)
 
 ;; Load Solarized theme.
-(require 'solarized-theme)
-(load-theme 'solarized-light t)
+(require 'monokai-theme)
+(load-theme 'monokai t)
 
 ;; Rainbow delimiters
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)

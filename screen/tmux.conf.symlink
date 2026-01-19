@@ -2,8 +2,9 @@
 set-option -g update-environment 'SSH_CLIENT SSH_CONNECTION'
 
 # Export the proper TERM and use xterm keys.
-set -g default-terminal 'screen-256color'
+set -g default-terminal 'tmux-256color'
 setw -g xterm-keys on
+set -ag terminal-overrides ",*:RGB"
 
 # Do not launch a login shell.
 set -g default-command "${SHELL}"
@@ -26,7 +27,7 @@ setw -g pane-base-index 1
 set -s escape-time 0
 
 # Let's be more efficient with hidden windows.
-setw -g aggressive-resize on
+setw -g aggressive-resize off
 
 # scrollback buffer n lines
 set -g history-limit 10000
@@ -35,10 +36,11 @@ set -g history-limit 10000
 set -g display-time 5000
 
 # Some colors here and there.
-set-option -g pane-border-fg colour235
-set-option -g pane-active-border-fg magenta
-set-option -g message-bg black
-set-option -g message-fg brightred
+set-option -g pane-border-style fg=colour235
+set-option -g pane-active-border-style fg=magenta
+set-option -g pane-active-border-style fg=brightred
+set-option -g message-style bg=black,fg=brightred
+
 
 # Some sane colors for Solarized on the status bar.
 set -g status on

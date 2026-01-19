@@ -3,6 +3,7 @@
 
 (require 'package)
 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (when (< emacs-major-version 24)
   (add-to-list 'package-archives
 	       '("gnu" . "https://elpa.gnu.org/packages/") t))
@@ -38,3 +39,6 @@
       (package-install package))))
 
 (install-packages)
+
+(setq abbrev-file-name "~/.emacs.d/abbrev_defs")                                |
+(quietly-read-abbrev-file "~/.emacs.d/abbrev_defs")
