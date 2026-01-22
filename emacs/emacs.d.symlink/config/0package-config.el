@@ -38,7 +38,5 @@
     (unless (package-installed-p package)
       (package-install package))))
 
-(install-packages)
-
 (setq abbrev-file-name "~/.emacs.d/abbrev_defs")
 (quietly-read-abbrev-file "~/.emacs.d/abbrev_defs")

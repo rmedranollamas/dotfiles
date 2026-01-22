@@ -10,7 +10,7 @@ else
 fi
 
 # Stop using Ctrl+S for stopping.
-stty stop ""
+[[ -t 0 ]] && stty stop ""
 
 # Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.

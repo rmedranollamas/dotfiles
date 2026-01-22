@@ -11,9 +11,6 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (load "~/.emacs.d/config/0package-config")
 
-;; Compile the packages now that we have load paths.
-(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
-
 ;; Load all files on the load dir via load-dir.
 (require 'load-dir)
 (custom-set-variables

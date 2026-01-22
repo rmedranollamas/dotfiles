@@ -33,15 +33,15 @@ err() {
 
 # Handy function that sources executable files in this folder.
 source_all() {
-  for i in $(LC_ALL='C' command ls "${1}") ; do
-    i="${1}/${i}"
-    [[ ( "${i}" =~ (.sh$|.bash$) && -x "${i}" ) || -h "${i}" ]] && source "${i}"
+  local script
+  for script in "$1"/*.{sh,bash}; do
+    [[ -x "$script" || -h "$script" ]] && . "$script"
   done
-  unset i
 }
 
 # Load the platform specific configs before the rest.
-source "${BASHRCD}/platform/`uname -s`.sh"
+UNAME=$(uname -s)
+[[ -f "${BASHRCD}/platform/${UNAME}.sh" ]] && . "${BASHRCD}/platform/${UNAME}.sh"
 
 # Load other configuration scripts if they exist.
 source_all "${BASHRCD}"
@@ -50,6 +50,7 @@ source_all "${BASHRCD}"
 unset BASHRCD
 unset err
 unset source_all
+unset UNAME
 
 # Add user bin to path.
 export PATH="${HOME}/.bin:${PATH}"

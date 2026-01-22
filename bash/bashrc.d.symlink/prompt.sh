@@ -14,8 +14,6 @@ PS2='\[\e[0;31m\]>\[\e[0m\] '
 
 precmd_func() {
   history -a
-  history -c
-  history -r
 }
 
 precmd_functions+=(precmd_func)

@@ -10,11 +10,15 @@
    #'pipenv-projectile-after-switch-extended))
 
 ;; Jedi for Python.
-(require 'company)
-(require 'company-jedi)
+(use-package company-jedi
+  :defer t
+  :after (company python)
+  :init
+  (add-to-list 'company-backends 'company-jedi)
+  :config
+  (setq jedi:environment-virtualenv
+        (append python-environment-virtualenv
+                '("--python" "python3")))
+  (setq jedi:complete-on-dot t))
+
 (add-hook 'python-mode-hook #'jedi:setup)
-(setq jedi:environment-virtualenv
-      (append python-environment-virtualenv
-              '("--python" "python3")))
-(setq jedi:complete-on-dot t)
-(add-to-list 'company-backends 'company-jedi)
