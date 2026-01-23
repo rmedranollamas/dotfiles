@@ -3,7 +3,7 @@
 # Condiguration of the prompt for bash.
 
 __ps1() {
-  if [[ -n "$(type -t __git_ps1)" ]] ; then
+  if [[ "$(type -t __git_ps1)" == "function" ]] ; then
     __git_ps1 "(Git:%s) "
   fi
 }
