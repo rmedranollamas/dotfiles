@@ -36,5 +36,4 @@ Host *
      ServerAliveInterval 25
      StrictHostKeyChecking ask
      TCPKeepAlive yes
-     UseKeyChain no
      VerifyHostKeyDNS ask
