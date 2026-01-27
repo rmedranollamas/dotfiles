@@ -35,9 +35,15 @@ set -g history-limit 10000
 # It would be nice to actually read messages.
 set -g display-time 5000
 
-# Some colors here and there.
-set-option -g pane-border-style fg=colour235
-set-option -g pane-active-border-style fg=brightred
+# Prominent pane highlighting.
+# 1. Styles for the Active Pane
+set -g window-active-style 'fg=terminal,bg=terminal'
+set -g pane-active-border-style 'fg=brightred,bg=default'
+
+# 2. Styles for Inactive Panes (Dimmed)
+set -g window-style 'fg=colour247,bg=colour236'
+set -g pane-border-style 'fg=colour238,bg=colour236'
+
 set-option -g message-style bg=black,fg=brightred
 
 
