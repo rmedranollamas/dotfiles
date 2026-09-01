@@ -192,7 +192,9 @@ test_lazy_completion_stress() {
   g_comp_out=$(
     HOME="${SANDBOX_HOME}" bash -c "
       source '${COMP_SCRIPT}'
-      _lazy_bash_completion git >/dev/null 2>&1 || true
+      if declare -F _lazy_bash_completion >/dev/null 2>&1; then
+        _lazy_bash_completion git >/dev/null 2>&1 || true
+      fi
       complete -p g 2>/dev/null || echo 'NO_G_COMP'
     " 2>&1 || true
   )

@@ -52,12 +52,29 @@ if ! shopt -oq posix; then
       _completion_loader "$@"
     fi
 
+    # Ensure git completion is loaded if available
+    if ! declare -F __git_complete >/dev/null 2>&1 && ! declare -F _git >/dev/null 2>&1; then
+      if [[ -r '/opt/homebrew/etc/bash_completion.d/git-completion.bash' ]]; then
+        source '/opt/homebrew/etc/bash_completion.d/git-completion.bash'
+      elif [[ -r '/usr/local/etc/bash_completion.d/git-completion.bash' ]]; then
+        source '/usr/local/etc/bash_completion.d/git-completion.bash'
+      elif [[ -r '/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash' ]]; then
+        source '/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash'
+      elif [[ -r '/usr/share/bash-completion/completions/git' ]]; then
+        source '/usr/share/bash-completion/completions/git'
+      elif [[ -r '/etc/bash_completion.d/git-prompt' ]]; then
+        source '/etc/bash_completion.d/git-prompt'
+      fi
+    fi
+
     # Configure alias 'g' for git completion
     if declare -F __git_complete >/dev/null 2>&1; then
       __git_complete g git 2>/dev/null || true
     elif declare -F _git >/dev/null 2>&1; then
       complete -o bashdefault -o default -o nospace -F _git g 2>/dev/null \
         || complete -o default -o nospace -F _git g 2>/dev/null || true
+    else
+      complete -o default -o bashdefault g 2>/dev/null || true
     fi
 
     return 124
