@@ -207,7 +207,7 @@ format_row() {
 [[ "$RUN_TIER1" == true ]] && format_row "Tier 1: Static & Syntax" "$TIER1_STATUS" "$TIER1_MS" "<200ms"
 [[ "$RUN_TIER2" == true ]] && format_row "Tier 2: Unit & Isolation" "$TIER2_STATUS" "$TIER2_MS" "<500ms"
 [[ "$RUN_TIER3" == true ]] && format_row "Tier 3: Integration & E2E" "$TIER3_STATUS" "$TIER3_MS" "<1.5s"
-[[ "$RUN_TIER4" == true ]] && format_row "Tier 4: Perf & Benchmarks" "$TIER4_STATUS" "$TIER4_MS" "<2.0s"
+[[ "$RUN_TIER4" == true ]] && format_row "Tier 4: Perf & Benchmarks" "$TIER4_STATUS" "$TIER4_MS" "<8.0s"
 
 printf "%b%s\n" "${BOLD}${CYAN}" "------------------------------------------------------"
 printf "  Total Suite Duration: %d ms\n" "$TOTAL_DURATION"

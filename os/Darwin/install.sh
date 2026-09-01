@@ -213,8 +213,10 @@ defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 # Kill affected applications                                                  #
 ###############################################################################
 
-for app in "Activity Monitor" "Dock" "Finder" "Mail" "Safari" "SystemUIServer" "Terminal"; do
-  killall "${app}" >/dev/null 2>&1 || true
-done
+if [[ -t 0 ]]; then
+  for app in "Activity Monitor" "Dock" "Finder" "Mail" "Safari" "SystemUIServer" "Terminal"; do
+    killall "${app}" >/dev/null 2>&1 || true
+  done
+fi
 
 unset log

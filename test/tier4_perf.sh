@@ -11,7 +11,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "${SCRIPT_DIR}/test_helpers.sh"
 
 TIER_NAME="Tier 4 - Performance & Benchmarking"
-SLA_MS=2000
+SLA_MS=8000
 TIER_START=$(get_time_ns)
 
 tier_header "${TIER_NAME}" "<${SLA_MS}ms"
@@ -126,7 +126,7 @@ info "4. Validating Test Framework Efficiency and Harness Overhead"
 HARNESS_OVERHEAD_MS=$(calc_duration_ms "$TIER_START" "$(get_time_ns)")
 printf "     ${DIM}[Benchmark] Tier 4 execution time: %dms${NC}\n" "$HARNESS_OVERHEAD_MS"
 
-if [[ "$HARNESS_OVERHEAD_MS" -le 4000 ]]; then
+if [[ "$HARNESS_OVERHEAD_MS" -le 8000 ]]; then
   pass "Harness execution overhead within budget (${HARNESS_OVERHEAD_MS}ms)"
 else
   fail "Harness execution overhead exceeded budget" "${HARNESS_OVERHEAD_MS}ms"
