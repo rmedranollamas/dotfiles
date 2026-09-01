@@ -5,7 +5,10 @@
 export LESS='-R'
 
 # Make less more friendly for non-text input files, see lesspipe(1).
-[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/bash lesspipe)"
+if [[ -x /usr/bin/lesspipe ]]; then
+  export LESSOPEN="| /usr/bin/lesspipe %s"
+  export LESSCLOSE="%s"
+fi
 
 # Colored man pages using less.
 man() {

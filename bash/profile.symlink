@@ -1,2 +1,68 @@
 # -*- mode: sh -*-
 # Generic config for login shells.
+
+export DOTFILES_PROFILE_LOADED=1
+
+path_contains() {
+  case ":${PATH}:" in
+    *":$1:"*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+path_prepend() {
+  [ -d "$1" ] || return 0
+  path_contains "$1" || export PATH="$1${PATH:+:$PATH}"
+}
+
+path_append() {
+  [ -d "$1" ] || return 0
+  path_contains "$1" || export PATH="${PATH:+$PATH:}$1"
+}
+
+dedup_path() {
+  local new_path="" item
+  local old_ifs="$IFS"
+  IFS=':'
+  set -f
+  for item in ${PATH}; do
+    [ -z "$item" ] && continue
+    case ":${new_path}:" in
+      *":${item}:"*) ;;
+      *) new_path="${new_path:+${new_path}:}${item}" ;;
+    esac
+  done
+  set +f
+  IFS="$old_ifs"
+  PATH="$new_path"
+  export PATH
+}
+
+export EDITOR='emacsclient -nw'
+export GOPATH="${HOME}/go"
+export RESEARCH_MODEL='deep-research-max-preview-04-2026'
+export NVM_DIR="${HOME}/.nvm"
+
+path_prepend "${HOME}/.bin"
+path_prepend "${HOME}/.local/bin"
+path_append '/usr/local/go/bin'
+path_append "${GOPATH}/bin"
+
+if [ -d "${NVM_DIR}/versions/node" ]; then
+  for node_dir in "${NVM_DIR}"/versions/node/*/bin; do
+    [ -d "${node_dir}" ] && path_prepend "${node_dir}"
+  done
+  unset node_dir
+fi
+
+if [ -r "${HOME}/.cargo/env" ]; then
+  . "${HOME}/.cargo/env"
+fi
+
+if [ -r "${HOME}/.config/shell/secrets.sh" ]; then
+  . "${HOME}/.config/shell/secrets.sh"
+fi
+
+dedup_path
+
+unset -f path_contains path_prepend path_append dedup_path

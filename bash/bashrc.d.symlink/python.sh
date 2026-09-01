@@ -5,12 +5,12 @@
 export PYTHONSTARTUP="${HOME}/.pythonrc"
 
 # Created by `pipx`
-if [[ -d "${HOME}/.local/bin" ]]; then
+if [[ -d "${HOME}/.local/bin" && ":$PATH:" != *":${HOME}/.local/bin:"* ]]; then
   export PATH="${HOME}/.local/bin:${PATH}"
 fi
 
 # Lazy load pipenv completion
-if [[ $(type -P 'pipenv') ]]; then
+if command -v pipenv >/dev/null 2>&1; then
   _pipenv_completion() {
     eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
     complete -F _pipenv_completion pipenv

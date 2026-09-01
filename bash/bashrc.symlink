@@ -1,13 +1,19 @@
 # -*- mode: sh -*-
 # Interactive shell configuration.
 
+# Load login/session environment when this shell was not started through
+# ~/.bash_profile.
+if [[ -z "${DOTFILES_PROFILE_LOADED}" && -r "${HOME}/.profile" ]]; then
+  source "${HOME}/.profile"
+fi
+
 # If not running interactively, don't do anything.
 [[ -z "${PS1}" ]] && return
 
 # If there is tmux, but not executing, and we are in SSH, then use it.
-if [[ -n "${SSH_CONNECTION}" && -x "$(which tmux)" && -z "${TMUX}" ]] ; then
+if [[ -n "${SSH_CONNECTION}" && -z "${TMUX}" ]] && command -v tmux >/dev/null 2>&1 ; then
   TERM='xterm-256color'
-  exec tmux -u -2 new-session -A -s "$(hostname -s)"
+  exec tmux -u -2 new-session -A -s "gemi"
 fi
 
 # Load system bashrc (Debian 8).
@@ -20,11 +26,10 @@ if [[ -f '/etc/bashrc' ]] ; then
   source '/etc/bashrc'
 fi
 
-# Place for all the config scripts for bash.
+# Configuration directories.
 BASHRCD="${HOME}/.bashrc.d"
-
-# Basic variables that are used everywhere.
-export EDITOR='emacsclient -nw'
+BASHCOMPD="${BASHRCD}/completion"
+PLATFORMD="${BASHRCD}/platform"
 
 # Error and logging.
 err() {
@@ -33,33 +38,66 @@ err() {
 
 # Handy function that sources executable files in this folder.
 source_all() {
-  local script
-  for script in "$1"/*.{sh,bash}; do
-    [[ -x "$script" || -h "$script" ]] && . "$script"
+  local script nullglob_set=0
+  [[ ! -d "$1" ]] && return 0
+  shopt -q nullglob && nullglob_set=1
+  shopt -s nullglob
+  for script in "$1"/*.sh "$1"/*.bash; do
+    if [[ -f "$script" && -r "$script" ]]; then
+      source "$script"
+    fi
   done
+  if [[ $nullglob_set -eq 0 ]]; then
+    shopt -u nullglob
+  fi
 }
 
-# Load the platform specific configs before the rest.
-UNAME=$(uname -s)
-[[ -f "${BASHRCD}/platform/${UNAME}.sh" ]] && . "${BASHRCD}/platform/${UNAME}.sh"
-
-# Load other configuration scripts if they exist.
+# Load platform-specific and generic configs.
+case "$OSTYPE" in
+  darwin*) UNAME="Darwin" ;;
+  linux*)  UNAME="Linux" ;;
+  *)       UNAME="$(uname -s)" ;;
+esac
+[[ -f "${PLATFORMD}/${UNAME}.sh" ]] && source "${PLATFORMD}/${UNAME}.sh"
 source_all "${BASHRCD}"
 
 # Clean up not needed stuff.
-unset BASHRCD
-unset err
-unset source_all
-unset UNAME
-
-# Add user bin to path.
-export PATH="${HOME}/.bin:${PATH}"
-
-# Make PATH unique in case there are duplicates.
-export PATH="$(echo "${PATH}" | awk -v RS=':' -v ORS=':' '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')"
+unset BASHRCD BASHCOMPD PLATFORMD UNAME err source_all
 
 # TODO(m3drano): For some reason, iTerm integration needs to be at the end. Fix.
 if [[ -e "${HOME}/.iterm2_shell_integration.bash" ]] ; then
   shopt -u extdebug
   source "${HOME}/.iterm2_shell_integration.bash"
 fi
+
+# Lazy load NVM and Node tools
+_load_nvm() {
+  unset -f nvm node npm npx yarn corepack pnpm _load_nvm
+  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  [[ -s "${NVM_DIR}/nvm.sh" ]] && source "${NVM_DIR}/nvm.sh"
+  [[ -s "${NVM_DIR}/bash_completion" ]] && source "${NVM_DIR}/bash_completion"
+}
+
+nvm() { _load_nvm; nvm "$@"; }
+node() { _load_nvm; node "$@"; }
+npm() { _load_nvm; npm "$@"; }
+npx() { _load_nvm; npx "$@"; }
+yarn() { _load_nvm; yarn "$@"; }
+corepack() { _load_nvm; corepack "$@"; }
+pnpm() { _load_nvm; pnpm "$@"; }
+
+# Local binaries and environment
+if [[ -d "$HOME/.local/bin" && ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+if [[ -r "$HOME/.cargo/env" ]]; then
+  . "$HOME/.cargo/env"
+fi
+
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
