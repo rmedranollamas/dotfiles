@@ -1,4 +1,4 @@
-;; -*- mode: Emacs-Lisp -*-
+;;; init.el --- Emacs initialization. -*- lexical-binding: t; -*-
 
 ;; Set UTF-8 as default encoding.
 (setq locale-coding-system 'utf-8)
@@ -7,12 +7,18 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-;; Load path and package config.
-(add-to-list 'load-path "~/.emacs.d/lisp")
-(load "~/.emacs.d/config/0package-config")
+;; Keep custom settings out of init file.
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file t))
 
-;; Load all files on the load dir via load-dir.
-(require 'load-dir)
-(custom-set-variables
- '(load-dirs t)
- '(load-dir-recursive t))
+;; Load package config.
+(load (expand-file-name "config/0package-config" user-emacs-directory))
+
+;; Load all modular configuration files in ~/.emacs.d/load.d/ dynamically.
+(let ((load-directory (expand-file-name "load.d" user-emacs-directory)))
+  (when (file-directory-p load-directory)
+    (dolist (file (directory-files load-directory t "\\.el$"))
+      (unless (or (string-prefix-p "." (file-name-nondirectory file))
+                  (string-suffix-p "~" file))
+        (load (file-name-sans-extension file) nil t)))))
