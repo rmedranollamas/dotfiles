@@ -33,15 +33,11 @@ if [[ "$OSTYPE" == darwin* ]] ; then
     export HOMEBREW_NO_EMOJI=1
     export HOMEBREW_NO_INSTALL_CLEANUP=1
 
-    brew_prefix="${HOMEBREW_PREFIX:-$("$brew_bin" --prefix 2>/dev/null)}"
+    brew_prefix="${HOMEBREW_PREFIX:-${brew_bin%/bin/brew}}"
     if [[ -n "$brew_prefix" ]]; then
       if [[ -d "${brew_prefix}/opt/openblas" ]]; then
         export OPENBLAS="${brew_prefix}/opt/openblas"
       fi
-    fi
-
-    if "$brew_bin" command command-not-found-init >/dev/null 2>&1; then
-      eval "$("$brew_bin" command-not-found-init)"
     fi
   fi
   unset brew_bin brew_prefix

@@ -21,7 +21,10 @@ tier_header "${TIER_NAME}" "<${SLA_MS}ms"
 # ------------------------------------------------------------------------------
 info "1. Validating Shell Script Syntax (bash -n)"
 
-mapfile -t SHELL_FILES < <(
+SHELL_FILES=()
+while IFS= read -r line || [[ -n "$line" ]]; do
+  [[ -n "$line" ]] && SHELL_FILES+=("$line")
+done < <(
   find "${PROJECT_ROOT}" \
     -maxdepth 4 \
     \( -name "*.sh" -o -name "git-prompt.bash" -o -path "*/bash/*.symlink" \) \
@@ -50,7 +53,10 @@ info "2. Validating Emacs Lisp Syntax (S-expression reader)"
 
 if command -v emacs >/dev/null 2>&1; then
   # Discover all existing .el configuration files dynamically
-  mapfile -t ELISP_FILES < <(
+  ELISP_FILES=()
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    [[ -n "$line" ]] && ELISP_FILES+=("$line")
+  done < <(
     find "${PROJECT_ROOT}/emacs" \
       -maxdepth 4 \
       \( -name "*.el" -o -name "emacs.symlink" \) \
@@ -149,7 +155,10 @@ else
   fail "Directory structure" "screen/ still present or tmux/tmux.conf.symlink missing"
 fi
 
-mapfile -t SYMLINK_SOURCES < <(find "${PROJECT_ROOT}" -maxdepth 2 -name "*.symlink" | sort)
+SYMLINK_SOURCES=()
+while IFS= read -r line || [[ -n "$line" ]]; do
+  [[ -n "$line" ]] && SYMLINK_SOURCES+=("$line")
+done < <(find "${PROJECT_ROOT}" -maxdepth 2 -name "*.symlink" | sort)
 EXPECTED_SYMLINKS=(
   "bash/bash_profile.symlink"
   "bash/bashrc.d.symlink"

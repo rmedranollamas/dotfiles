@@ -71,7 +71,10 @@ done
 info "3. Verifying Bootstrap Idempotency on Consecutive Invocation"
 
 # Count any initial backup files from run 1
-mapfile -t INITIAL_BAK_FILES < <(find "${SANDBOX_HOME}" -maxdepth 3 -name "*.bak" 2>/dev/null || true)
+INITIAL_BAK_FILES=()
+while IFS= read -r line || [[ -n "$line" ]]; do
+  [[ -n "$line" ]] && INITIAL_BAK_FILES+=("$line")
+done < <(find "${SANDBOX_HOME}" -maxdepth 3 -name "*.bak" 2>/dev/null || true)
 
 BOOTSTRAP_RUN2_OUTPUT=$(HOME="${SANDBOX_HOME}" "${PROJECT_ROOT}/bootstrap.sh" 2>&1 || true)
 BOOTSTRAP_RUN2_EXIT=$?
@@ -79,7 +82,10 @@ BOOTSTRAP_RUN2_EXIT=$?
 assert_eq 0 "$BOOTSTRAP_RUN2_EXIT" "bootstrap.sh 2nd run exited cleanly (code 0)"
 
 # Verify 0 new .bak files generated during idempotent run
-mapfile -t POST_BAK_FILES < <(find "${SANDBOX_HOME}" -maxdepth 3 -name "*.bak" 2>/dev/null || true)
+POST_BAK_FILES=()
+while IFS= read -r line || [[ -n "$line" ]]; do
+  [[ -n "$line" ]] && POST_BAK_FILES+=("$line")
+done < <(find "${SANDBOX_HOME}" -maxdepth 3 -name "*.bak" 2>/dev/null || true)
 assert_eq "${#INITIAL_BAK_FILES[@]}" "${#POST_BAK_FILES[@]}" "Zero new backup (.bak) files generated during 2nd run (idempotent)"
 
 # Verify all symlinks remain intact
