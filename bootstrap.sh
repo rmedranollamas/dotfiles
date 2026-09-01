@@ -13,21 +13,21 @@ export DOTFILES_ROOT
 mkdir -p "${DOTFILES_ROOT}/logs"
 
 # Use first system tools, since those in bin might have dependencies.
-export PATH=${PATH}:${DOTFILES_ROOT}/bin
+export PATH="${PATH}:${DOTFILES_ROOT}/bin"
 
 # Make bash exit if some command does not return 0.
 set -e
 
 log_info () {
-  printf "\r\033[2K  [\033[00;34mINFO\033[0m] $1\n"
+  printf "\r\033[2K  [\033[00;34mINFO\033[0m] %s\n" "$1"
 }
 
 log_ok () {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n" "$1"
 }
 
 log_sys () {
-  printf "\r\033[2K  [ \033[0;31mOS\033[0m ] $1\n"
+  printf "\r\033[2K  [ \033[0;31mOS\033[0m ] %s\n" "$1"
 }
 
 link_file() {
@@ -48,6 +48,16 @@ link_file() {
   log_ok "symlink $dest -> $src created"
 }
 
+setup_directories() {
+  local dir
+  for dir in "${HOME}/.ssh" "${HOME}/.saves" "${HOME}/.emacs.d/auto-saves"; do
+    if [[ ! -d "${dir}" ]]; then
+      mkdir -p "${dir}"
+    fi
+    chmod 700 "${dir}"
+  done
+}
+
 setup_ssh() {
   local ssh_dir="${HOME}/.ssh"
   local ssh_config_src="${DOTFILES_ROOT}/ssh/config"
@@ -55,7 +65,7 @@ setup_ssh() {
 
   if [[ -L "${ssh_dir}" ]]; then
     log_info "Unlinking symlinked ${ssh_dir}"
-    rm "${ssh_dir}"
+    rm -f "${ssh_dir}"
   fi
 
   mkdir -p "${ssh_dir}"
@@ -68,38 +78,33 @@ setup_ssh() {
   fi
 }
 
-list_files() {
-  find "${DOTFILES_ROOT}" -maxdepth 2 -name "$1"
-}
-
-system_files() {
-  find "${DOTFILES_ROOT}" -maxdepth 3 -name "$1" -regex ".*/$(uname -s)/.*"
-}
-
 install() {
-  for file in $(list_files 'install.sh') ; do
+  while IFS= read -r -d '' file; do
     log_info "running ${file}..."
     bash "${file}"
-  done
+  done < <(find "${DOTFILES_ROOT}" -maxdepth 2 -name 'install.sh' -print0)
 }
 
 system_setup() {
-  for file in $(system_files 'install.sh') ; do
+  local sys_name
+  sys_name="$(uname -s)"
+  while IFS= read -r -d '' file; do
     log_sys "setting up ${file}..."
     bash "${file}"
-  done
+  done < <(find "${DOTFILES_ROOT}" -maxdepth 3 -name 'install.sh' -path "*/${sys_name}/*" -print0)
 }
 
 symlink() {
-  for file in $(list_files '*.symlink') ; do
-    link_file "$file" "$HOME/.$(basename "${file%.*}")"
-  done
+  while IFS= read -r -d '' file; do
+    link_file "${file}" "${HOME}/.$(basename "${file%.*}")"
+  done < <(find "${DOTFILES_ROOT}" -maxdepth 2 -name '*.symlink' -print0)
 }
 
 bootstrap() {
   if sudo -n -v &>/dev/null; then
     log_ok 'sudo credentials renewed'
   fi
+  setup_directories
   setup_ssh
   system_setup
   echo ''

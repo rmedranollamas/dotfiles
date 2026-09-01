@@ -9,6 +9,7 @@
 # - Supports --dry-run, --branches-only, --gc-only, and --yes flags
 
 set -eo pipefail
+shopt -s extglob
 
 DRY_RUN=false
 BRANCHES_ONLY=false
@@ -78,14 +79,16 @@ CURRENT_BRANCH="$(git branch --show-current 2>/dev/null || echo "")"
 # Determine default target branch (e.g. main or master)
 get_default_branch() {
   local default_ref
-  default_ref="$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@' || true)"
+  default_ref="$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || true)"
+  default_ref="${default_ref#origin/}"
   if [[ -n "${default_ref}" ]]; then
     echo "${default_ref}"
     return
   fi
-  for branch in main master develop trunk; do
-    if git show-ref --verify --quiet "refs/heads/${branch}"; then
-      echo "${branch}"
+  local b
+  for b in main master develop trunk; do
+    if git show-ref --verify --quiet "refs/heads/${b}"; then
+      echo "${b}"
       return
     fi
   done
@@ -120,8 +123,9 @@ cleanup_branches() {
   echo "==> Inspecting merged local branches against '${target_branch}'..."
   local merged_branches=()
   while IFS= read -r branch; do
-    branch="$(echo "${branch}" | sed -e 's/^[ *]*//' -e 's/[[:space:]]*$//')"
-    [[ -z "${branch}" ]] && continue
+    branch="${branch##*([ *])}"
+    branch="${branch%%*([[:space:]])}"
+    [[ -z "${branch}" || "${branch}" == \(* || "${branch}" == "HEAD" ]] && continue
     if is_protected "${branch}"; then
       continue
     fi
@@ -157,7 +161,7 @@ cleanup_branches() {
   if [[ "${do_delete}" == true ]]; then
     for b in "${merged_branches[@]}"; do
       echo "  Deleting branch '${b}'..."
-      git branch -d "${b}" || git branch -D "${b}"
+      git branch -d -- "${b}" 2>/dev/null || git branch -D -- "${b}" 2>/dev/null || true
     done
     echo "  Branch cleanup complete."
   else

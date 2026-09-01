@@ -34,4 +34,8 @@ if [[ -f "${google_compute_engine}.pub" ]]; then
   chmod 644 "${google_compute_engine}.pub"
 fi
 
+if [[ -f "${ssh_dir}/config" ]]; then
+  chmod 600 "${ssh_dir}/config"
+fi
+
 unset google_compute_engine github hostname_f log log_dir ssh_dir

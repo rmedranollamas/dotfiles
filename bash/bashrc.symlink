@@ -31,11 +31,6 @@ BASHRCD="${HOME}/.bashrc.d"
 BASHCOMPD="${BASHRCD}/completion"
 PLATFORMD="${BASHRCD}/platform"
 
-# Error and logging.
-err() {
-  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2
-}
-
 # Handy function that sources executable files in this folder.
 source_all() {
   local script nullglob_set=0
@@ -62,7 +57,7 @@ esac
 source_all "${BASHRCD}"
 
 # Clean up not needed stuff.
-unset BASHRCD BASHCOMPD PLATFORMD UNAME err source_all
+unset BASHRCD BASHCOMPD PLATFORMD UNAME source_all
 
 # TODO(m3drano): For some reason, iTerm integration needs to be at the end. Fix.
 if [[ -e "${HOME}/.iterm2_shell_integration.bash" ]] ; then

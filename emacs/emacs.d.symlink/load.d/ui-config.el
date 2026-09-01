@@ -19,12 +19,13 @@
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (add-hook 'text-mode-hook #'display-line-numbers-mode)
 
-;; Load Monokai theme.
+;; Load Monokai theme safely.
 (use-package monokai-theme
   :ensure t
   :defer t
   :init
-  (load-theme 'monokai t))
+  (when (member 'monokai (custom-available-themes))
+    (ignore-errors (load-theme 'monokai t))))
 
 ;; Rainbow delimiters on programming modes.
 (use-package rainbow-delimiters

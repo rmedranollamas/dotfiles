@@ -11,7 +11,7 @@
 ;; Restore GC threshold and file-name handlers after startup.
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (setq gc-cons-threshold 33554432 ; 32MB
+            (setq gc-cons-threshold 800000 ; 800KB default
                   gc-cons-percentage 0.1
                   file-name-handler-alist default-file-name-handler-alist)))
 
