@@ -48,6 +48,26 @@ link_file() {
   log_ok "symlink $dest -> $src created"
 }
 
+setup_ssh() {
+  local ssh_dir="${HOME}/.ssh"
+  local ssh_config_src="${DOTFILES_ROOT}/ssh/config"
+  local ssh_config_dest="${ssh_dir}/config"
+
+  if [[ -L "${ssh_dir}" ]]; then
+    log_info "Unlinking symlinked ${ssh_dir}"
+    rm "${ssh_dir}"
+  fi
+
+  mkdir -p "${ssh_dir}"
+  chmod 700 "${ssh_dir}"
+
+  if [[ -f "${ssh_config_src}" ]]; then
+    link_file "${ssh_config_src}" "${ssh_config_dest}"
+    chmod 600 "${ssh_config_src}" 2>/dev/null || true
+    chmod 600 "${ssh_config_dest}" 2>/dev/null || true
+  fi
+}
+
 list_files() {
   find "${DOTFILES_ROOT}" -maxdepth 2 -name "$1"
 }
@@ -72,6 +92,9 @@ system_setup() {
 
 symlink() {
   for file in $(list_files '*.symlink') ; do
+    if [[ -d "$file" ]]; then
+      continue
+    fi
     link_file "$file" "$HOME/.$(basename "${file%.*}")"
   done
 }
@@ -80,6 +103,7 @@ bootstrap() {
   if sudo -n -v &>/dev/null; then
     log_ok 'sudo credentials renewed'
   fi
+  setup_ssh
   system_setup
   echo ''
   link_file "${DOTFILES_ROOT}/bin" "${HOME}/.bin"

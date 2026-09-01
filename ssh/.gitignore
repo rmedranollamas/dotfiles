@@ -1,0 +1,8 @@
+# Ignore everything in this directory
+*
+
+# Whitelist tracked files
+!config
+!install.sh
+!.gitignore
+!README*

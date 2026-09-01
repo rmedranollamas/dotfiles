@@ -2,72 +2,119 @@
 set-option -g update-environment 'SSH_CLIENT SSH_CONNECTION'
 
 # Export the proper TERM and use xterm keys.
-set -g default-terminal 'tmux-256color'
+set -g default-terminal "tmux-256color"
 setw -g xterm-keys on
-set -ag terminal-overrides ",*:RGB"
+set -as terminal-overrides ",*:Tc,*:RGB"
+
+# Enable focus events for modern editors/tools
+set -g focus-events on
+
+# Renumber windows sequentially after closing any of them
+set -g renumber-windows on
 
 # Do not launch a login shell.
 set -g default-command "${SHELL}"
 
-# We hate vi. Intensely.
+# Emacs key bindings in status line and copy mode
 setw -g mode-keys emacs
 set -g status-keys emacs
+set -g extended-keys on
+set -g extended-keys-format csi-u
+
+# Enable mouse support
+set -g mouse on
+setw -g mouse on
+
+# Multi-platform Emacs copy-mode clipboard integration
+if-shell -b 'command -v wl-copy >/dev/null 2>&1' {
+  bind-key -T copy-mode M-w send-keys -X copy-pipe-and-cancel "wl-copy"
+  bind-key -T copy-mode-emacs M-w send-keys -X copy-pipe-and-cancel "wl-copy"
+  bind-key -T copy-mode C-w send-keys -X copy-pipe-and-cancel "wl-copy"
+  bind-key -T copy-mode-emacs C-w send-keys -X copy-pipe-and-cancel "wl-copy"
+  bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "wl-copy"
+  bind-key -T copy-mode-emacs MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "wl-copy"
+} {
+  if-shell -b 'command -v xclip >/dev/null 2>&1' {
+    bind-key -T copy-mode M-w send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+    bind-key -T copy-mode-emacs M-w send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+    bind-key -T copy-mode C-w send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+    bind-key -T copy-mode-emacs C-w send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+    bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+    bind-key -T copy-mode-emacs MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+  } {
+    if-shell -b 'command -v pbcopy >/dev/null 2>&1' {
+      bind-key -T copy-mode M-w send-keys -X copy-pipe-and-cancel "pbcopy"
+      bind-key -T copy-mode-emacs M-w send-keys -X copy-pipe-and-cancel "pbcopy"
+      bind-key -T copy-mode C-w send-keys -X copy-pipe-and-cancel "pbcopy"
+      bind-key -T copy-mode-emacs C-w send-keys -X copy-pipe-and-cancel "pbcopy"
+      bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+      bind-key -T copy-mode-emacs MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+    }
+  }
+}
 
 # Binding with C-b b and nested instances.
 bind-key b send-prefix
 
-# C-b C-b will go the last active window.
+# C-b C-b will go to the last active window.
 bind C-b last-window
 
-# I don't like to go the other side of the keyboard.
+# 1-based indexing for windows and panes.
 set -g base-index 1
 setw -g pane-base-index 1
 
-# Since I don't use escapes, this makes things faster.
+# Faster escape sequences
 set -s escape-time 0
 
-# Let's be more efficient with hidden windows.
+# Efficient resizing with hidden windows.
 setw -g aggressive-resize off
 
-# scrollback buffer n lines
-set -g history-limit 10000
+# Scrollback buffer (50k lines)
+set -g history-limit 50000
 
-# It would be nice to actually read messages.
+# Display messages time
 set -g display-time 5000
 
-# Prominent pane highlighting.
-# 1. Styles for the Active Pane
+# Prominent pane styling.
 set -g window-active-style 'fg=terminal,bg=terminal'
+set -g window-style 'fg=colour247,bg=colour236'
+
+set -g pane-border-style 'fg=colour238,bg=colour236'
 set -g pane-active-border-style 'fg=brightred,bg=default'
 
-# 2. Styles for Inactive Panes (Dimmed)
-set -g window-style 'fg=colour247,bg=colour236'
-set -g pane-border-style 'fg=colour238,bg=colour236'
+set -g message-style 'bg=black,fg=brightred'
 
-set-option -g message-style bg=black,fg=brightred
-
-
-# Some sane colors for Solarized on the status bar.
+# Clean status bar and window formats
 set -g status on
-set -g status-interval 10
-set -g status-bg black
-set -g status-fg white
-set -g status-left ''
-set -g status-right "#[fg=blue][#S] #[fg=green][#(date +'%H:%M')]"
-setw -g window-status-current-bg red
+set -g status-interval 5
+set -g status-position bottom
+set -g status-style 'bg=black,fg=white'
 
-# Show me activity in other windows, but quietly.
+set -g status-left '#[fg=blue,bold] #S #[default] '
+set -g status-left-length 30
+set -g status-right '#[fg=green] %H:%M #[default]'
+set -g status-right-length 50
+
+setw -g window-status-format ' #I:#W '
+setw -g window-status-current-format '#[bg=red,fg=white,bold] #I:#W #[default]'
+
+# Quiet activity alerts
 set -g bell-action none
 setw -g monitor-activity on
 set -g visual-activity off
 
-# Get me an Emacs.
-bind e split-window -p 60 'emacs -a "" -nw'
-bind h split-window -h 'emacs -a "" -nw'
+# Window management
+bind v split-window -h -c "#{pane_current_path}"
+bind s split-window -v -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
 
-# Let's set a title on the terminal.
+# Emacs quick spawn
+bind e split-window -p 60 -c "#{pane_current_path}" 'emacs -a "" -nw'
+bind E split-window -h -c "#{pane_current_path}" 'emacs -a "" -nw'
+
+# Terminal title
 set -g set-titles on
 set -g set-titles-string '#W@#h'
 
-# Open IRC.
+# Open IRC
 bind i new-window irssi

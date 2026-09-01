@@ -1,0 +1,42 @@
+# Logs
+logs/
+*.log
+
+# Sensitive keys and credentials
+*.pem
+*.key
+id_*
+*.pub
+known_hosts*
+authorized_keys*
+.env
+.env.*
+secrets.sh
+*.secret
+
+# Editor backups and cache files
+*~
+\#*\#
+.#*
+*.bak
+*.swp
+*.tmp
+*.DS_Store
+
+# Compiled Emacs Lisp & cache
+*.elc
+auto-save-list/
+auto-saves/
+eln-cache/
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Node
+node_modules/

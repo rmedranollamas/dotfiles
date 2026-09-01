@@ -1,26 +1,48 @@
 #!/bin/bash
+set -e
 
-log="${DOTFILES_ROOT}/logs/ssh.install.log"
-github="${DOTFILES_ROOT}/ssh/ssh.symlink/github"
-google_compute_engine="${DOTFILES_ROOT}/ssh/ssh.symlink/google_compute_engine"
-sourceforge="${DOTFILES_ROOT}/ssh/ssh.symlink/sourceforge"
+ssh_dir="${HOME}/.ssh"
+mkdir -p "${ssh_dir}"
+chmod 700 "${ssh_dir}"
+
+log_dir="${DOTFILES_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/.." && pwd -P)}/logs"
+mkdir -p "${log_dir}"
+log="${log_dir}/ssh.install.log"
+
+github="${ssh_dir}/github"
+google_compute_engine="${ssh_dir}/google_compute_engine"
+sourceforge="${ssh_dir}/sourceforge"
+
+hostname_f="$(hostname -f 2>/dev/null || hostname)"
 
 if [[ ! -f "${github}" ]] ; then
-  ssh-keygen -a 100 -o -t ed25519 -N '' -C "rmedranollamas@$(hostname -f)" -f "${github}" >> "${log}" 2>&1
-  chmod 400 "${github}*"
+  ssh-keygen -a 100 -o -t ed25519 -N '' -C "rmedranollamas@${hostname_f}" -f "${github}" >> "${log}" 2>&1
+fi
+if [[ -f "${github}" ]]; then
+  chmod 600 "${github}"
+fi
+if [[ -f "${github}.pub" ]]; then
+  chmod 644 "${github}.pub"
 fi
 
 if [[ ! -f "${google_compute_engine}" ]] ; then
-  ssh-keygen -a 100 -o -t ed25519 -N '' -C "m3drano@$(hostname -f)" -f "${google_compute_engine}" >> "${log}" 2>&1
-  chmod 400 "${google_compute_engine}*"
+  ssh-keygen -a 100 -o -t ed25519 -N '' -C "m3drano@${hostname_f}" -f "${google_compute_engine}" >> "${log}" 2>&1
+fi
+if [[ -f "${google_compute_engine}" ]]; then
+  chmod 600 "${google_compute_engine}"
+fi
+if [[ -f "${google_compute_engine}.pub" ]]; then
+  chmod 644 "${google_compute_engine}.pub"
 fi
 
 if [[ ! -f "${sourceforge}" ]] ; then
   ssh-keygen -a 100 -o -b 4096 -t rsa -N '' -C 'medranollamas@shell.sf.net' -f "${sourceforge}" >> "${log}" 2>&1
-  chmod 400 "${sourceforge}*"
+fi
+if [[ -f "${sourceforge}" ]]; then
+  chmod 600 "${sourceforge}"
+fi
+if [[ -f "${sourceforge}.pub" ]]; then
+  chmod 644 "${sourceforge}.pub"
 fi
 
-unset sourceforge
-unset google_compute_engine
-unset github
-unset log
+unset sourceforge google_compute_engine github hostname_f log log_dir ssh_dir

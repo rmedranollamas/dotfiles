@@ -18,15 +18,24 @@
 	renames = copies
 	mnemonicprefix = true
 	tool = opendiff
+	algorithm = histogram
+	colorMoved = zebra
 [push]
 	default = tracking
 	signed = true
 	atomic = true
+	autoSetupRemote = true
+[fetch]
+	prune = true
+	pruneTags = true
+[rebase]
+	autoSquash = true
 [rerere]
 	enabled = true
 [merge]
 	stat = true
 	tool = opendiff
+	conflictstyle = zdiff3
 [alias]
 	st = status
 	ci = commit
@@ -54,8 +63,6 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-[commit]
-	gpgsign = true
 [init]
 	defaultBranch = main
 [mergetool]
