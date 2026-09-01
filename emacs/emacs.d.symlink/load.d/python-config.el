@@ -16,6 +16,7 @@
 
 ;; Modern Python LSP with Eglot (built-in in Emacs 29+).
 (use-package eglot
+  :ensure nil
   :defer t
   :hook ((python-mode . eglot-ensure)
          (python-ts-mode . eglot-ensure))

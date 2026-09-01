@@ -6,13 +6,39 @@
                          ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
 
-;; Bootstrap use-package cleanly without periodic synchronous network calls.
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
+;; In Emacs 29+, use-package is built into core.
 (require 'use-package)
+(require 'use-package-ensure)
 (setq use-package-always-ensure t)
+
+;; Read cached archive contents from disk if available to avoid unneeded network calls.
+(unless package-archive-contents
+  (package-read-all-archive-contents))
+
+;; Clean offline / non-blocking package ensure handler.
+(defvar dotfiles--package-refreshed nil)
+(defun dotfiles-use-package-ensure (name args _state &optional _no-refresh)
+  (dolist (ensure args)
+    (let ((package (or (and (eq ensure t) (use-package-as-symbol name)) ensure)))
+      (when package
+        (when (consp package)
+          (use-package-pin-package (car package) (cdr package))
+          (setq package (car package)))
+        (unless (package-installed-p package)
+          (condition-case-unless-debug err
+              (progn
+                (unless (or package-archive-contents dotfiles--package-refreshed noninteractive)
+                  (setq dotfiles--package-refreshed t)
+                  (ignore-errors (package-refresh-contents)))
+                (when (assoc package package-archive-contents)
+                  (package-install package))
+                t)
+            (error
+             (display-warning 'use-package
+                              (format "Failed to install %s: %s"
+                                      name (error-message-string err))
+                              :warning))))))))
+(setq use-package-ensure-function #'dotfiles-use-package-ensure)
 
 ;; Project management.
 (use-package projectile

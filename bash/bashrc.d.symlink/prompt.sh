@@ -2,14 +2,18 @@
 # -*- mode: sh -*-
 # Configuration of the prompt for bash.
 
-__ps1() {
-  if [[ "$(type -t __git_ps1)" == "function" ]]; then
-    __git_ps1 "(Git:%s) "
+_update_git_prompt() {
+  __git_prompt_str=""
+  if declare -F __git_ps1 >/dev/null 2>&1; then
+    local saved_ps1="${PS1}"
+    __git_ps1 "" "" "(Git:%s) "
+    eval "__git_prompt_str=\"${PS1}\""
+    PS1="${saved_ps1}"
   fi
 }
 
 # Always use colors - all ANSI escapes wrapped in \[...\]
-PS1='\[\e[0;34m\]$(__ps1)\[\e[0m\]\[\e[1;34m\]\W\[\e[0m\] \[\e[0;32m\]\$\[\e[0m\] '
+PS1='\[\e[0;34m\]${__git_prompt_str}\[\e[0m\]\[\e[1;34m\]\W\[\e[0m\] \[\e[0;32m\]\$\[\e[0m\] '
 PS2='\[\e[0;31m\]>\[\e[0m\] '
 
 precmd_func() {
@@ -25,6 +29,7 @@ _add_precmd_func() {
 }
 
 _add_precmd_func precmd_func
+_add_precmd_func _update_git_prompt
 unset -f _add_precmd_func
 
 _run_precmd_functions() {

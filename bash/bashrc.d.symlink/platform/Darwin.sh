@@ -35,12 +35,6 @@ if [[ "$OSTYPE" == darwin* ]] ; then
 
     brew_prefix="${HOMEBREW_PREFIX:-$("$brew_bin" --prefix 2>/dev/null)}"
     if [[ -n "$brew_prefix" ]]; then
-      if [[ -r "${brew_prefix}/etc/profile.d/bash_completion.sh" ]]; then
-        source "${brew_prefix}/etc/profile.d/bash_completion.sh"
-      elif [[ -r "${brew_prefix}/share/bash-completion/bash_completion" ]]; then
-        source "${brew_prefix}/share/bash-completion/bash_completion"
-      fi
-
       if [[ -d "${brew_prefix}/opt/openblas" ]]; then
         export OPENBLAS="${brew_prefix}/opt/openblas"
       fi

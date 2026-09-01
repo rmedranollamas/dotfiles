@@ -2,22 +2,9 @@
 # -*- mode: sh -*-
 # Loads git completion and prompt from system or local fallbacks
 
-# Enable programmable completion features
-if ! shopt -oq posix; then
-  if [[ -f '/usr/share/bash-completion/bash_completion' ]]; then
-    source '/usr/share/bash-completion/bash_completion'
-  elif [[ -f '/etc/bash_completion' ]]; then
-    source '/etc/bash_completion'
-  elif [[ -f '/opt/homebrew/etc/profile.d/bash_completion.sh' ]]; then
-    source '/opt/homebrew/etc/profile.d/bash_completion.sh'
-  elif [[ -f '/usr/local/etc/profile.d/bash_completion.sh' ]]; then
-    source '/usr/local/etc/profile.d/bash_completion.sh'
-  fi
-fi
-
 COMP_DIR="${HOME}/.bashrc.d/completion"
 
-# Always source git-prompt as it is needed for the prompt.
+# Always source git-prompt eagerly as it is needed for the prompt.
 if [[ -f '/usr/lib/git-core/git-sh-prompt' ]]; then
   source '/usr/lib/git-core/git-sh-prompt'
 elif [[ -f '/usr/share/git-core/contrib/completion/git-prompt.sh' ]]; then
@@ -32,22 +19,49 @@ elif [[ -f "${COMP_DIR}/git-prompt.sh" ]]; then
   source "${COMP_DIR}/git-prompt.sh"
 fi
 
-# Load git completion from native system bash-completion loader and configure alias 'g'
-_git_completion_setup() {
-  if ! type __git_complete &>/dev/null; then
-    if type _comp_load &>/dev/null; then
-      _comp_load git 2>/dev/null || true
-    elif type _completion_loader &>/dev/null; then
-      _completion_loader git 2>/dev/null || true
+# Lazy-load system programmable completion and configure Git completion on first completion request
+if ! shopt -oq posix; then
+  _lazy_bash_completion() {
+    # Remove lazy completion handler to avoid recursive loops
+    complete -r -D 2>/dev/null
+    unset -f _lazy_bash_completion
+
+    # Load system bash completion
+    if [[ -r '/usr/share/bash-completion/bash_completion' ]]; then
+      source '/usr/share/bash-completion/bash_completion'
+    elif [[ -r '/etc/bash_completion' ]]; then
+      source '/etc/bash_completion'
+    elif [[ -n "${HOMEBREW_PREFIX:-}" && -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+      source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+    elif [[ -n "${HOMEBREW_PREFIX:-}" && -r "${HOMEBREW_PREFIX}/share/bash-completion/bash_completion" ]]; then
+      source "${HOMEBREW_PREFIX}/share/bash-completion/bash_completion"
+    elif [[ -r '/opt/homebrew/etc/profile.d/bash_completion.sh' ]]; then
+      source '/opt/homebrew/etc/profile.d/bash_completion.sh'
+    elif [[ -r '/usr/local/etc/profile.d/bash_completion.sh' ]]; then
+      source '/usr/local/etc/profile.d/bash_completion.sh'
+    elif [[ -r '/home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh' ]]; then
+      source '/home/linuxbrew/.linuxbrew/etc/profile.d/bash_completion.sh'
+    elif [[ -r "${HOME}/.linuxbrew/etc/profile.d/bash_completion.sh" ]]; then
+      source "${HOME}/.linuxbrew/etc/profile.d/bash_completion.sh"
     fi
-  fi
 
-  if type __git_complete &>/dev/null; then
-    __git_complete g git
-  elif [[ "$(type -t _git)" == "function" ]]; then
-    complete -o bashdefault -o default -o nospace -F _git g 2>/dev/null \
-      || complete -o default -o nospace -F _git g
-  fi
-}
+    # Trigger dynamic completion loader for the requested command
+    if declare -F _comp_complete_load >/dev/null 2>&1; then
+      _comp_complete_load "$@"
+    elif declare -F _completion_loader >/dev/null 2>&1; then
+      _completion_loader "$@"
+    fi
 
-_git_completion_setup
+    # Configure alias 'g' for git completion
+    if declare -F __git_complete >/dev/null 2>&1; then
+      __git_complete g git 2>/dev/null || true
+    elif declare -F _git >/dev/null 2>&1; then
+      complete -o bashdefault -o default -o nospace -F _git g 2>/dev/null \
+        || complete -o default -o nospace -F _git g 2>/dev/null || true
+    fi
+
+    return 124
+  }
+
+  complete -D -F _lazy_bash_completion
+fi

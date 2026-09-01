@@ -45,3 +45,6 @@ venv/
 
 # Node
 node_modules/
+
+# Agent artifacts & traces
+.agents/

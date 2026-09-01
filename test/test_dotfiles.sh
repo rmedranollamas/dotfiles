@@ -1,193 +1,222 @@
 #!/usr/bin/env bash
 # -*- mode: sh -*-
-# Dotfiles Automated Validation Harness (<0.5s execution time)
+# ==============================================================================
+# test_dotfiles.sh - Unified Master Test Runner for Dotfiles Test Suite
+#
+# Architecture:
+#   Tier 1: Static & Syntax Validation      (SLA: <200ms)
+#   Tier 2: Unit & Component Isolation     (SLA: <500ms)
+#   Tier 3: Integration & Sandbox E2E      (SLA: <1.5s)
+#   Tier 4: Performance & Benchmarking     (SLA: <2.0s)
+# ==============================================================================
 
-set -euo pipefail
+set -eo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
+export PROJECT_ROOT
 
-# Color codes
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-BLUE='\033[0;34m'
-YELLOW='\033[1;33m'
-BOLD='\033[1m'
-NC='\033[0m'
+# shellcheck source=test/test_helpers.sh
+source "${SCRIPT_DIR}/test_helpers.sh"
 
-PASSED=0
-FAILED=0
-START_TIME=$(date +%s%N 2>/dev/null || date +%s)
+RUN_TIER1=true
+RUN_TIER2=true
+RUN_TIER3=true
+RUN_TIER4=true
+VERBOSE=false
 
-pass() {
-  PASSED=$((PASSED + 1))
-  printf "  [ ${GREEN}PASS${NC} ] %s\n" "$1"
+show_help() {
+  cat <<EOF
+Usage: $(basename "$0") [OPTIONS]
+
+Unified test runner for the 4-tier dotfiles validation harness.
+
+Options:
+  -1, --tier-1       Run Tier 1 only (Static & Syntax Validation)
+  -2, --tier-2       Run Tier 2 only (Unit & Component Isolation)
+  -3, --tier-3       Run Tier 3 only (Integration & Sandbox E2E)
+  -4, --tier-4       Run Tier 4 only (Performance & Benchmarking)
+  -a, --all          Run all 4 tiers (default)
+  -l, --list         List available test tiers and their SLAs
+  -v, --verbose      Enable verbose output
+  -h, --help         Display this help message and exit
+
+SLA Targets:
+  Tier 1: < 200 ms
+  Tier 2: < 500 ms
+  Tier 3: < 1500 ms
+  Tier 4: < 2000 ms
+  Total:  < 2000 ms (full parallel/optimized run)
+EOF
+  exit 0
 }
 
-fail() {
-  FAILED=$((FAILED + 1))
-  printf "  [ ${RED}FAIL${NC} ] %s: %s\n" "$1" "$2"
+list_tiers() {
+  cat <<EOF
+Available Test Tiers:
+  [1] Tier 1: Static & Syntax Validation (bash -n, Emacs sexp, SSH config, symlink presence, perms) [SLA: <200ms]
+  [2] Tier 2: Unit & Component Isolation (profile paths, aliases cascades, git-clean, epylint, link_file) [SLA: <500ms]
+  [3] Tier 3: Integration & Sandbox E2E (sandbox bootstrap, target mappings, idempotency, bash -i, tmux, SSH) [SLA: <1.5s]
+  [4] Tier 4: Performance & Benchmarking (bash startup <40ms, fork audit, emacs latency, harness SLA) [SLA: <2.0s]
+EOF
+  exit 0
 }
 
-info() {
-  printf "${BOLD}${BLUE}==> %s${NC}\n" "$1"
-}
+# Parse command line options
+if [[ $# -gt 0 ]]; then
+  RUN_TIER1=false
+  RUN_TIER2=false
+  RUN_TIER3=false
+  RUN_TIER4=false
 
-echo ""
-printf "${BOLD}======================================================\n"
-printf "           DOTFILES AUTOMATED TEST SUITE              \n"
-printf "======================================================${NC}\n"
-echo ""
-
-# 1. Shell Syntax Validation (bash -n)
-info "1. Validating Shell Script Syntax (bash -n)"
-
-mapfile -t SHELL_FILES < <(
-  find "${ROOT_DIR}" \
-    -maxdepth 4 \
-    \( -name "*.sh" -o -name "bashrc.symlink" -o -name "profile.symlink" -o -name "bash_profile.symlink" -o -name "git-prompt.bash" \) \
-    ! -path "*/.git/*" \
-    ! -path "*/elpa/*" \
-    ! -path "*/logs/*" \
-    -type f | sort
-)
-
-for file in "${SHELL_FILES[@]}"; do
-  rel_path="${file#"${ROOT_DIR}/"}"
-  if bash -n "$file" 2>/dev/null; then
-    pass "Shell syntax: ${rel_path}"
-  else
-    fail "Shell syntax: ${rel_path}" "syntax error detected"
-  fi
-done
-
-# 2. Emacs Bytecode and Lisp Validation
-info "2. Validating Emacs Lisp & Bytecode Compilation"
-
-if command -v emacs >/dev/null 2>&1; then
-  EMACS_RESULT=$(emacs -Q --batch -L "${ROOT_DIR}/emacs/emacs.d.symlink/load.d" --eval "
-(let ((errors nil)
-      (files (append (directory-files \"${ROOT_DIR}/emacs/emacs.d.symlink/load.d\" t \"\\\\.el$\")
-                     (directory-files \"${ROOT_DIR}/emacs/emacs.d.symlink/config\" t \"\\\\.el$\")
-                     (list \"${ROOT_DIR}/emacs/emacs.symlink\"
-                           \"${ROOT_DIR}/emacs/emacs.d.symlink/early-init.el\"
-                           \"${ROOT_DIR}/emacs/emacs.d.symlink/custom.el\"))))
-  (dolist (f files)
-    (condition-case err
-        (with-temp-buffer
-          (insert-file-contents f)
-          (goto-char (point-min))
-          (while (< (point) (point-max))
-            (read (current-buffer))))
-      (end-of-file nil)
-      (error
-       (push (format \"%s: %s\" (file-name-nondirectory f) (error-message-string err)) errors))))
-  (if errors
-      (progn
-        (dolist (e errors) (message \"FAIL: %s\" e))
-        (kill-emacs 1))
-    (message \"OK:%d\" (length files))))
-" 2>&1 || true)
-
-  if [[ "$EMACS_RESULT" == *"OK:"* ]]; then
-    count="${EMACS_RESULT##*OK:}"
-    count="${count%%$'\n'*}"
-    pass "Emacs Lisp syntax valid across all ${count} configuration files"
-  else
-    fail "Emacs Lisp syntax validation" "$EMACS_RESULT"
-  fi
-else
-  pass "Emacs not in PATH, skipping Emacs test"
-fi
-
-# 3. SSH Hardening & Isolation
-info "3. Validating SSH Security and Isolation"
-
-SSH_CONFIG="${ROOT_DIR}/ssh/config"
-if [[ -f "$SSH_CONFIG" ]]; then
-  # Test config syntax with ssh -G
-  if ssh -F "$SSH_CONFIG" -G localhost &>/dev/null; then
-    pass "SSH config syntax validation (ssh -F ssh/config -G localhost)"
-  else
-    fail "SSH config syntax" "Failed to parse SSH client configuration"
-  fi
-
-  # Verify file permissions
-  perms=$(stat -c "%a" "$SSH_CONFIG" 2>/dev/null || stat -f "%Lp" "$SSH_CONFIG" 2>/dev/null || echo "600")
-  if [[ "$perms" == "600" || "$perms" == "644" || "$perms" == "664" ]]; then
-    pass "SSH config file exists with valid file mode (${perms})"
-  else
-    fail "SSH config permissions" "Unexpected mode ${perms}"
-  fi
-else
-  fail "SSH config" "File ${SSH_CONFIG} not found"
-fi
-
-if [[ -x "${ROOT_DIR}/ssh/install.sh" ]]; then
-  pass "SSH install script is executable"
-else
-  fail "SSH install script" "Missing executable permission on ssh/install.sh"
-fi
-
-# 4. Symlink Targets and Repository Structure
-info "4. Validating Symlink Targets & Workspace Structure"
-
-# Ensure screen/ was renamed to tmux/
-if [[ ! -d "${ROOT_DIR}/screen" && -d "${ROOT_DIR}/tmux" && -f "${ROOT_DIR}/tmux/tmux.conf.symlink" ]]; then
-  pass "Directory screen/ correctly renamed to tmux/ (tmux.conf.symlink present)"
-else
-  fail "Tmux layout" "screen/ still present or tmux/tmux.conf.symlink missing"
-fi
-
-# Check all *.symlink declarations
-mapfile -t SYMLINK_SOURCES < <(find "${ROOT_DIR}" -maxdepth 2 -name "*.symlink" | sort)
-if [[ ${#SYMLINK_SOURCES[@]} -gt 0 ]]; then
-  pass "Discovered ${#SYMLINK_SOURCES[@]} *.symlink sources for bootstrap installation"
-  for s in "${SYMLINK_SOURCES[@]}"; do
-    target_name=".$(basename "${s%.*}")"
-    if [[ -e "$s" ]]; then
-      pass "Symlink source: ${s#"${ROOT_DIR}/"} -> \$HOME/${target_name}"
-    else
-      fail "Symlink source: ${s}" "Source does not exist"
-    fi
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -1|--tier-1)
+        RUN_TIER1=true
+        shift
+        ;;
+      -2|--tier-2)
+        RUN_TIER2=true
+        shift
+        ;;
+      -3|--tier-3)
+        RUN_TIER3=true
+        shift
+        ;;
+      -4|--tier-4)
+        RUN_TIER4=true
+        shift
+        ;;
+      -a|--all)
+        RUN_TIER1=true
+        RUN_TIER2=true
+        RUN_TIER3=true
+        RUN_TIER4=true
+        shift
+        ;;
+      -l|--list)
+        list_tiers
+        ;;
+      -v|--verbose)
+        VERBOSE=true
+        shift
+        ;;
+      -h|--help)
+        show_help
+        ;;
+      *)
+        echo "Unknown option: $1" >&2
+        show_help
+        ;;
+    esac
   done
-else
-  fail "Symlinks" "No *.symlink targets found"
 fi
 
-# Verify bin executables and bootstrap
-if [[ -x "${ROOT_DIR}/bootstrap.sh" ]]; then
-  pass "Bootstrap script is executable: bootstrap.sh"
-else
-  fail "Bootstrap script" "Missing executable permission on bootstrap.sh"
-fi
+SUITE_START=$(get_time_ns)
 
-for bin_script in "${ROOT_DIR}/bin"/*.sh; do
-  if [[ -f "$bin_script" && -x "$bin_script" ]]; then
-    pass "Binary executable: bin/$(basename "$bin_script")"
-  elif [[ -f "$bin_script" ]]; then
-    fail "Binary executable: bin/$(basename "$bin_script")" "Missing +x permission"
+printf "\n%b" "${BOLD}${MAGENTA}"
+printf "%s\n" "======================================================"
+printf "%s\n" "           DOTFILES AUTOMATED TEST SUITE              "
+printf "%s\n" "======================================================"
+printf "%b\n" "${NC}"
+
+TOTAL_PASSED=0
+TOTAL_FAILED=0
+TOTAL_SKIPPED=0
+
+TIER1_STATUS="SKIPPED"
+TIER2_STATUS="SKIPPED"
+TIER3_STATUS="SKIPPED"
+TIER4_STATUS="SKIPPED"
+
+TIER1_MS=0
+TIER2_MS=0
+TIER3_MS=0
+TIER4_MS=0
+
+# Execute Tier 1
+if [[ "$RUN_TIER1" == true ]]; then
+  t1_start=$(get_time_ns)
+  if bash "${SCRIPT_DIR}/tier1_static.sh"; then
+    TIER1_STATUS="${GREEN}PASSED${NC}"
+  else
+    TIER1_STATUS="${RED}FAILED${NC}"
+    TOTAL_FAILED=$((TOTAL_FAILED + 1))
   fi
-done
-
-# 5. Summary and Timing
-echo ""
-END_TIME=$(date +%s%N 2>/dev/null || date +%s)
-DURATION_MS=0
-if [[ "$START_TIME" =~ ^[0-9]{19}$ ]] && [[ "$END_TIME" =~ ^[0-9]{19}$ ]]; then
-  DURATION_MS=$(( (END_TIME - START_TIME) / 1000000 ))
+  t1_end=$(get_time_ns)
+  TIER1_MS=$(calc_duration_ms "$t1_start" "$t1_end")
 fi
 
-printf "${BOLD}======================================================\n"
-printf "TEST SUMMARY: %d passed, %d failed" "$PASSED" "$FAILED"
-if [[ "$DURATION_MS" -gt 0 ]]; then
-  printf " (%d ms)\n" "$DURATION_MS"
-else
-  printf "\n"
+# Execute Tier 2
+if [[ "$RUN_TIER2" == true ]]; then
+  t2_start=$(get_time_ns)
+  if bash "${SCRIPT_DIR}/tier2_unit.sh"; then
+    TIER2_STATUS="${GREEN}PASSED${NC}"
+  else
+    TIER2_STATUS="${RED}FAILED${NC}"
+    TOTAL_FAILED=$((TOTAL_FAILED + 1))
+  fi
+  t2_end=$(get_time_ns)
+  TIER2_MS=$(calc_duration_ms "$t2_start" "$t2_end")
 fi
-printf "======================================================${NC}\n"
 
-if [[ "$FAILED" -gt 0 ]]; then
+# Execute Tier 3
+if [[ "$RUN_TIER3" == true ]]; then
+  t3_start=$(get_time_ns)
+  if bash "${SCRIPT_DIR}/tier3_integration.sh"; then
+    TIER3_STATUS="${GREEN}PASSED${NC}"
+  else
+    TIER3_STATUS="${RED}FAILED${NC}"
+    TOTAL_FAILED=$((TOTAL_FAILED + 1))
+  fi
+  t3_end=$(get_time_ns)
+  TIER3_MS=$(calc_duration_ms "$t3_start" "$t3_end")
+fi
+
+# Execute Tier 4
+if [[ "$RUN_TIER4" == true ]]; then
+  t4_start=$(get_time_ns)
+  if bash "${SCRIPT_DIR}/tier4_perf.sh"; then
+    TIER4_STATUS="${GREEN}PASSED${NC}"
+  else
+    TIER4_STATUS="${RED}FAILED${NC}"
+    TOTAL_FAILED=$((TOTAL_FAILED + 1))
+  fi
+  t4_end=$(get_time_ns)
+  TIER4_MS=$(calc_duration_ms "$t4_start" "$t4_end")
+fi
+
+SUITE_END=$(get_time_ns)
+TOTAL_DURATION=$(calc_duration_ms "$SUITE_START" "$SUITE_END")
+
+# Print Executive Summary Table
+printf "\n%b" "${BOLD}${CYAN}"
+printf "%s\n" "======================================================"
+printf "%s\n" "                 TEST SUITE SUMMARY                   "
+printf "%s\n" "======================================================"
+printf "%b" "${NC}"
+
+format_row() {
+  local name="$1"
+  local status="$2"
+  local duration="$3"
+  local sla="$4"
+  printf "  %-32s %-16b %6sms (SLA: %s)\n" "$name" "$status" "$duration" "$sla"
+}
+
+[[ "$RUN_TIER1" == true ]] && format_row "Tier 1: Static & Syntax" "$TIER1_STATUS" "$TIER1_MS" "<200ms"
+[[ "$RUN_TIER2" == true ]] && format_row "Tier 2: Unit & Isolation" "$TIER2_STATUS" "$TIER2_MS" "<500ms"
+[[ "$RUN_TIER3" == true ]] && format_row "Tier 3: Integration & E2E" "$TIER3_STATUS" "$TIER3_MS" "<1.5s"
+[[ "$RUN_TIER4" == true ]] && format_row "Tier 4: Perf & Benchmarks" "$TIER4_STATUS" "$TIER4_MS" "<2.0s"
+
+printf "%b%s\n" "${BOLD}${CYAN}" "------------------------------------------------------"
+printf "  Total Suite Duration: %d ms\n" "$TOTAL_DURATION"
+printf "%s%b\n" "======================================================" "${NC}"
+
+if [[ "$TOTAL_FAILED" -gt 0 ]]; then
+  printf "\n%b  [ OVERALL RESULT ]: FAILED (%d tier(s) failed)%b\n\n" "${RED}${BOLD}" "$TOTAL_FAILED" "${NC}"
   exit 1
+else
+  printf "\n%b  [ OVERALL RESULT ]: ALL TIERS PASSED (100%%)%b\n\n" "${GREEN}${BOLD}" "${NC}"
+  exit 0
 fi
-
-exit 0

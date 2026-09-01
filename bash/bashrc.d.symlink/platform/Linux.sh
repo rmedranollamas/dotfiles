@@ -17,37 +17,33 @@ if [[ "$OSTYPE" == linux* ]]; then
     export PATH="${PATH:+${PATH}:}${HOME}/.local/share/flatpak/exports/bin"
   fi
 
-  # Linuxbrew
+  # Linuxbrew with mtime-checked shellenv cache
+  brew_bin=""
   if [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    brew_bin="/home/linuxbrew/.linuxbrew/bin/brew"
   elif [[ -x "${HOME}/.linuxbrew/bin/brew" ]]; then
-    eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
+    brew_bin="${HOME}/.linuxbrew/bin/brew"
+  elif command -v brew &>/dev/null; then
+    brew_bin="$(command -v brew)"
   fi
 
-  # System bash completion (lazy-loaded on first tab press)
-  if ! shopt -oq posix && [[ -n "${PS1:-}" || "$-" == *i* ]]; then
-    _lazy_bash_completion() {
-      complete -r -D 2>/dev/null
-      unset -f _lazy_bash_completion
-      if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
-        source "/usr/share/bash-completion/bash_completion"
-      elif [[ -r "/etc/bash_completion" ]]; then
-        source "/etc/bash_completion"
-      fi
-      if declare -F _comp_complete_load >/dev/null 2>&1; then
-        _comp_complete_load "$@"
-      elif declare -F _completion_loader >/dev/null 2>&1; then
-        _completion_loader "$@"
-      fi
-      return 124
-    }
-    if [[ -r "/usr/share/bash-completion/bash_completion" || -r "/etc/bash_completion" ]]; then
-      complete -D -F _lazy_bash_completion
+  if [[ -n "$brew_bin" ]]; then
+    brew_cache="${XDG_CACHE_HOME:-$HOME/.cache}/brew_shellenv.cache"
+    if [[ ! -f "$brew_cache" || "$brew_bin" -nt "$brew_cache" ]]; then
+      mkdir -p "${brew_cache%/*}" 2>/dev/null
+      "$brew_bin" shellenv > "$brew_cache" 2>/dev/null
     fi
+    if [[ -r "$brew_cache" ]]; then
+      source "$brew_cache"
+    else
+      eval "$("$brew_bin" shellenv)"
+    fi
+    unset brew_cache
   fi
+  unset brew_bin
 
   # Command-not-found handler fallback
-  if [[ "$(type -t command_not_found_handle)" != "function" ]]; then
+  if ! declare -F command_not_found_handle >/dev/null 2>&1; then
     if [[ -x "/usr/lib/command-not-found" ]]; then
       command_not_found_handle() {
         /usr/lib/command-not-found -- "$1"
