@@ -40,7 +40,7 @@ ______________________________________________________________________
   - **Tier 1 (Static & Syntax)**: `bash -n`, Emacs Lisp sexp validation, SSH syntax (`ssh -G`), Tmux config parsing, and Symlink mapping.
   - **Tier 2 (Unit & Isolation)**: Path helper algorithms, alias cascades, `git-clean.sh` branch safety logic, and `link_file` idempotency.
   - **Tier 3 (Integration & Sandbox E2E)**: Pristine bootstrap in isolated sandbox `$HOME`, idempotent consecutive runs, and permission audits.
-  - **Tier 4 (Performance & Benchmarks)**: Interactive Bash startup latency (<40ms SLA) and Emacs batch startup (<300ms SLA).
+  - **Tier 4 (Performance & Benchmarks)**: Interactive Bash startup latency (\<40ms SLA) and Emacs batch startup (\<300ms SLA).
 - **Adversarial Stress Suite (Tier 5)**: Edge-case fuzzing and stress testing in `test/tier5_adversarial.sh`.
 - **GitHub Actions CI Matrix**: Automated continuous integration on Linux and macOS with Dependabot maintenance.
 
@@ -115,10 +115,11 @@ To bootstrap the configurations into your home directory:
 ```
 
 `bootstrap.sh` performs the following steps:
+
 1. Hardens `~/.ssh` and symlinks `ssh/config`.
-2. Runs OS-specific initialization from `os/$(uname -s)/install.sh`.
-3. Symlinks `bin/` to `~/.bin` and links all `*.symlink` files and directories to `~/.<name>`.
-4. Executes topical `install.sh` scripts across all modules.
+1. Runs OS-specific initialization from `os/$(uname -s)/install.sh`.
+1. Symlinks `bin/` to `~/.bin` and links all `*.symlink` files and directories to `~/.<name>`.
+1. Executes topical `install.sh` scripts across all modules.
 
 ### Running Tests
 
