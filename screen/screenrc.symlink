@@ -1,9 +1,21 @@
-# Show proper term variable.
-term screen-256color
+# UTF-8 encoding support
+defutf8 on
+utf8 on on
 
-# Clean startup and detach.
+# 256 color terminal support
+term screen-256color
+termcapinfo xterm* 'Co#256:pa#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+attrcolor b ".I"
+
+# Scrollback buffer (50k lines)
+defscrollback 50000
+
+# Clean startup and detach
 startup_message off
 autodetach on
+vbell off
 
-# Show me the caption bar.
+# Clean status bar and caption
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %Y-%m-%d %{W}%0c %{g}]'
 caption always "%{-b ..}%-w%{+b ..}[%n %t]%{-}%+w"
