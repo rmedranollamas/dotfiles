@@ -28,6 +28,11 @@ secrets.sh
 auto-save-list/
 auto-saves/
 eln-cache/
+elpa/
+transient/
+*.eld
+custom.el
+.saves/
 
 # Python cache & virtual environments
 __pycache__/

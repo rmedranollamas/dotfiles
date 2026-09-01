@@ -56,11 +56,6 @@ _git_completion_setup() {
   fi
 }
 
-# Load other completion scripts.
-if [[ -f "${COMP_DIR}/Darwin.sh" ]]; then
-  source "${COMP_DIR}/Darwin.sh"
-fi
-
 # Some handy overrides.
 if [[ -f "${COMP_DIR}/git.bash" || -f "${COMP_DIR}/git-completion.bash" ]]; then
   complete -F _git_completion_setup g git

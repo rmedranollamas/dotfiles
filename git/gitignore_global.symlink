@@ -13,6 +13,10 @@ tramp
 *_archive
 flycheck_*
 eln-cache/
+elpa/
+transient/
+*.eld
+custom.el
 
 # Secrets, keys, and credentials
 *.pem
@@ -50,42 +54,6 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Eclipse ignores
-*.pydevproject
-.project
-.metadata
-bin/**
-tmp/**
-tmp/**/*
-*.tmp
-*.bak
-local.properties
-.classpath
-.settings/
-.loadpath
-.externalToolBuilders/
-*.launch
-.cproject
-.buildpath
-
-# Xcode ignores
-*~.nib
-DerivedData/
-build/
-*.pbxuser
-*.mode1v3
-*.mode2v3
-*.perspectivev3
-!default.pbxuser
-!default.mode1v3
-!default.mode2v3
-!default.perspectivev3
-Breakpoints_v5.bkpt
-xcuserdata
-!xcshareddata
-*.moved-aside
-*.xcworkspace/
-
 # OS X & General OS ignores
 .DS_Store
 .AppleDouble
@@ -94,11 +62,8 @@ Icon
 ._*
 .Spotlight-V100
 .Trashes
-Thumbs.db
-Desktop.ini
 *.swp
 *.lock
-profile
 
 # Bazel ignores
 /bazel-*

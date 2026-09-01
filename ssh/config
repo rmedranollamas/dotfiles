@@ -6,10 +6,6 @@ Host github.com gist.github.com
     IdentityFile ~/.ssh/github
     ControlPersist 3600
 
-Host *.sf.net *.sourceforge.net
-    IdentityFile ~/.ssh/sourceforge
-    PubkeyAcceptedKeyTypes +ssh-rsa
-
 Host *.m3drano.ch
     StrictHostKeyChecking ask
     VerifyHostKeyDNS yes
@@ -21,7 +17,7 @@ Host *.gce.compute.m3drano.ch *-gce.compute.m3drano.ch
 
 # Hardened Global Defaults
 Host *
-    ChallengeResponseAuthentication no
+    KbdInteractiveAuthentication no
     CheckHostIP no
     Compression yes
     ControlMaster auto
