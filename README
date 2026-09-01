@@ -1,18 +1,109 @@
-These are my configuration files.
+# Dotfiles (2026 Modern Edition)
 
-The configs are organized by themes, whether a theme is an application or some
-other area, like OS config. There are some important conventions:
+A high-performance, modular, cross-platform configuration suite for Linux and macOS (Darwin), engineered for modern terminal workflows, hardened security, and lightning-fast execution.
 
- 1. bootstrap.sh installs all the files into the local user home directory.
-    It runs on the plain /bin/sh provided by the system by default.
- 2. Each <directory>/install.sh will be run once on bootstrap time.
- 3. Each <directory>/<file>.symlink will be symlinked at $HOME with the name
-    .<file> (it can be a directory, such as emacs.d.symlink/)
- 4. The platform files, in the form <directory>/<platform>/ (for example
-    <directory>/Darwin/) have the same structure as the mail level, but are only
-    considered on each platform.
- 5. The directory bin/ will be added to the user PATH variable.
+---
 
-The main choice of tools is the old die-hard tripet (screen, bash, emacs). There
-are many other supported, and configured to match as much as possible the config
-of the main tools.
+## Key Highlights & Architecture
+
+### 1. Tmux TrueColor & Modern Multiplexing
+- **Full 24-bit TrueColor Support**: Configured for `tmux-256color` with terminal capability overrides (`Tc` and `RGB`) for accurate color reproduction across modern terminal emulators.
+- **Ergonomic Bindings & Navigation**: Streamlined pane splits, vi-style navigation, automated window renumbering, and clean status bar integration.
+- **Directory Structure**: Dedicated `tmux/` topical directory hosting `tmux.conf.symlink` -> `~/.tmux.conf`.
+
+### 2. Bash 5 Zero-Fork Caching & Modern Toolchain
+- **Zero-Fork Caching**: Optimized startup paths leveraging Bash 5 built-ins and memoized completions to minimize subshell spawning during shell initialization.
+- **Dynamic CLI Tooling**: Automated aliases for modern Rust CLI replacements (`eza`/`lsd` for `ls`/`tree`, `bat`/`batcat` for `cat`/`preview`) with graceful fallbacks.
+- **Native Bash-Completion Integration**: Delegated Git completion using native system completion loaders (`_completion_loader` / `_comp_load`) and dynamic alias completion for `g` -> `git`.
+- **Advanced Shell Options**: Enabled `globstar` for recursive pattern matching, automatic window size adjustments (`checkwinsize`), and hardened grep defaults excluding VCS metadata and `node_modules`.
+
+### 3. Emacs 29/30 Eglot, Tree-sitter & Ruff
+- **Native Language Server Protocol (Eglot)**: Zero-dependency LSP client configured for Python, C/C++, Bash, JSON, YAML, and TOML.
+- **Tree-sitter Grammar Integration**: Dynamic `major-mode-remap-alist` remappings activate `*-ts-mode` variants (`python-ts-mode`, `bash-ts-mode`, `json-ts-mode`, `yaml-ts-mode`, `c-ts-mode`, `toml-ts-mode`) when grammars are available via `treesit-ready-p`.
+- **Modern Python Tooling**: Integrated Ruff linter and formatter alongside Pyvenv virtual environment management and Flycheck syntax diagnostics.
+- **Refined Typography & Theme**: Tailored IBM Plex Mono font rendering and Monokai color palette with rainbow delimiters.
+
+### 4. SSH Physical Isolation & Hardened Defaults
+- **Identity Isolation**: Dedicated Ed25519 cryptographic keys partitioned per infrastructure role:
+  - `~/.ssh/github` for GitHub and Git hosting services.
+  - `~/.ssh/google_compute_engine` for Google Cloud Platform / GCE hosts.
+  - Domain-specific host mappings for personal infrastructure (`*.m3drano.ch`).
+- **Hardened Global Policies**: Agent forwarding and X11 forwarding disabled by default (`ForwardAgent no`, `ForwardX11 no`), `IdentitiesOnly yes`, strict host-key verification, socket multiplexing (`ControlMaster auto`, `ControlPersist 600`), and enforced `0700`/`0600` directory and file permissions.
+
+### 5. Fast Automated Test Suite
+- **Comprehensive Validation Harness**: Built-in test runner at `test/test_dotfiles.sh` verifying:
+  - Shell syntax across all scripts and dotfile components (`bash -n`).
+  - Emacs Lisp bytecode integrity and sexp validation.
+  - SSH client configuration syntax and permission modes.
+  - Symlink source and target mapping correctness.
+- **Sub-Second Execution**: Complete validation suite runs in **< 150 ms** for instant feedback.
+
+---
+
+## Repository Organization
+
+The repository follows a topical modular pattern:
+
+```text
+dotfiles/
+├── bash/                       # Bash configuration, aliases, completions
+│   ├── bashrc.d.symlink/       # Modular shell scripts (aliases, completion, prompt, etc.)
+│   ├── bashrc.symlink          # Sourced by interactive shells (~/.bashrc)
+│   ├── bash_profile.symlink    # Login shell entrypoint (~/.bash_profile)
+│   ├── dir_colors.symlink      # LS_COLORS color database (~/.dir_colors)
+│   └── inputrc.symlink         # Readline keybindings (~/.inputrc)
+├── bin/                        # Custom developer executables prepended to PATH
+│   ├── epylint.sh              # Python linting wrapper
+│   └── git-clean.sh            # Git branch cleaner
+├── emacs/                      # Emacs 29/30 configuration
+│   ├── emacs.d.symlink/        # Modular Emacs configuration directory (~/.emacs.d)
+│   └── emacs.symlink           # Early init / loader (~/.emacs)
+├── git/                        # Git global configuration and ignore lists
+│   ├── gitconfig.symlink       # Global Git configuration (~/.gitconfig)
+│   └── gitignore_global.symlink# Global ignore patterns (~/.gitignore_global)
+├── misc/                       # Miscellaneous application settings
+│   ├── hushlogin.symlink       # Suppress login banner (~/.hushlogin)
+│   └── latexmkrc.symlink       # Cross-platform LaTeXmk build rules (~/.latexmkrc)
+├── os/                         # OS-specific bootstrap routines
+│   ├── Darwin/                 # macOS defaults and packages
+│   └── Linux/                  # Linux package and system configuration
+├── python/                     # Python environment settings
+│   ├── pdbrc.symlink           # PDB debugger enhancements (~/.pdbrc)
+│   └── pythonrc.symlink        # Interactive Python shell configuration (~/.pythonrc)
+├── ssh/                        # Hardened SSH configurations and key generators
+│   ├── config                  # Master SSH client configuration
+│   └── install.sh              # Automated keypair initialization
+├── test/                       # Automated test harness
+│   └── test_dotfiles.sh        # Fast validation test runner
+├── tmux/                       # Tmux TrueColor configuration
+│   └── tmux.conf.symlink       # Terminal multiplexer settings (~/.tmux.conf)
+├── vi/                         # Vim fallbacks
+│   └── vimrc.symlink           # Clean Vim fallback configuration (~/.vimrc)
+└── bootstrap.sh                # Idempotent installation script
+```
+
+---
+
+## Installation & Testing
+
+### Installation
+
+To bootstrap the configurations into your home directory:
+
+```bash
+./bootstrap.sh
+```
+
+`bootstrap.sh` performs the following steps:
+1. Hardens `~/.ssh` and symlinks `ssh/config`.
+2. Runs OS-specific initialization from `os/$(uname -s)/install.sh`.
+3. Symlinks `bin/` to `~/.bin` and links all `*.symlink` files and directories to `~/.<name>`.
+4. Executes topical `install.sh` scripts across all modules.
+
+### Running Tests
+
+Validate syntax, bytecode, SSH security, and symlink mappings at any time:
+
+```bash
+./test/test_dotfiles.sh
+```

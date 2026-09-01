@@ -49,7 +49,7 @@ alias cd..='cd ..'
 alias df='df -h'
 alias du='du -h'
 alias sps='ps aux | less'
-alias grep='grep --color=auto '
+alias grep='grep --color=auto --exclude-dir={.git,.hg,.svn,node_modules}'
 
 # Lazy evaluation of EDITOR
 alias e='${EDITOR:-nano}'

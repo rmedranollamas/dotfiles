@@ -92,9 +92,6 @@ system_setup() {
 
 symlink() {
   for file in $(list_files '*.symlink') ; do
-    if [[ -d "$file" ]]; then
-      continue
-    fi
     link_file "$file" "$HOME/.$(basename "${file%.*}")"
   done
 }

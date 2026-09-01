@@ -4,7 +4,7 @@
 
 # Set the proper terminal type.
 if [[ -n "${TMUX}" ]] ; then
-  export TERM='screen-256color'
+  export TERM='tmux-256color'
 else
   export TERM='xterm-256color'
 fi
@@ -13,5 +13,5 @@ fi
 [[ -t 0 ]] && stty stop ""
 
 # Check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+# update the values of LINES and COLUMNS. Enable globstar for recursive globbing.
+shopt -s checkwinsize globstar
