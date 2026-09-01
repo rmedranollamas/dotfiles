@@ -6,14 +6,7 @@
 # This script will install the bootfiles by looking into each of the topical
 # directories and sourcing the install.sh found there.
 
-# OS X does not have realpath as command.
-if [[ "$(uname -s)" == 'Darwin' ]] ; then
-  realpath() {
-    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
-  }
-fi
-
-readonly DOTFILES_ROOT="$(dirname `realpath $0`)"
+readonly DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd -P)"
 export DOTFILES_ROOT
 
 # Create a logs dir.
@@ -38,8 +31,21 @@ log_sys () {
 }
 
 link_file() {
-  ln -fsn "$1" "$2"
-  log_ok "symlink $2 -> $1 created"
+  local src="$1"
+  local dest="$2"
+
+  if [[ -L "$dest" ]] && [[ "$(readlink -f "$dest" 2>/dev/null || readlink "$dest" 2>/dev/null)" == "$(readlink -f "$src" 2>/dev/null || echo "$src")" ]]; then
+    log_ok "$dest already points to $src"
+    return
+  fi
+
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    log_info "Backing up $dest to $dest.bak"
+    mv "$dest" "$dest.bak"
+  fi
+
+  ln -sfn "$src" "$dest"
+  log_ok "symlink $dest -> $src created"
 }
 
 list_files() {
@@ -53,14 +59,14 @@ system_files() {
 install() {
   for file in $(list_files 'install.sh') ; do
     log_info "running ${file}..."
-    sh -c "${file}"
+    bash "${file}"
   done
 }
 
 system_setup() {
   for file in $(system_files 'install.sh') ; do
-    log_sys "seting up ${file}..."
-    sh -c "${file}"
+    log_sys "setting up ${file}..."
+    bash "${file}"
   done
 }
 
@@ -71,7 +77,7 @@ symlink() {
 }
 
 bootstrap() {
-  if [[ $(sudo -v -n &> /dev/null) ]] ; then
+  if sudo -n -v &>/dev/null; then
     log_ok 'sudo credentials renewed'
   fi
   system_setup
