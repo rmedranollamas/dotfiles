@@ -21,7 +21,7 @@
 	algorithm = histogram
 	colorMoved = zebra
 [push]
-	default = tracking
+	default = upstream
 	signed = true
 	atomic = true
 	autoSetupRemote = true

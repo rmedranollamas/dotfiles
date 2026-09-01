@@ -4,7 +4,6 @@
 
 if [[ "$OSTYPE" == darwin* ]] ; then
   export PATH="/usr/local/sbin${PATH+:$PATH}"
-  export DISPLAY=':0.0'
 
   # Dynamic Homebrew prefix detection
   brew_bin=""
@@ -55,12 +54,6 @@ if [[ "$OSTYPE" == darwin* ]] ; then
 
   if [[ -d "/Applications/Emacs.app/Contents/MacOS/bin" ]]; then
     export PATH="/Applications/Emacs.app/Contents/MacOS/bin${PATH+:$PATH}"
-    alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs.sh'
-  fi
-
-  if [[ -f "${HOME}/.gnupg/gpg-agent-info" ]]; then
-    source "${HOME}/.gnupg/gpg-agent-info"
-    export GPG_AGENT_INFO
   fi
 
   if [[ -t 0 ]]; then

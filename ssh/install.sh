@@ -11,7 +11,6 @@ log="${log_dir}/ssh.install.log"
 
 github="${ssh_dir}/github"
 google_compute_engine="${ssh_dir}/google_compute_engine"
-sourceforge="${ssh_dir}/sourceforge"
 
 hostname_f="$(hostname -f 2>/dev/null || hostname)"
 
@@ -35,14 +34,4 @@ if [[ -f "${google_compute_engine}.pub" ]]; then
   chmod 644 "${google_compute_engine}.pub"
 fi
 
-if [[ ! -f "${sourceforge}" ]] ; then
-  ssh-keygen -a 100 -o -b 4096 -t rsa -N '' -C 'medranollamas@shell.sf.net' -f "${sourceforge}" >> "${log}" 2>&1
-fi
-if [[ -f "${sourceforge}" ]]; then
-  chmod 600 "${sourceforge}"
-fi
-if [[ -f "${sourceforge}.pub" ]]; then
-  chmod 644 "${sourceforge}.pub"
-fi
-
-unset sourceforge google_compute_engine github hostname_f log log_dir ssh_dir
+unset google_compute_engine github hostname_f log log_dir ssh_dir
