@@ -77,5 +77,20 @@
       select-enable-clipboard t
       select-active-regions t)
 
+;; Tree-sitter major-mode remappings when tree-sitter grammars are available.
+(when (require 'treesit nil t)
+  (dolist (pair '((python-mode python-ts-mode python)
+                  (sh-mode     bash-ts-mode   bash)
+                  (bash-mode   bash-ts-mode   bash)
+                  (json-mode   json-ts-mode   json)
+                  (yaml-mode   yaml-ts-mode   yaml)
+                  (c-mode      c-ts-mode      c)
+                  (toml-mode   toml-ts-mode   toml)))
+    (let ((orig (nth 0 pair))
+          (ts (nth 1 pair))
+          (lang (nth 2 pair)))
+      (when (treesit-ready-p lang t)
+        (add-to-list 'major-mode-remap-alist (cons orig ts))))))
+
 (provide 'ui-config)
 ;;; ui-config.el ends here
