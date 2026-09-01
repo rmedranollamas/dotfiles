@@ -63,5 +63,19 @@ if ! shopt -oq posix; then
     return 124
   }
 
-  complete -D -F _lazy_bash_completion
+  if [[ "${BASH_VERSINFO[0]:-0}" -ge 4 ]]; then
+    complete -D -F _lazy_bash_completion 2>/dev/null || true
+  else
+    # Legacy fallback for Bash 3.2 (macOS default system bash)
+    if [[ -r '/opt/homebrew/etc/profile.d/bash_completion.sh' ]]; then
+      source '/opt/homebrew/etc/profile.d/bash_completion.sh'
+    elif [[ -r '/usr/local/etc/bash_completion' ]]; then
+      source '/usr/local/etc/bash_completion'
+    elif [[ -r '/etc/bash_completion' ]]; then
+      source '/etc/bash_completion'
+    fi
+    if declare -F _git >/dev/null 2>&1; then
+      complete -o default -o nospace -F _git g 2>/dev/null || true
+    fi
+  fi
 fi
