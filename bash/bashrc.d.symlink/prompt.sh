@@ -16,8 +16,12 @@ _update_git_prompt() {
 PS1='\[\e[0;34m\]${__git_prompt_str}\[\e[0m\]\[\e[1;34m\]\W\[\e[0m\] \[\e[0;32m\]\$\[\e[0m\] '
 PS2='\[\e[0;31m\]>\[\e[0m\] '
 
+precmd() {
+  :
+}
+
 precmd_func() {
-  history -a
+  history -a 2>/dev/null || true
 }
 
 _add_precmd_func() {
@@ -35,7 +39,9 @@ unset -f _add_precmd_func
 _run_precmd_functions() {
   local f
   for f in "${precmd_functions[@]}"; do
-    "$f"
+    if declare -F "$f" >/dev/null 2>&1; then
+      "$f"
+    fi
   done
 }
 

@@ -46,7 +46,13 @@ TIER_SKIPPED=0
 
 # High-resolution time measurement (nanoseconds to milliseconds)
 get_time_ns() {
-  date +%s%N 2>/dev/null || date +%s000000000
+  local t
+  t=$(date +%s%N 2>/dev/null)
+  if [[ "$t" =~ ^[0-9]{18,}$ ]]; then
+    echo "$t"
+  else
+    python3 -c 'import time; print(time.time_ns())' 2>/dev/null || date +%s000000000
+  fi
 }
 
 calc_duration_ms() {
