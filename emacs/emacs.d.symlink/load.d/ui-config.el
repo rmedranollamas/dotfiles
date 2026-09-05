@@ -93,5 +93,10 @@
       (when (treesit-ready-p lang t)
         (add-to-list 'major-mode-remap-alist (cons orig ts))))))
 
+;; Terminal responsiveness and xterm key decoding.
+(setq xterm-query-timeout 1.0)
+(define-key input-decode-map "\e[>0c" [nil])
+(setq xterm-extra-capabilities '(reportBackground modifyOtherKeys))
+
 (provide 'ui-config)
 ;;; ui-config.el ends here

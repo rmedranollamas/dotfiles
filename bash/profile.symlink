@@ -45,6 +45,7 @@ export NVM_DIR="${HOME}/.nvm"
 
 path_prepend "${HOME}/.bin"
 path_prepend "${HOME}/.local/bin"
+path_prepend "${HOME}/.antigravity/antigravity/bin"
 path_append '/usr/local/go/bin'
 path_append "${GOPATH}/bin"
 
