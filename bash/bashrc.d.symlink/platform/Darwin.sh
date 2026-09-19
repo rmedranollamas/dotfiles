@@ -42,8 +42,17 @@ if [[ "$OSTYPE" == darwin* ]] ; then
   fi
   unset brew_bin brew_prefix
 
-  if [[ -d "/Applications/Emacs.app/Contents/MacOS/bin" ]]; then
+  if [[ -d "/Applications/Emacs.app/Contents/MacOS" ]]; then
+    export PATH="/Applications/Emacs.app/Contents/MacOS:/Applications/Emacs.app/Contents/MacOS/bin${PATH+:$PATH}"
+  elif [[ -d "/Applications/Emacs.app/Contents/MacOS/bin" ]]; then
     export PATH="/Applications/Emacs.app/Contents/MacOS/bin${PATH+:$PATH}"
+  fi
+
+  # Purge legacy NeXT/Apple typedstream color list if present (causes Cocoa unarchiver errors in Emacs)
+  if [[ -f "${HOME}/Library/Colors/Emacs.clr" ]]; then
+    if file "${HOME}/Library/Colors/Emacs.clr" 2>/dev/null | grep -q 'typedstream'; then
+      rm -f "${HOME}/Library/Colors/Emacs.clr"
+    fi
   fi
 
   if [[ -t 0 ]]; then

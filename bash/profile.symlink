@@ -43,6 +43,14 @@ export GOPATH="${HOME}/go"
 export RESEARCH_MODEL='deep-research-max-preview-04-2026'
 export NVM_DIR="${HOME}/.nvm"
 
+# Locale configuration (guard against missing locales on macOS)
+case "${LANG:-}" in
+  "" | en_CH*) export LANG="en_US.UTF-8" ;;
+esac
+case "${LC_ALL:-}" in
+  "" | en_CH*) export LC_ALL="en_US.UTF-8" ;;
+esac
+
 path_prepend "${HOME}/.bin"
 path_prepend "${HOME}/.local/bin"
 path_prepend "${HOME}/.antigravity/antigravity/bin"

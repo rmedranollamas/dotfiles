@@ -4,6 +4,15 @@
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
+
+;; Silence missing lexical-binding cookie warnings for legacy / third-party autoloads.
+(defvar warning-inhibit-types nil)
+(defvar warning-suppress-log-types nil)
+(defvar warning-suppress-types nil)
+(add-to-list 'warning-inhibit-types '(files missing-lexbind-cookie))
+(add-to-list 'warning-suppress-log-types '(files missing-lexbind-cookie))
+(add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
+
 (package-initialize)
 
 ;; In Emacs 29+, use-package is built into core.

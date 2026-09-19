@@ -246,6 +246,18 @@ test_aliases_core() {
   assert_contains "g='git '" "$res" "aliases.sh: g aliased to 'git '"
   assert_contains "py='python3'" "$res" "aliases.sh: py aliased to 'python3'"
   assert_contains "kill-emacs" "$res" "aliases.sh: killemacs helper aliased"
+
+  if [[ "$OSTYPE" == darwin* && -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]]; then
+    local darwin_res
+    darwin_res=$(
+      bash -c "
+        shopt -s expand_aliases
+        source '${ALIAS_SCRIPT}'
+        alias emacs
+      " 2>/dev/null || true
+    )
+    assert_contains "emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'" "$darwin_res" "aliases.sh: emacs aliased to Emacs.app on macOS"
+  fi
 }
 test_aliases_core
 

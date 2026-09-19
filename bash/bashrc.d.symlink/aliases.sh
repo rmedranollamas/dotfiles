@@ -58,5 +58,8 @@ alias se='sudo -E ${EDITOR:-nano}'
 # Development and helper aliases
 alias g='git '
 alias py='python3'
+if [[ "$OSTYPE" == darwin* && -x "/Applications/Emacs.app/Contents/MacOS/Emacs" ]]; then
+  alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
+fi
 alias emacsserver='emacs --daemon'
 alias killemacs="emacsclient -e '(kill-emacs)'"

@@ -36,5 +36,13 @@
 (when (boundp 'native-comp-async-report-warnings-errors)
   (setq native-comp-async-report-warnings-errors 'silent))
 
+;; Silence missing lexical-binding cookie warnings for legacy / third-party packages in Emacs 30+.
+(defvar warning-inhibit-types nil)
+(defvar warning-suppress-log-types nil)
+(defvar warning-suppress-types nil)
+(add-to-list 'warning-inhibit-types '(files missing-lexbind-cookie))
+(add-to-list 'warning-suppress-log-types '(files missing-lexbind-cookie))
+(add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
+
 (provide 'early-init)
 ;;; early-init.el ends here
